@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:whilabel_renewal/design_guide_managers/base_design_settings.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
+import 'package:whilabel_renewal/design_guide_managers/svg_icon_path.dart';
 import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
 import 'package:whilabel_renewal/screen/resign/resign_view_model.dart';
 
@@ -101,7 +102,7 @@ class ResignView extends ConsumerWidget {
       leading: IconButton(
         padding: const EdgeInsets.only(left: 16),
         alignment: Alignment.centerLeft,
-        icon: SvgPicture.asset(""),
+        icon: SvgPicture.asset(SvgIconPath.close),
         onPressed: () {
           Navigator.pop(context);
         },
