@@ -3,25 +3,19 @@ import 'package:flutter_svg/svg.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
 
-class ToggleSwitchButton extends StatefulWidget {
-  ToggleSwitchButton(
-      {Key? key,
+class ToggleSwitchButton extends StatelessWidget {
+  const ToggleSwitchButton(
+      {super.key,
       required this.title,
       required this.isButtonState,
-      required this.onPressedButton})
-      : super(key: key);
+      required this.onPressedButton});
   final Function onPressedButton;
   final String title;
   final bool isButtonState;
 
-  @override
-  State<ToggleSwitchButton> createState() => _ToggleSwitchButtonState();
-}
-
-class _ToggleSwitchButtonState extends State<ToggleSwitchButton> {
   /*TODO) 버튼 상태를 부모에게 받아와서 상태를 변화 시켜주자 **/
-  String offToggleIconPath = "assets/icon/toggle_off.svg";
-  String onToggleIconPath = "assets/icon/toggle_on.svg";
+  final String offToggleIconPath = "assets/icon/toggle_off.svg";
+  final String onToggleIconPath = "assets/icon/toggle_on.svg";
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +23,7 @@ class _ToggleSwitchButtonState extends State<ToggleSwitchButton> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(widget.title,
+          Text(title,
               style: TextStylesManager.createHadColorTextStyle(
                 "M16",
                 ColorsManager.gray200,
@@ -37,11 +31,10 @@ class _ToggleSwitchButtonState extends State<ToggleSwitchButton> {
           IconButton(
             iconSize: 60,
             onPressed: () {
-              widget.onPressedButton();
+              onPressedButton();
             },
-            icon: SvgPicture.asset(widget.isButtonState == true
-                ? onToggleIconPath
-                : offToggleIconPath),
+            icon: SvgPicture.asset(
+                isButtonState == true ? onToggleIconPath : offToggleIconPath),
           )
         ],
       ),
