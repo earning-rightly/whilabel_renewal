@@ -7,17 +7,17 @@ class SettingViewState with _$SettingViewState {
   /** TODO) 필오한 state가 무엇일까?*/
   const factory SettingViewState({
     required SettingViewText settingViewText,
-    required bool isAblePushAlim,
-    required bool isAbleMarketingAlim,
+    required bool isAblePushNotification,
+    required bool isAbleMarketingNotification,
   }) = _SettingViewState;
 
   factory SettingViewState.initial(
-      bool _isAblePushAlim, bool _isAbleMarketingAlim) {
+      bool _isAblePushNotification, bool _isAbleMarketingNotification) {
 
     return SettingViewState(
       settingViewText: SettingViewText(),
-        isAblePushAlim: _isAblePushAlim,
-        isAbleMarketingAlim: _isAbleMarketingAlim);
+        isAblePushNotification: _isAblePushNotification,
+        isAbleMarketingNotification: _isAbleMarketingNotification);
   }
 }
 
