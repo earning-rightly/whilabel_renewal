@@ -14,8 +14,12 @@ class SettingView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     /*TODO viewModel이라는 변수명 말고 어떤 것이 좋을까?**/
     final viewModel = ref.read(settingViewProvider.notifier);
+    final viewState = ref.read(settingViewProvider);
     final viewText = ref.watch(settingViewProvider).settingViewText;
     final Size size = MediaQuery.of(context).size;
+
+    bool pushNotificationState = viewState.isAblePushNotification;
+    bool marketingNotificationState = viewState.isAbleMarketingNotification;
 
     return Scaffold(
       appBar: _scaffoldAppBar(context),
@@ -31,14 +35,17 @@ class SettingView extends ConsumerWidget {
                   children: [
                     ToggleSwitchButton(
                         title: viewText.pushAlimText,
-                        isButtonState: false,
+                        isButtonState: pushNotificationState,
                         onPressedButton: () {
-                          viewModel.updatePushAlimState(true);
+                          viewModel.updatePushNotificationState(pushNotificationState);
                         }),
                     ToggleSwitchButton(
                       title: viewText.marketingAlimText,
-                      isButtonState: true,
-                      onPressedButton: () {},
+                      isButtonState: marketingNotificationState,
+                      onPressedButton: () {
+                        viewModel.updateMarketingNotificationState(marketingNotificationState);
+
+                      },
                     ),
                   ],
                 ),

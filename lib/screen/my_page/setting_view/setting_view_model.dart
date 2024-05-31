@@ -18,19 +18,25 @@ class SettingViewModel extends StateNotifier<SettingViewState> {
       **/
   SettingViewModel(this.ref) : super(SettingViewState.initial(false, false));
 
-  Future<void> updatePushAlimState(bool alimState) async {
+  Future<void> updatePushNotificationState(bool state) async {
     /* TODO
     1. web(DB) 값 변경
     2. 변경된 값 불러오고 저장
     3. 성공 여부 return
     **/
-
+    this.state = this.state.copyWith(
+          isAblePushNotification: !state,
+        );
     print("DB update 요청");
     print("GET USER 정보 ");
   }
 
-  Future<void> updateMarketingAlimState(bool alimState) async {
+  Future<void> updateMarketingNotificationState(bool state) async {
     // TODO updatePushAlimState()와 동일한 순서
+
+    this.state = this.state.copyWith(
+      isAbleMarketingNotification: !state,
+    );
   }
 
   void showPopUp(BuildContext context) {
