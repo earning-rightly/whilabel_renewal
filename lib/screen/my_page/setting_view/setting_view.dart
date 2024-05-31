@@ -5,19 +5,11 @@ import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
 import 'setting_view_model.dart';
 
-class SettingView extends ConsumerStatefulWidget {
-  const SettingView({Key? key}) : super(key: key);
+class SettingView extends ConsumerWidget {
+  const SettingView({super.key});
 
   @override
-  _SettingViewState createState() => _SettingViewState();
-}
-
-class _SettingViewState extends ConsumerState<SettingView> {
-  @override
-  Widget build(
-    BuildContext context,
-  ) {
-
+  Widget build(BuildContext context, WidgetRef ref) {
     /*TODO viewModel이라는 변수명 말고 어떤 것이 좋을까?**/
     final viewModel = ref.read(settingViewProvider.notifier);
     final viewText = ref.watch(settingViewProvider).settingViewText;
@@ -26,7 +18,7 @@ class _SettingViewState extends ConsumerState<SettingView> {
     return Scaffold(
       appBar: _scaffoldAppBar(context),
       backgroundColor: ColorsManager.black100,
-      body:  Padding(
+      body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: SizedBox(
             width: size.width,
@@ -48,34 +40,29 @@ class _SettingViewState extends ConsumerState<SettingView> {
                     ),
                   ],
                 ),
-                   SizedBox(
-                    // alignment: Alignment.centerLeft,
-                    width: size.width,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextButton(
-                          child: Text(
-                              viewText.logOutText,
-                            style:TextStylesManager.createHadColorTextStyle(
-                                "R14", ColorsManager.black300)
-                          ),
-                          onPressed: () {
-                            viewModel.showPopUp(context);
-                          },
-                        ),
-                        TextButton(
-                          child: Text(
-                              viewText.signOutText,
+                SizedBox(
+                  // alignment: Alignment.centerLeft,
+                  width: size.width,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextButton(
+                        child: Text(viewText.logOutText,
                             style: TextStylesManager.createHadColorTextStyle(
-                                "R14", ColorsManager.black300)
-                          ),
-                          onPressed: () {},
-                        )
-                      ],
-                    ),
+                                "R14", ColorsManager.black300)),
+                        onPressed: () {
+                          viewModel.showPopUp(context);
+                        },
+                      ),
+                      TextButton(
+                        child: Text(viewText.signOutText,
+                            style: TextStylesManager.createHadColorTextStyle(
+                                "R14", ColorsManager.black300)),
+                        onPressed: () {},
+                      )
+                    ],
                   ),
-
+                ),
               ],
             )),
       ),
@@ -137,9 +124,10 @@ class _ToggleSwitchButtonState extends State<ToggleSwitchButton> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(widget.title,
-                 style: TextStylesManager.createHadColorTextStyle(
-        "M16",
-        ColorsManager.gray200,)),
+              style: TextStylesManager.createHadColorTextStyle(
+                "M16",
+                ColorsManager.gray200,
+              )),
           IconButton(
             iconSize: 60,
             onPressed: () {
