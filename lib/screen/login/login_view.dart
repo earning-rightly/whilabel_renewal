@@ -30,27 +30,37 @@ class LoginView extends ConsumerWidget {
             child: Column(
               children: [
                 const Spacer(flex: 1),
-                SvgPicture.asset(SvgIconPath.whilabelIcon , width: 170, fit: BoxFit.cover),
+                SvgPicture.asset(SvgIconPath.whilabelIcon , width: 200, fit: BoxFit.cover),
                 const SizedBox(height: 16),
                 Text("dkdkdkdkdkdk", style: TextStylesManager.createHadColorTextStyle("B16", ColorsManager.white)),
                 const Spacer(flex: 1),
 
-                SNSLoginBtn(onPressed: () {
+                Padding(
+                  padding: EdgeInsets.only(left: 16,right: 16,bottom: 32),
+                  child: Column(
+                    children: [
+                      SNSLoginBtn(onPressed: () {
 
-                }, iconPath: SvgIconPath.instargramIcon,
-                    title: "title"),
-                SNSLoginBtn(onPressed: () {
+                      }, iconPath: SvgIconPath.instargramIcon,
+                          title: "인스타그램 계정으로 로그인"),
+                      const SizedBox(height: 16),
+                      SNSLoginBtn(onPressed: () {
 
-                }, iconPath: SvgIconPath.instargramIcon,
-                    title: "title"),
-                SNSLoginBtn(onPressed: () {
+                      }, iconPath: SvgIconPath.googleIcon,
+                          title: "구글 계정으로 로그인"),
+                      const SizedBox(height: 16),
+                      SNSLoginBtn(onPressed: () {
 
-                }, iconPath: SvgIconPath.instargramIcon,
-                    title: "title"),
-                SNSLoginBtn(onPressed: () {
+                      }, iconPath: SvgIconPath.appleIcon,
+                          title: "애플 계정으로 로그인"),
+                      const SizedBox(height: 16),
+                      SNSLoginBtn(onPressed: () {
 
-                }, iconPath: SvgIconPath.instargramIcon,
-                    title: "title"),
+                      }, iconPath: SvgIconPath.kakaoIcon,
+                          title: "카카오톡 계정으로 로그인"),
+                    ],
+                  ),
+                ),
               ],
             ),
           )
