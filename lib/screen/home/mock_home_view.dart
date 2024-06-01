@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:whilabel_renewal/screen/login/login_view.dart';
 import 'package:whilabel_renewal/screen/my_page/setting_view/setting_view.dart';
+import 'package:whilabel_renewal/screen/resign/resign_view.dart';
 
 /** 개발할때 사용할 임시 Home view */
 class MockHomeView extends StatelessWidget {
@@ -30,6 +31,14 @@ class MockHomeView extends StatelessWidget {
                         MaterialPageRoute(builder: (context) => LoginView()));
                   },
                   child: Text("loginView")),
+              SizedBox(height: 30),
+              TextButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => ResignView()));
+                  },
+                  child: Text("resignView")),
+
             ],
           ),
         ),
