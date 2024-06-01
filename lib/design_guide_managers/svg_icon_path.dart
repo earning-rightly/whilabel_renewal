@@ -20,7 +20,7 @@ class SvgIconPath {
   static String toggleOff = "assets/icon/toggle_off.svg";
   static String toggleOn = "assets/icon/toggle_on.svg";
   static String backBold = "assets/icon/_back/back_bold.svg";
-  static String close = "icon/close.svg";
+  static String close = "assets/icon/close.svg";
   static String notification = "assets/icon/notification.svg";
   static String notificationNew = "assets/icon/notification_new.svg";
   static String whisky = "assets/icon/whisky.svg";
