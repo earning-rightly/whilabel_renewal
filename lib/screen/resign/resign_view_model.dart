@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:whilabel_renewal/screen/CommonViews/common_popup_with_two_buttons.dart';
+import 'package:whilabel_renewal/screen/common_views/common_pop_up_with_two_buttons.dart';
 import 'package:whilabel_renewal/screen/resign/resign_view_state.dart';
 
 
