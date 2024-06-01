@@ -65,7 +65,13 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-
+  assets:
+    - assets/icon/
+    - assets/icon/_back/
+    - assets/icon/_taste/
+    - assets/icon/_check/
+    - assets/icon/on_boarding/
+    - assets/icon/pop_menu/
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/icon/
