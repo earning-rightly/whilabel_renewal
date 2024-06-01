@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whilabel_renewal/screen/home/mock_home_view.dart';
+import 'package:whilabel_renewal/screen/resign/resign_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,4 +22,3 @@ class MyApp extends StatelessWidget {
         ));
   }
 }
-
