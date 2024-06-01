@@ -73,7 +73,14 @@ flutter:
     - assets/icon/on_boarding/
     - assets/icon/pop_menu/
   # To add assets to your application, add an assets section, like this:
-  # assets:
+  assets:
+    - assets/icon/
+    - assets/icon/_back/
+    - assets/icon/_taste/
+    - assets/icon/_check/
+    - assets/icon/on_boarding/
+    - assets/icon/pop_menu/
+
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

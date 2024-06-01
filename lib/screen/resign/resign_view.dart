@@ -32,7 +32,7 @@ class ResignView extends ConsumerWidget {
                     Flexible(
                       child: Text(
                         softWrap: true,
-                        state.mainCautionText,
+                        state.resignViewText.mainCautionText,
                         style: TextStylesManager.bold20,
                         maxLines: 3,
                       ),
@@ -41,15 +41,15 @@ class ResignView extends ConsumerWidget {
                   SizedBox(height: BaseSpacing.space24),
 
                   // 첫 번째 리스트 글
-                  _createWarningText(state.cautionContentTextOne),
+                  _createWarningText(state.resignViewText.cautionContentTextOne),
                   SizedBox(height: BaseSpacing.space12),
 
                   // 두 번째 리스트 글
-                  _createWarningText(state.cautionContentTextTwo),
+                  _createWarningText(state.resignViewText.cautionContentTextTwo),
                   SizedBox(height: BaseSpacing.space12),
 
                   // 세 번째 리스트 글
-                  _createWarningText(state.cautionContentTextThree, maxLine: 2),
+                  _createWarningText(state.resignViewText.cautionContentTextThree, maxLine: 2),
 
                   const Spacer(),
 
