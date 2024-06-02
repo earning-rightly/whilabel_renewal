@@ -44,7 +44,7 @@ class LoginView extends ConsumerWidget {
                   child: Column(
                     children: [
                       SNSLoginBtn(onPressed: () {
-
+                        ref.read(loginViewModelProvider.notifier).showRegisterNicknameView(context);
                       }, iconPath: SvgIconPath.instargramIcon,
                           title: state.texts.instagramBtnTitle),
                       const SizedBox(height: 16),
