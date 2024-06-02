@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/design_guide_managers/svg_icon_path.dart';
 import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
+import 'package:whilabel_renewal/screen/login/login_view_model.dart';
 import 'package:whilabel_renewal/screen/login/sub_widget/sns_login_btn.dart';
 
 class LoginView extends ConsumerWidget {
@@ -14,6 +15,9 @@ class LoginView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+    final state = ref.watch(loginViewModelProvider);
+
     return Scaffold(
       body: SafeArea(
           child: Container(
@@ -32,7 +36,7 @@ class LoginView extends ConsumerWidget {
                 const Spacer(flex: 1),
                 SvgPicture.asset(SvgIconPath.whilabelIcon , width: 200, fit: BoxFit.cover),
                 const SizedBox(height: 16),
-                Text("dkdkdkdkdkdk", style: TextStylesManager.createHadColorTextStyle("B16", ColorsManager.white)),
+                Text(state.texts.logoText, style: TextStylesManager.createHadColorTextStyle("B16", ColorsManager.white)),
                 const Spacer(flex: 1),
 
                 Padding(
@@ -42,22 +46,22 @@ class LoginView extends ConsumerWidget {
                       SNSLoginBtn(onPressed: () {
 
                       }, iconPath: SvgIconPath.instargramIcon,
-                          title: "인스타그램 계정으로 로그인"),
+                          title: state.texts.instagramBtnTitle),
                       const SizedBox(height: 16),
                       SNSLoginBtn(onPressed: () {
 
                       }, iconPath: SvgIconPath.googleIcon,
-                          title: "구글 계정으로 로그인"),
+                          title: state.texts.googleBtnTitle),
                       const SizedBox(height: 16),
                       SNSLoginBtn(onPressed: () {
 
                       }, iconPath: SvgIconPath.appleIcon,
-                          title: "애플 계정으로 로그인"),
+                          title: state.texts.appleBtnTitle),
                       const SizedBox(height: 16),
                       SNSLoginBtn(onPressed: () {
 
                       }, iconPath: SvgIconPath.kakaoIcon,
-                          title: "카카오톡 계정으로 로그인"),
+                          title: state.texts.kakaoBtnTitle),
                     ],
                   ),
                 ),
