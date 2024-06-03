@@ -36,6 +36,4 @@ class RegisterNicknameViewModel extends StateNotifier<RegisterNicknameState> {
 
   }
 
-
-
 }
