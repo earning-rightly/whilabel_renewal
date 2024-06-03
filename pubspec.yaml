@@ -40,6 +40,8 @@ dependencies:
   flutter_riverpod: ^2.5.1
   freezed_annotation:
   flutter_barcode_scanner: ^2.0.0
+  camera: ^0.9.4+5
+  google_ml_kit: ^0.7.3
 
 dev_dependencies:
   flutter_test:

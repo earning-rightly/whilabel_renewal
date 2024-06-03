@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:whilabel_renewal/screen/barcode_scanner/barcode_scanner_view.dart';
+import 'package:whilabel_renewal/screen/custom_barcode_scanner/custom_barcode_scanner_view.dart';
 import 'package:whilabel_renewal/screen/my_page/setting_view/setting_view.dart';
 
 /** 개발할때 사용할 임시 Home view */
@@ -28,6 +29,13 @@ class MockHomeView extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => BarcodeScannerView()));
+                  },
+                  child: Text("scanner")),
+              SizedBox(height: 30),
+              TextButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => CustomBarcodeScannerView()));
                   },
                   child: Text("scanner"))
             ],
