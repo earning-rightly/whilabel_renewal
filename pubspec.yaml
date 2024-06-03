@@ -39,6 +39,7 @@ dependencies:
   riverpod_annotation: ^2.3.5
   flutter_riverpod: ^2.5.1
   freezed_annotation:
+  flutter_barcode_scanner: ^2.0.0
 
 dev_dependencies:
   flutter_test:
