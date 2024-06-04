@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whilabel_renewal/screen/login/login_view.dart';
 import 'package:whilabel_renewal/screen/login/login_view_model.dart';
 import 'package:whilabel_renewal/screen/my_page/setting_view/setting_view.dart';
+import 'package:whilabel_renewal/screen/register/register_user_info/register_user_info_view.dart';
 import 'package:whilabel_renewal/screen/resign/resign_view.dart';
 import 'package:whilabel_renewal/screen/util_views/loading_view/loading_view.dart';
 import 'package:whilabel_renewal/screen/util_views/loading_view/loading_view_model.dart';
@@ -45,6 +46,14 @@ class MockHomeView extends ConsumerWidget {
                           MaterialPageRoute(builder: (context) => ResignView()));
                     },
                     child: Text("resignView")),
+                SizedBox(height: 30),
+                TextButton(
+                    onPressed: () {
+                      ref.read(loadingViewModelProvider.notifier).showLoading();
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => RegisterUserInfoView()));
+                    },
+                    child: Text("register_info")),
               ],
             ),
           ),
