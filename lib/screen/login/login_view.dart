@@ -12,11 +12,12 @@ import 'package:whilabel_renewal/screen/login/sub_widget/sns_login_btn.dart';
 
 class LoginView extends ConsumerWidget {
 
+  final LoginViewModel _viewModel = LoginViewModel();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    final state = ref.watch(loginViewModelProvider);
+    final state = ref.watch(_viewModel.provider);
 
     return Scaffold(
       body: SafeArea(
@@ -44,7 +45,7 @@ class LoginView extends ConsumerWidget {
                   child: Column(
                     children: [
                       SNSLoginBtn(onPressed: () {
-                        ref.read(loginViewModelProvider.notifier).showRegisterNicknameView(context);
+
                       }, iconPath: SvgIconPath.instargramIcon,
                           title: state.texts.instagramBtnTitle),
                       const SizedBox(height: 16),

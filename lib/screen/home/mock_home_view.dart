@@ -54,6 +54,7 @@ class MockHomeView extends ConsumerWidget {
                           MaterialPageRoute(builder: (context) => RegisterUserInfoView()));
                     },
                     child: Text("register_info")),
+
               ],
             ),
           ),
