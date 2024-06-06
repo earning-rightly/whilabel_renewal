@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:whilabel_renewal/data/mock_data/archiving_post/mock_archiving_post.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
-import 'package:whilabel_renewal/screen/mock_data/archiving_post/mock_archiving_post.dart';
-import 'package:whilabel_renewal/screen/whiskey_detail/archivng_post_detail_view.dart';
 
 // ignore: must_be_immutable
 class MockPost extends StatelessWidget {
@@ -13,17 +12,12 @@ class MockPost extends StatelessWidget {
     required this.archivingPost,
   }) : super(key: key);
   String creatDate = "";
-  GlobalKey key = GlobalKey(); // declare a global key
+  // GlobalKey key = GlobalKey(); // declare a global key
 
   void initState() {}
 
   @override
   Widget build(BuildContext context) {
-    // final homeViewModel = context.watch<HomeViewModel>();
-    // final DateTime date1 = DateTime.fromMicrosecondsSinceEpoch(
-    //     archivingPost.createAt!.microsecondsSinceEpoch);
-
-    // creatDate = DateFormat("yyyy.MM.dd").format(date1);
     creatDate ="11111";
 
     return GestureDetector(
@@ -64,11 +58,6 @@ class MockPost extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        // whisky이름이 12자 이상이면 그 뒤로는 ... 표시
-                        // archivingPost.whiskyName.length > 12
-                        //     ? archivingPost.whiskyName.substring(0, 12)
-                        //     : "${archivingPost.whiskyName}...",
-
                         archivingPost.whiskyName.length < 12
                             ? archivingPost.whiskyName
                             : "${archivingPost.whiskyName.substring(0, 12)}...",
