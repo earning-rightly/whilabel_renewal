@@ -1,6 +1,6 @@
-import 'package:whilabel_renewal/screen/mock_data/taste/taste_feature.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:whilabel_renewal/data/taste/taste_feature.dart';
 
 part 'mock_archiving_post.g.dart';
 part 'mock_archiving_post.freezed.dart';
