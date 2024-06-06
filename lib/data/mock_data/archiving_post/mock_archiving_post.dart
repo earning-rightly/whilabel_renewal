@@ -9,8 +9,8 @@ part 'mock_archiving_post.freezed.dart';
 @freezed
 class MockArchivingPost with _$MockArchivingPost{
  factory MockArchivingPost({
-   required String postId,
-   required String userId,
+   required int postId,
+   required int userId,
    required String createAt,
     required  String whiskyId,
     required String barcode, // DB에서 검샥 안되는 위스키를 위해
@@ -19,7 +19,7 @@ class MockArchivingPost with _$MockArchivingPost{
     String? strength,
     String? modifyAt,
     required String imageUrl,
-    required int starValue,
+    required double starValue,
     required String note,
     required List<TasteFeature> tasteFeatures,
   }) = _MockArchivingPost;
