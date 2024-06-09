@@ -1,17 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whilabel_renewal/data/taste/taste_feature.dart';
 import 'package:whilabel_renewal/screen/home/mock_home_view_model.dart';
-
 import './archiving_post_detail_state.dart';
 import 'archiving_post_view_text.dart';
 
-// final archivingPostDetailViewModelProvider = StateNotifierProvider<
-//     ArchivingPostDetailViewModel,
-//     ArchivingPostDetailState>((ref) => ArchivingPostDetailViewModel(ref));
-//
-// final settingViewProvider =
-// StateNotifierProvider<ArchivingPostDetailViewModel, ArchivingPostDetailState>(
-//         (ref) => ArchivingPostDetailViewModel(ref));
 
 class ArchivingPostDetailViewModel
     extends StateNotifier<ArchivingPostDetailState> {

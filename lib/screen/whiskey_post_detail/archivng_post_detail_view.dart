@@ -3,11 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
 import 'package:whilabel_renewal/screen/common_views/function/divider.dart';
-import 'package:whilabel_renewal/screen/whiskey_post_detail/sub_widget/user_crique_container/user_crique_container_view_model.dart';
+import 'package:whilabel_renewal/screen/whiskey_post_detail/sub_widget/user_critique_container/user_critique_container.dart';
+import 'package:whilabel_renewal/screen/whiskey_post_detail/sub_widget/user_critique_container/user_critique_container_view_model.dart';
 
 import './sub_widget/modify_button.dart';
 import './archiving_post_detail_view_model.dart';
-import 'sub_widget/user_crique_container/user_critque_container.dart';
 
 class ArchivingPostDetailView extends ConsumerWidget {
   ArchivingPostDetailView({Key? key}) : super(key: key);
@@ -17,7 +17,7 @@ class ArchivingPostDetailView extends ConsumerWidget {
   final tasteNoteController = TextEditingController();
 
   final viewModel = ArchivingPostDetailViewModel();
-  final userCritiqueViewModel = UserCriqueContainerViewModel();
+  final userCritiqueViewModel = UserCritiqueContainerViewModel();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -164,7 +164,7 @@ class ArchivingPostDetailView extends ConsumerWidget {
                                 ],
                               ),
                             ),
-                            UserCritqueContainer(
+                            UserCritiqueContainer(
                               starScore: state.starScore,
                               isModify: state.isModify,
                               tasteNoteController: tasteNoteController,

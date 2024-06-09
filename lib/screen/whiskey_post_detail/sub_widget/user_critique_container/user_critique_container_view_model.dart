@@ -1,19 +1,19 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whilabel_renewal/data/taste/taste_feature.dart';
 
-import './user_crique_container_state.dart';
+import './user_critique_container_state.dart';
 
 
 
-class UserCriqueContainerViewModel
-    extends StateNotifier<UserCriqueContainerState> {
+class UserCritiqueContainerViewModel
+    extends StateNotifier<UserCritiqueContainerState> {
 
   final provider = StateNotifierProvider<
-      UserCriqueContainerViewModel,
-      UserCriqueContainerState>((_) => UserCriqueContainerViewModel());
+      UserCritiqueContainerViewModel,
+      UserCritiqueContainerState>((_) => UserCritiqueContainerViewModel());
 
-  UserCriqueContainerViewModel()
-      : super(UserCriqueContainerState.initial(
+  UserCritiqueContainerViewModel()
+      : super(UserCritiqueContainerState.initial(
             tasteFeatures: [], starScore: 3, note: ""));
 
   void setState(
