@@ -1,6 +1,8 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="your.package.name"
+    >
     <application
-        android:label="whilabel_renewal"
+        android:label="위라벨"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
