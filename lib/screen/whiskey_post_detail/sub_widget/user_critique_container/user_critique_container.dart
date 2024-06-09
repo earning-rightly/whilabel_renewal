@@ -7,29 +7,31 @@ import 'package:whilabel_renewal/screen/common_views/star_rating.dart';
 import 'package:whilabel_renewal/screen/common_views/taste_range.dart';
 import 'package:whilabel_renewal/screen/common_views/text_field_lengh_counter.dart';
 
-import './user_crique_container_view_model.dart';
+import './user_critique_container_view_model.dart';
 
-class UserCritqueContainer extends ConsumerWidget {
+class UserCritiqueContainer extends ConsumerWidget {
   final bool isModify;
   final double starScore;
   final List<TasteFeature> features;
   final TextEditingController tasteNoteController;
   final String note;
+  final UserCritiqueContainerViewModel viewModel ;
 
-  const UserCritqueContainer(
+
+  const UserCritiqueContainer(
       {Key? key,
       required this.isModify,
       required this.starScore,
       required this.tasteNoteController,
       required this.features,
-      required this.note})
+      required this.note,
+      required this.viewModel})
       : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
 
-    final viewModel = ref.watch(userCriqueContainerViewModelProvider.notifier);
     return Container(
         width: size.width,
         padding: const EdgeInsets.all(16),
