@@ -5,17 +5,20 @@ import 'package:whilabel_renewal/screen/home/mock_home_view_model.dart';
 import './archiving_post_detail_state.dart';
 import 'archiving_post_view_text.dart';
 
-final archivingPostDetailViewModelProvider = StateNotifierProvider<
-    ArchivingPostDetailViewModel,
-    ArchivingPostDetailState>((ref) => ArchivingPostDetailViewModel(ref));
-
-final settingViewProvider =
-StateNotifierProvider<ArchivingPostDetailViewModel, ArchivingPostDetailState>(
-        (ref) => ArchivingPostDetailViewModel(ref));
+// final archivingPostDetailViewModelProvider = StateNotifierProvider<
+//     ArchivingPostDetailViewModel,
+//     ArchivingPostDetailState>((ref) => ArchivingPostDetailViewModel(ref));
+//
+// final settingViewProvider =
+// StateNotifierProvider<ArchivingPostDetailViewModel, ArchivingPostDetailState>(
+//         (ref) => ArchivingPostDetailViewModel(ref));
 
 class ArchivingPostDetailViewModel
     extends StateNotifier<ArchivingPostDetailState> {
-  final Ref ref;
+
+  final provider = StateNotifierProvider<ArchivingPostDetailViewModel,ArchivingPostDetailState>( (ref) {
+    return ArchivingPostDetailViewModel();
+  });
 
   static ArchivingPostViewText mockTexts = ArchivingPostViewText(
       strength: '10',
@@ -23,7 +26,7 @@ class ArchivingPostDetailViewModel
       distillery: " mock distillery",
       whiskeyName: "whiskeyName");
 
-  ArchivingPostDetailViewModel(this.ref)
+  ArchivingPostDetailViewModel()
       : super(ArchivingPostDetailState.initial(
       postId: 0, mockTexts, tasteFeatures: [], starScore: 3, note: ""));
 
@@ -46,7 +49,7 @@ class ArchivingPostDetailViewModel
   }
 
   Future<void> updatePostInfo(double starScore, String note,
-      List<TasteFeature> features) async {
+      List<TasteFeature> features, WidgetRef ref) async {
     final homeViewModel = ref.read(mockHomeViewModelProvider.notifier);
 
     // detaill view state update

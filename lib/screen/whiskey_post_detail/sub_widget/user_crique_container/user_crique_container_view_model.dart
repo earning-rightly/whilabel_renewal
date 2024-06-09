@@ -3,15 +3,16 @@ import 'package:whilabel_renewal/data/taste/taste_feature.dart';
 
 import './user_crique_container_state.dart';
 
-final userCriqueContainerViewModelProvider = StateNotifierProvider<
-    UserCriqueContainerViewModel,
-    UserCriqueContainerState>((ref) => UserCriqueContainerViewModel(ref));
+
 
 class UserCriqueContainerViewModel
     extends StateNotifier<UserCriqueContainerState> {
-  final Ref ref;
 
-  UserCriqueContainerViewModel(this.ref)
+  final provider = StateNotifierProvider<
+      UserCriqueContainerViewModel,
+      UserCriqueContainerState>((_) => UserCriqueContainerViewModel());
+
+  UserCriqueContainerViewModel()
       : super(UserCriqueContainerState.initial(
             tasteFeatures: [], starScore: 3, note: ""));
 

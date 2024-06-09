@@ -15,6 +15,8 @@ class UserCritqueContainer extends ConsumerWidget {
   final List<TasteFeature> features;
   final TextEditingController tasteNoteController;
   final String note;
+  final UserCriqueContainerViewModel viewModel ;
+
 
   const UserCritqueContainer(
       {Key? key,
@@ -22,14 +24,14 @@ class UserCritqueContainer extends ConsumerWidget {
       required this.starScore,
       required this.tasteNoteController,
       required this.features,
-      required this.note})
+      required this.note,
+      required this.viewModel})
       : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
 
-    final viewModel = ref.watch(userCriqueContainerViewModelProvider.notifier);
     return Container(
         width: size.width,
         padding: const EdgeInsets.all(16),

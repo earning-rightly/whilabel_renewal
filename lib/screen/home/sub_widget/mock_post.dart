@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:whilabel_renewal/data/mock_data/archiving_post/mock_archiving_post.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
-import 'package:whilabel_renewal/screen/whiskey_detail/archivng_post_detail_view.dart';
+
+import '../../whiskey_post_detail/archivng_post_detail_view.dart';
 
 
 // ignore: must_be_immutable
