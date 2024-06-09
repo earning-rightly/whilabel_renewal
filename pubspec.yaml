@@ -73,6 +73,8 @@ flutter:
     - assets/icon/_check/
     - assets/icon/on_boarding/
     - assets/icon/pop_menu/
+    - assets/login/
+    - assets/logo/
   # To add assets to your application, add an assets section, like this
 
   #   - images/a_dot_burr.jpeg
