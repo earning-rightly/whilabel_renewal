@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:whilabel_renewal/data/taste/taste_feature.dart';
-
 import './archiving_post_view_text.dart';
+
 
 part 'archiving_post_detail_state.freezed.dart';
 

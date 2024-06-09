@@ -9,6 +9,10 @@ final archivingPostDetailViewModelProvider = StateNotifierProvider<
     ArchivingPostDetailViewModel,
     ArchivingPostDetailState>((ref) => ArchivingPostDetailViewModel(ref));
 
+final settingViewProvider =
+StateNotifierProvider<ArchivingPostDetailViewModel, ArchivingPostDetailState>(
+        (ref) => ArchivingPostDetailViewModel(ref));
+
 class ArchivingPostDetailViewModel
     extends StateNotifier<ArchivingPostDetailState> {
   final Ref ref;
@@ -21,41 +25,56 @@ class ArchivingPostDetailViewModel
 
   ArchivingPostDetailViewModel(this.ref)
       : super(ArchivingPostDetailState.initial(
-            postId: 0, mockTexts, tasteFeatures: [], starScore: 3, note: ""));
+      postId: 0, mockTexts, tasteFeatures: [], starScore: 3, note: ""));
 
-  void setState(
-      {required int postId,
-      required bool isModify,
-      required String note,
-      required double starScore,
-      required List<TasteFeature> features}) {
+  void setState({required int postId,
+    required bool isModify,
+    required String note,
+    required double starScore,
+    required List<TasteFeature> features}) {
     this.state = this.state.copyWith(
-          postId: postId,
-          isModify: isModify,
-          tasteFeatures: features,
-          note: note,
-          starScore: starScore,
-        );
+      postId: postId,
+      isModify: isModify,
+      tasteFeatures: features,
+      note: note,
+      starScore: starScore,
+    );
   }
 
   void setIsModifyState(bool state) {
     this.state = this.state.copyWith(isModify: !state);
   }
 
-  Future<void> updatePostInfo(
-      double starScore, String note, List<TasteFeature> features) async {
+  Future<void> updatePostInfo(double starScore, String note,
+      List<TasteFeature> features) async {
     final homeViewModel = ref.read(mockHomeViewModelProvider.notifier);
 
     // detaill view state update
     this.state = this.state.copyWith(
-          tasteFeatures: features,
-          note: note,
-          starScore: starScore,
-        );
+      tasteFeatures: features,
+      note: note,
+      starScore: starScore,
+    );
     // home view stare update
     await homeViewModel.updateArchivingPost(
         state.postId, starScore, note, features);
 
     // TODO DB에 post 정보 변경 로직 추가하기
   }
+
+
+  Future<void> modifyNote(String note) async {
+    //TODO  note 값 변경
+
+  }
+
+  Future<void> modifyStarScore(int score) async {
+    //TODO  stareScore 변경
+
+  }
+
+  Future<void> modifyStarTasteFeature(TasteFeature tasteFeature) async {
+    // TODO List<TasteFeature>tasteFeatures 변경
+  }
+
 }

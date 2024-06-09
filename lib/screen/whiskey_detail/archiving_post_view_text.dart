@@ -5,9 +5,9 @@ class ArchivingPostViewText {
    required  this.strength,
    required  this.createAt,
 });
-  String whiskeyName;
-  String distillery ;
-  String strength;
-  String createAt ;
+  String whiskeyName = "";
+  String distillery = "";
+  String strength = "";
+  String createAt = "";
   final String myEvaluationText= "나의 평가";
 }
