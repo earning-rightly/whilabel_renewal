@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whilabel_renewal/doamin/service/oauth/apple_ouath.dart';
 import 'package:whilabel_renewal/doamin/service/oauth/google_oauth.dart';
 import 'package:whilabel_renewal/doamin/service/oauth/kakao_oauth.dart';
 import 'package:whilabel_renewal/enums/login_type_enum.dart';
@@ -11,33 +12,21 @@ class LoginViewModel extends StateNotifier<LoginViewState> {
 
   LoginViewModel() : super(LoginViewState.initial());
 
-  void processLogin(LoginType type) {
+  void processLogin(LoginType type) async {
     state = state.copyWith(isLoading: true);
 //TODO: login API call
-    switch (type) {
-      case LoginType.google:
-        _mockLoginWithGoogle();
-        break;
-      case LoginType.kakaotalk:
-        _mockLoginWithKakao();
-        break;
-
-      default:
-        print("LoginType 값이 정의되지 않았습니다");
-    }
+    final user = await _snsLogin(type);
+    print('user :$user');
+    print('$type login success!');
   }
 
-  Future<void> _mockLoginWithGoogle() async {
-    print("login google is working ");
-    // AuthUser? loginedAuthUser;
-    final google= GoogleOauth();
-    final user =  google.login();
-
-
-  }
-
-  Future<void> _mockLoginWithKakao() async {
-    final kakao = KaKaoOauth();
-    kakao.login();
+  Future<dynamic> _snsLogin(LoginType snsType) async {
+    return switch (snsType) {
+      LoginType.kakaotalk => await KaKaoOauth().login(),
+      // LoginType.instagram => await InstargramOauth().login(),
+      LoginType.google => await GoogleOauth().login(),
+      LoginType.apple => await AppleOauth().login(),
+      _ => null
+    };
   }
 }

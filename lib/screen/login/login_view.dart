@@ -58,11 +58,12 @@ class LoginView extends ConsumerWidget {
                           title: state.texts.googleBtnTitle),
                       const SizedBox(height: 16),
                       SNSLoginBtn(onPressed: () {
+                        viewModel.processLogin(LoginType.apple);
                       }, iconPath: SvgIconPath.appleIcon,
                           title: state.texts.appleBtnTitle),
                       const SizedBox(height: 16),
                       SNSLoginBtn(onPressed: () {
-
+                        viewModel.processLogin(LoginType.kakaotalk);
                       }, iconPath: SvgIconPath.kakaoIcon,
                           title: state.texts.kakaoBtnTitle),
                     ],
