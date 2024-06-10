@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:whilabel_renewal/screen/home/mock_home_view.dart';
-import 'package:whilabel_renewal/screen/resign/resign_view.dart';
 
 void main() {
+  KakaoSdk.init(nativeAppKey: '047e6c73d88758da1317eb50efcc8828');
   runApp(const MyApp());
 }
 

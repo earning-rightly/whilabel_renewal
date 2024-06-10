@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/design_guide_managers/svg_icon_path.dart';
 import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
+import 'package:whilabel_renewal/enums/login_type_enum.dart';
 import 'package:whilabel_renewal/screen/login/login_view_model.dart';
 import 'package:whilabel_renewal/screen/login/sub_widget/sns_login_btn.dart';
 
@@ -18,6 +19,7 @@ class LoginView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
 
     final state = ref.watch(_viewModel.provider);
+    final viewModel = ref.watch(_viewModel.provider.notifier);
 
     return Scaffold(
       body: SafeArea(
@@ -50,12 +52,12 @@ class LoginView extends ConsumerWidget {
                           title: state.texts.instagramBtnTitle),
                       const SizedBox(height: 16),
                       SNSLoginBtn(onPressed: () {
+                        viewModel.processLogin(LoginType.google);
 
                       }, iconPath: SvgIconPath.googleIcon,
                           title: state.texts.googleBtnTitle),
                       const SizedBox(height: 16),
                       SNSLoginBtn(onPressed: () {
-
                       }, iconPath: SvgIconPath.appleIcon,
                           title: state.texts.appleBtnTitle),
                       const SizedBox(height: 16),
