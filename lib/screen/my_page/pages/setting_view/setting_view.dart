@@ -6,6 +6,7 @@ import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
 import 'setting_view_model.dart';
 
 import './sub_widget/toggle_switch_button.dart';
+import '../resign/resign_view.dart';
 
 class SettingView extends ConsumerWidget {
   const SettingView({super.key});
@@ -66,7 +67,10 @@ class SettingView extends ConsumerWidget {
                         child: Text(viewText.signOutText,
                             style: TextStylesManager.createHadColorTextStyle(
                                 "R14", ColorsManager.black300)),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => ResignView()));
+                        },
                       )
                     ],
                   ),
