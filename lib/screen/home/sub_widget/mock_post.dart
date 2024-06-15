@@ -1,32 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whilabel_renewal/data/mock_data/archiving_post/mock_archiving_post.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
-
-import '../../whiskey_post_detail/archivng_post_detail_view.dart';
-
+import 'package:whilabel_renewal/screen/archiving_post_detail/archiving_post_detail_view_model.dart';
+import 'package:whilabel_renewal/screen/archiving_post_detail/archivng_post_detail_view.dart';
 
 // ignore: must_be_immutable
-class MockPost extends StatelessWidget {
+class MockPost extends ConsumerWidget {
   final MockArchivingPost archivingPost;
 
   MockPost({
     Key? key,
     required this.archivingPost,
   }) : super(key: key);
-  String creatDate = "";
-  // GlobalKey key = GlobalKey(); // declare a global key
-
-  void initState() {}
+  String createDate = "";
 
   @override
-  Widget build(BuildContext context) {
-    creatDate ="11111";
+  Widget build(BuildContext context, WidgetRef ref) {
+    createDate = "2024.06.09";
+    final provider = ArchivingPostDetailViewModel().provider;
 
+    final archivingPostDetailViewModel = ref.watch(provider.notifier);
     return GestureDetector(
-      onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> ArchivingPostDetailView()));
-
+      onTap: () async {
+        await archivingPostDetailViewModel.setState(
+            postId: archivingPost.postId,
+            isModify: false,
+            note: archivingPost.note,
+            starScore: archivingPost.starValue,
+            features: archivingPost.tasteFeatures);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ArchivingPostDetailView(
+                      archivingPost,
+                      provider: provider,
+                    )));
       },
       child: Container(
         width: 350,
@@ -69,30 +79,26 @@ class MockPost extends StatelessWidget {
                       ),
                       // 누르면 item meun 보여주는 아이콘 버튼
                       IconButton(
-                        splashColor: ColorsManager.black300,
-                        splashRadius: 15,
-                        icon: Icon(Icons.more_horiz_outlined),
-                        padding: EdgeInsets.zero,
-                        constraints:
-                        const BoxConstraints(minWidth: 10, minHeight: 10),
-                        style: IconButton.styleFrom(
+                          splashColor: ColorsManager.black300,
+                          splashRadius: 15,
+                          icon: Icon(Icons.more_horiz_outlined),
                           padding: EdgeInsets.zero,
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        ),
-                        onPressed: () async {
-                          }
-
-                      )
+                          constraints:
+                              const BoxConstraints(minWidth: 10, minHeight: 10),
+                          style: IconButton.styleFrom(
+                            padding: EdgeInsets.zero,
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          ),
+                          onPressed: () async {})
                     ],
                   ),
                   SizedBox(height: 6),
-
                   Text(
                     "${archivingPost.location ?? ""}\t\u2022\t${archivingPost.strength ?? 0.0.toString()}%",
                     style: TextStylesManager.createHadColorTextStyle(
                         "R12", ColorsManager.gray),
                   ),
-                  SizedBox(height:6),
+                  SizedBox(height: 6),
                   Flexible(
                     fit: FlexFit.tight, // 나머지 모든 공간을 차지
                     child: Container(
@@ -115,7 +121,7 @@ class MockPost extends StatelessWidget {
                     alignment: Alignment.center,
                     padding: EdgeInsets.symmetric(vertical: 6, horizontal: 8),
                     height: 30,
-                    width:175,
+                    width: 175,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(15)),
                         color: ColorsManager.black200),
@@ -130,11 +136,10 @@ class MockPost extends StatelessWidget {
                               "M12", ColorsManager.yellow),
                         ),
                         Text(
-                          "\t$creatDate",
+                          "\t$createDate",
                           style: TextStylesManager.createHadColorTextStyle(
                               "M12", ColorsManager.gray),
                         ),
-
                       ],
                     ),
                   ),
