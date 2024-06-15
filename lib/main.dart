@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:whilabel_renewal/screen/home/mock_home_view.dart';
 
-void main() {
-  KakaoSdk.init(nativeAppKey: '047e6c73d88758da1317eb50efcc8828');
+void main() async{
+  await dotenv.load(fileName: '.env');
+  KakaoSdk.init(nativeAppKey: dotenv.get("KAKAO_NATIVE_APP_KEY"));
   runApp(const MyApp());
 }
 
