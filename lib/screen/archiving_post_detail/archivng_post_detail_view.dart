@@ -1,31 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whilabel_renewal/data/mock_data/archiving_post/mock_archiving_post.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
 import 'package:whilabel_renewal/screen/common_views/function/divider.dart';
 
-
-
 import './sub_widget/modify_button.dart';
 import './archiving_post_detail_view_model.dart';
+import 'archiving_post_detail_state.dart';
 import 'sub_widget/user_critique_container/user_critique_container.dart';
 import 'sub_widget/user_critique_container/user_critique_container_view_model.dart';
 
 class ArchivingPostDetailView extends ConsumerWidget {
-  ArchivingPostDetailView({Key? key}) : super(key: key);
+  final MockArchivingPost post;
+
+  final StateNotifierProvider<ArchivingPostDetailViewModel,
+      ArchivingPostDetailState> provider;
+
+  ArchivingPostDetailView(this.post, {Key? key, required this.provider})
+      : super(key: key);
 
   final distilleryImage =
       "https://firebasestorage.googleapis.com/v0/b/whilabel.appspot.com/o/distillery_images%2FAngel_senvy.jpeg?alt=media&token=8aafe5f3-8f39-4a3e-844e-0de50eae52c7";
   final tasteNoteController = TextEditingController();
-
-  final viewModel = ArchivingPostDetailViewModel();
   final userCritiqueViewModel = UserCritiqueContainerViewModel();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(viewModel.provider);
+    final state = ref.watch(provider);
+    final viewModel = ref.read(provider.notifier);
+    bool isModify = state.isModify;
     final userCriqueContainerViewModel =
-        ref.watch(userCritiqueViewModel.provider.notifier);
+        ref.read(userCritiqueViewModel.provider.notifier);
     final texts = state.texts;
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -121,10 +127,10 @@ class ArchivingPostDetailView extends ConsumerWidget {
                                         style: TextStylesManager.bold18,
                                       ),
                                       ModifyButton(
-                                        isModify: state.isModify,
+                                        isModify: isModify,
                                         onClickButton: () async {
                                           //TODO 저장을 누르면 viewSate에 방영 & dialog 출력
-                                          if (state.isModify) {
+                                          if (isModify) {
                                             // 저장 버튼 눌렀을 떄
                                             final score =
                                                 await userCriqueContainerViewModel
@@ -135,7 +141,8 @@ class ArchivingPostDetailView extends ConsumerWidget {
                                             await viewModel.updatePostInfo(
                                                 score,
                                                 tasteNoteController.text,
-                                                features,ref);
+                                                features,
+                                                ref);
                                           } else {
                                             // 수정 버튼 눌렀을 떄
                                             tasteNoteController.text =
@@ -147,8 +154,7 @@ class ArchivingPostDetailView extends ConsumerWidget {
                                                     features:
                                                         state.tasteFeatures);
                                           }
-                                          viewModel
-                                              .setIsModifyState(state.isModify);
+                                          viewModel.setIsModifyState(!isModify);
                                         },
                                       )
                                     ],
@@ -168,7 +174,7 @@ class ArchivingPostDetailView extends ConsumerWidget {
                             ),
                             UserCritiqueContainer(
                               starScore: state.starScore,
-                              isModify: state.isModify,
+                              isModify: isModify,
                               tasteNoteController: tasteNoteController,
                               note: state.note,
                               features: state.tasteFeatures,
