@@ -37,7 +37,6 @@ class KaKaoOauth {
   }
 
   Future<bool> _isCheckLogin() async {
-    try {
       bool isInstalled = await isKakaoTalkInstalled();
       if (isInstalled) {
         debugPrint("카카오톡 : 설치 O 상태");
@@ -66,9 +65,5 @@ class KaKaoOauth {
           return false;
         }
       }
-    } catch (error) {
-      debugPrint("에러 발생, 에러 메시지 : $error");
-      return false;
-    }
   }
 }
