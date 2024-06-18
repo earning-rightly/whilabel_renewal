@@ -1,4 +1,4 @@
-package com.example.whilabel_renewal
+package com.earning_right.whilabel
 
 import io.flutter.embedding.android.FlutterActivity
 
