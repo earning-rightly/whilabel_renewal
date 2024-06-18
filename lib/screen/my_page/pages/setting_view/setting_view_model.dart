@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/screen/common_views/common_pop_up_with_two_buttons.dart';
 
-import './setting_view_state.dart';
+import 'setting_view_state.dart';
 
 final settingViewProvider =
     StateNotifierProvider<SettingViewModel, SettingViewState>(
