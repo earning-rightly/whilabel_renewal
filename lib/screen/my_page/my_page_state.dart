@@ -9,14 +9,14 @@ class MyPageState with _$MyPageState {
           {
           required String settingIconPath,
           required List<Map<String, dynamic>> myPageViewButtonData,
-          required List<Map<String, dynamic>> myPageViewDucButtonData}) =
+          required List<Map<String, dynamic>> myPageViewDocButtonData}) =
       _MyPageState;
 
   factory MyPageState.initial() {
     return MyPageState(
         settingIconPath: SvgIconPath.setting,
         myPageViewButtonData: _myPageViewButtonData,
-        myPageViewDucButtonData: _myPageViewDucButtonDatas);
+        myPageViewDocButtonData: _myPageViewDocButtonData);
   }
 }
 
@@ -47,7 +47,7 @@ final _myPageViewButtonData = [
   },
 ];
 
-final _myPageViewDucButtonDatas = [
+final _myPageViewDocButtonData = [
   {
     "svg_path": SvgIconPath.document,
     "title": "서비스 이용약관",

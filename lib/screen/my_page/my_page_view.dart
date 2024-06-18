@@ -83,7 +83,7 @@ class MyPageView extends ConsumerWidget {
 
                 // 마이페이지 문서보기 리스트 버튼
                 for (Map<String, dynamic> docData
-                    in state.myPageViewDucButtonData)
+                    in state.myPageViewDocButtonData)
                   ListTitleIconButton(
                     svgPath: docData["svg_path"],
                     titleText: docData["title"],
