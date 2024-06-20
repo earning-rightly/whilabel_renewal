@@ -49,18 +49,16 @@ class ArchivingPostDetailView extends ConsumerWidget {
                     children: [
                       // 양조장 이미지
                       Container(
-                        width: size.width,
-                        height: 225,
-                        color: ColorsManager.black200,
-                        child: distilleryImage == null
-                            ? null
-                            : Image.network(
-                                distilleryImage,
-                                fit: BoxFit.fill,
-                                frameBuilder: (BuildContext context,
-                                    Widget child,
-                                    int? frame,
-                                    bool wasSynchronouslyLoaded) {
+                          width: size.width,
+                          height: 225,
+                          color: ColorsManager.black200,
+                          child: distilleryImage == null
+                              ? null
+                              : Image.network(distilleryImage, fit: BoxFit.fill,
+                                  frameBuilder: (BuildContext context,
+                                      Widget child,
+                                      int? frame,
+                                      bool wasSynchronouslyLoaded) {
                                   if (wasSynchronouslyLoaded) {
                                     return child;
                                   }
@@ -71,14 +69,11 @@ class ArchivingPostDetailView extends ConsumerWidget {
                                     alwaysIncludeSemantics: true,
                                     child: child,
                                   );
-                                },
-                              ),
-                      ),
+                                })),
                       SizedBox(height: 20),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 16),
-                        child: Column(
-                          children: [
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          child: Column(children: [
                             Row(
                               children: [
                                 Expanded(
@@ -88,8 +83,8 @@ class ArchivingPostDetailView extends ConsumerWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                          state.texts.whiskeyName != ""
-                                              ? state.texts.whiskeyName
+                                          post.whiskyName != ""
+                                              ? post.whiskyName
                                               : "위스키를 등록 중입니다",
                                           maxLines: 3,
                                           overflow: TextOverflow.ellipsis,
@@ -98,7 +93,8 @@ class ArchivingPostDetailView extends ConsumerWidget {
                                         height: 6,
                                       ),
                                       buildDistilleryAndStrengthText(
-                                          texts.distillery, texts.strength)
+                                          post.distillery ?? "",
+                                          post.strength ?? "")
                                     ],
                                   ),
                                 ),
@@ -197,15 +193,14 @@ class ArchivingPostDetailView extends ConsumerWidget {
                                   SizedBox(height: 24),
 
                                   Container(
-                                    padding: EdgeInsets.all(16),
-                                    alignment: Alignment.center,
-                                    width: MediaQuery.of(context).size.width,
-                                    decoration: BoxDecoration(
-                                        color: ColorsManager.black200,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(16))),
-                                    child: Column(
-                                      children: [
+                                      padding: EdgeInsets.all(16),
+                                      alignment: Alignment.center,
+                                      width: MediaQuery.of(context).size.width,
+                                      decoration: BoxDecoration(
+                                          color: ColorsManager.black200,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(16))),
+                                      child: Column(children: [
                                         Text(
                                           "맛 특징과 브랜드 특징이",
                                           style: TextStylesManager
@@ -218,16 +213,12 @@ class ArchivingPostDetailView extends ConsumerWidget {
                                               .createHadColorTextStyle("R16",
                                                   ColorsManager.black400),
                                         ),
-                                      ],
-                                    ),
-                                  )
+                                      ]))
                                 ],
                               ),
                             ),
                             // SizedBox(height: 80),)
-                          ],
-                        ),
-                      ),
+                          ]))
                     ],
                   ),
                 ],
