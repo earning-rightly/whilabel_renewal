@@ -46,6 +46,7 @@ dependencies:
   flutter_dotenv: ^5.1.0
   popup_banner: ^1.0.0
   collection: ^1.18.0
+  flutter_screenutil: ^5.9.3
 
 dev_dependencies:
   flutter_test:
