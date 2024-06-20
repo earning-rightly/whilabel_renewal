@@ -9,8 +9,8 @@ import 'package:whilabel_renewal/design_guide_managers/svg_icon_path.dart';
 import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
 import 'package:whilabel_renewal/screen/home/mock_home_view_model.dart';
 
-import 'pages/archiving_post_grid/archiving_post_grid.dart';
-import 'pages/archiving_post_list/archiving_post_list.dart';
+import 'pages/grid_archiving_post/grid_archiving_post_view.dart';
+import 'pages/list_archiving_post/list_archiving_post_view.dart';
 
 class HomeView extends ConsumerWidget {
   HomeView({Key? key}) : super(key: key);
@@ -54,10 +54,10 @@ class HomeView extends ConsumerWidget {
                   child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16),
                       child: TabBarView(children: [
-                        ArchivingPostListView(
+                        ListArchivingPostView(
                           posts: posts,
                         ),
-                        ArchivingPostGridView()
+                        GridArchivingPostView()
                       ])))
             ]),
           ),

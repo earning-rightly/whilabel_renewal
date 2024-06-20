@@ -5,8 +5,8 @@ import 'package:whilabel_renewal/screen/home/mock_home_view_model.dart';
 
 import './sub_widget/grid_archiving_card.dart';
 
-class ArchivingPostGridView extends ConsumerWidget {
-  ArchivingPostGridView({Key? key}) : super(key: key);
+class GridArchivingPostView extends ConsumerWidget {
+  GridArchivingPostView({Key? key}) : super(key: key);
 
   final _provider = MockHomeViewModel().provider;
 
