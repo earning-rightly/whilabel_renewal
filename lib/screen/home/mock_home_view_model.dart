@@ -4,14 +4,11 @@ import 'package:whilabel_renewal/data/taste/taste_feature.dart';
 
 import './mock_home_state.dart';
 
-final mockHomeViewModelProvider =
-    StateNotifierProvider<MockHomeViewModel, MockHomeState>(
-        (ref) => MockHomeViewModel(ref));
-
 class MockHomeViewModel extends StateNotifier<MockHomeState> {
-  final Ref ref;
+  final provider = StateNotifierProvider<MockHomeViewModel, MockHomeState>(
+      (ref) => MockHomeViewModel());
 
-  MockHomeViewModel(this.ref) : super(MockHomeState.initial());
+  MockHomeViewModel() : super(MockHomeState.initial());
 
   Future<List<MockArchivingPost>> getArchivingPosts() async {
     return state.posts;
