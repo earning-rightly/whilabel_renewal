@@ -18,7 +18,7 @@ final mockPost1 = MockArchivingPost(
     whiskyName: "Arran1996",
     starValue: 5,
     imageUrl:
-        "https://firebasestorage.googleapis.com/v0/b/whilabel.appspot.com/o/post%2Farchiving_post%2Fgoogle%3A116895248812367520964%2B1702190878827404%2F12001260-1d84-1e77-bb44-2bda63f09dc5%5Egoogle%3A116895248812367520964%2B1702190878827404%7D.jpg?alt=media&token=a2b830ca-4a3c-4ff8-a1a2-ac6f777d02ae",
+    "https://firebasestorage.googleapis.com/v0/b/whilabel.appspot.com/o/post%2Farchiving_post%2Fgoogle%3A116895248812367520964%2B1702190878827404%2F12001260-1d84-1e77-bb44-2bda63f09dc5%5Egoogle%3A116895248812367520964%2B1702190878827404%7D.jpg?alt=media&token=a2b830ca-4a3c-4ff8-a1a2-ac6f777d02ae",
     whiskyId: "00",
     strength: "40",
     location: "켄벨 타운",
@@ -56,3 +56,24 @@ final mockPost2 = MockArchivingPost(
     location: "켄벨 타운",
     modifyAt: "00000");
 
+final mockPost3 = MockArchivingPost(
+    postId: 3,
+    userId: 123,
+    note: "맛있는 위스키 최고!!",
+    tasteFeatures: [
+      TasteFeature(
+          title: "test1",
+          lowExpression: "low",
+          highExpression: "high",
+          value: 2)
+    ],
+    createAt: "20040506",
+    barcode: "00000",
+    whiskyName: "Lagavulin16-year-old",
+    starValue: 5,
+    imageUrl:
+    "https://firebasestorage.googleapis.com/v0/b/whilabel.appspot.com/o/post%2Farchiving_post%2Fkakao%3A3047138193%2B1710765631382475%2Fb279a9e0-d684-1f1c-97a3-23bb15bf081d%5Ekakao%3A3047138193%2B1710765631382475%7D.jpg?alt=media&token=6459c118-cada-4246-a6b2-31dfb47700d6",
+    whiskyId: "00",
+    strength: "40",
+    location: "켄벨 타운",
+    modifyAt: "00000");
