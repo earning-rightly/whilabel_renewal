@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whilabel_renewal/data/mock_data/archiving_post/mock_archiving_post.dart';
+import 'package:whilabel_renewal/screen/home/home_view.dart';
 import 'package:whilabel_renewal/screen/home/mock_home_view_model.dart';
 import 'package:whilabel_renewal/screen/login/login_view.dart';
 import 'package:whilabel_renewal/screen/my_page/my_page_view.dart';
 import 'package:whilabel_renewal/screen/my_page/pages/resign/resign_view.dart';
-import 'package:whilabel_renewal/screen/onboarding/onboarding_view.dart';
 import 'package:whilabel_renewal/screen/util_views/loading_view/loading_view.dart';
 import 'package:whilabel_renewal/screen/util_views/loading_view/loading_view_model.dart';
 
@@ -19,7 +19,7 @@ class MockHomeView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final posts = ref.watch(_provider).posts;
+    final posts = ref.watch(_provider).listArchivingPosts;
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
@@ -60,6 +60,15 @@ class MockHomeView extends ConsumerWidget {
                               builder: (context) => MyPageView()));
                     },
                     child: Text("myPage")),
+
+                TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HomeView()));
+                    },
+                    child: Text("Home")),
               ],
             ),
           ),
