@@ -18,6 +18,7 @@ class MockArchivingPost with _$MockArchivingPost{
     String? location, //생산지
     String? strength,
     String? modifyAt,
+   String? distillery,
     required String imageUrl,
     required double starValue,
     required String note,
