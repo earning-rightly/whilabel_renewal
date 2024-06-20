@@ -19,7 +19,7 @@ class MockHomeView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final posts = ref.watch(_provider);
+    final posts = ref.watch(_provider).posts;
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
