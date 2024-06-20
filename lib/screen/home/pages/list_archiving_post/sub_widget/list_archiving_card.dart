@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:whilabel_renewal/data/mock_data/archiving_post/mock_archiving_post.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
@@ -6,9 +7,10 @@ import 'package:whilabel_renewal/design_guide_managers/svg_icon_path.dart';
 import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
 import 'package:whilabel_renewal/screen/archiving_post_detail/archiving_post_detail_view_model.dart';
 import 'package:whilabel_renewal/screen/archiving_post_detail/archivng_post_detail_view.dart';
+import 'package:whilabel_renewal/screen/util_views/context_menu/context_menu_view_model.dart';
 
 // ignore: must_be_immutable
-class ListArchivingPostCard extends StatelessWidget {
+class ListArchivingPostCard extends ConsumerWidget {
   final MockArchivingPost archivingPost;
   final int sameWhiskyNameCounter;
 
@@ -19,14 +21,23 @@ class ListArchivingPostCard extends StatelessWidget {
   }) : super(key: key);
   String creatDate = "";
   GlobalKey key = GlobalKey(); // declare a global key
+  final detailPostProvider = ArchivingPostDetailViewModel().provider;
+  final contextMenuProvider = ContextMenuViewModel().provider;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final archivingPostDetailViewModel = ref.watch(detailPostProvider.notifier);
+    final contextMenuViewModel = ref.watch(contextMenuProvider.notifier);
 
-    final detailPostProvider = ArchivingPostDetailViewModel().provider;
 
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
+        await archivingPostDetailViewModel.setState(
+            postId: archivingPost.postId,
+            isModify: false,
+            note: archivingPost.note,
+            starScore: archivingPost.starValue,
+            features: archivingPost.tasteFeatures);
         print(archivingPost);
         Navigator.push(
             context,
@@ -92,7 +103,16 @@ class ListArchivingPostCard extends StatelessWidget {
                           padding: EdgeInsets.zero,
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         ),
-                        onPressed: () async {},
+                        onPressed: () async {
+                          RenderBox popUpMenuBox = key.currentContext
+                              ?.findRenderObject() as RenderBox;
+                          // meauitems가 나타나야 하는 곳에 위치를 통일 시키기 위해서
+                          Offset position = popUpMenuBox.localToGlobal(
+                              Offset.zero); //this is global position
+
+                          contextMenuViewModel.showContextMenu(context, position.dx + 1000, position.dy);
+
+                        },
                       )
                     ],
                   ),

@@ -3,25 +3,51 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whilabel_renewal/data/mock_data/archiving_post/mock_archiving_post.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/screen/home/mock_home_view_model.dart';
+import 'package:whilabel_renewal/screen/home/pages/list_archiving_post/list_archiving_post_view_model.dart';
 
 import 'sub_widget/list_archiving_card.dart';
+import 'sub_widget/list_sorting_button.dart';
 
-class ArchivingPostListView extends ConsumerWidget {
+class ListArchivingPostView extends ConsumerWidget {
   final List<MockArchivingPost> posts;
 
-  ArchivingPostListView({Key? key, required this.posts}) : super(key: key);
+  ListArchivingPostView({Key? key, required this.posts}) : super(key: key);
 
-  final _provider = MockHomeViewModel().provider;
+  final mockHomeProvider = MockHomeViewModel().provider;
+  final provider = ListArchivingPostViewModel().provider;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+    final Size size = MediaQuery.of(context).size;
     Map<String, List<MockArchivingPost>> gridPosts =
-        ref.watch(_provider).gridArchivingPosts;
+        ref.watch(mockHomeProvider).gridArchivingPosts;
+   final state = ref.watch(provider);
+   final buttonStates = state.buttonStates;
 
     return Column(
       children: [
-        // 리스트에서 사용할 위스키 정렬 버튼
-        Container(height: 32, child: Text("리스트 위스키")),
+    Container(
+      margin:  EdgeInsets.only(top: 12, bottom: 8),
+      height: 32,
+      width: size.width *1.2,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: buttonStates.length,
+        itemBuilder: (context, index) {
+          return Row(
+            children: [
+              ListSortingButton(
+                listArchivingPostProvider: provider,
+                  sortingButtonType:
+                  buttonStates[index].buttonOrder,
+                  index: index,
+                  isSelected:  buttonStates[index].isSelected),
+              SizedBox(width: 8),
+            ],
+          );
+        }),
+    ),
 
         // // 일정 공간에 띄어지게 하기위해서
         SizedBox(height: 16),
