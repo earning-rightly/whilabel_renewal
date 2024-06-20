@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:whilabel_renewal/screen/resign/resign_view.dart';
 part 'resign_view_state.freezed.dart';
 
 @freezed

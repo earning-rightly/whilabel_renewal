@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whilabel_renewal/data/mock_data/archiving_post/mock_archiving_post.dart';
 import 'package:whilabel_renewal/screen/home/mock_home_view_model.dart';
 import 'package:whilabel_renewal/screen/login/login_view.dart';
-import 'package:whilabel_renewal/screen/my_page/setting_view/setting_view.dart';
+import 'package:whilabel_renewal/screen/my_page/my_page_view.dart';
+import 'package:whilabel_renewal/screen/my_page/pages/resign/resign_view.dart';
 import 'package:whilabel_renewal/screen/onboarding/onboarding_view.dart';
-import 'package:whilabel_renewal/screen/resign/resign_view.dart';
 import 'package:whilabel_renewal/screen/util_views/loading_view/loading_view.dart';
 import 'package:whilabel_renewal/screen/util_views/loading_view/loading_view_model.dart';
 
@@ -19,7 +19,7 @@ class MockHomeView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final posts = ref.watch(_provider).posts;
+    final posts = ref.watch(_provider);
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
@@ -35,15 +35,6 @@ class MockHomeView extends ConsumerWidget {
                     color: Colors.black,
                     child: MockPost(archivingPost: post),
                   ),
-                TextButton(
-                    onPressed: () {
-                      ref.read(loadingViewModelProvider.notifier).hideLoading();
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SettingView()));
-                    },
-                    child: Text("setting view")),
                 SizedBox(height: 30),
                 TextButton(
                     onPressed: () {
@@ -60,17 +51,15 @@ class MockHomeView extends ConsumerWidget {
                           MaterialPageRoute(
                               builder: (context) => ResignView()));
                     },
-                    child: Text("resignView")),
-                SizedBox(height: 30),
+                    child: Text("onboarding")),
                 TextButton(
                     onPressed: () {
-                      ref.read(loadingViewModelProvider.notifier).showLoading();
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => OnBoardingView()));
+                              builder: (context) => MyPageView()));
                     },
-                    child: Text("onboarding")),
+                    child: Text("myPage")),
               ],
             ),
           ),
