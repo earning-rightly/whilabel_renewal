@@ -20,6 +20,8 @@ class LoginView extends ConsumerWidget {
 
     final state = ref.watch(_viewModel.provider);
     final viewModel = ref.watch(_viewModel.provider.notifier);
+    viewModel.setContext(context);
+
 
     return Scaffold(
       body: SafeArea(
