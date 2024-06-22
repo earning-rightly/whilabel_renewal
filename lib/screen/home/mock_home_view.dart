@@ -10,6 +10,7 @@ import 'package:whilabel_renewal/screen/onboarding/onboarding_view.dart';
 import 'package:whilabel_renewal/screen/util_views/loading_view/loading_view.dart';
 import 'package:whilabel_renewal/screen/util_views/loading_view/loading_view_model.dart';
 
+import '../main_bottom_tab_page/main_bottom_tab_page.dart';
 import 'sub_widget/mock_post.dart';
 
 /** 개발할때 사용할 임시 Home view */
@@ -50,7 +51,7 @@ class MockHomeView extends ConsumerWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => MainPage()));
+                              builder: (context) => MainBottomTabPage()));
                     },
                     child: Text("onboarding")),
                 TextButton(
