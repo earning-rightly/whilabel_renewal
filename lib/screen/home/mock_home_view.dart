@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whilabel_renewal/data/mock_data/archiving_post/mock_archiving_post.dart';
 import 'package:whilabel_renewal/screen/home/mock_home_view_model.dart';
 import 'package:whilabel_renewal/screen/login/login_view.dart';
+import 'package:whilabel_renewal/screen/main/main_page.dart';
 import 'package:whilabel_renewal/screen/my_page/my_page_view.dart';
 import 'package:whilabel_renewal/screen/my_page/pages/resign/resign_view.dart';
 import 'package:whilabel_renewal/screen/onboarding/onboarding_view.dart';
@@ -49,7 +50,7 @@ class MockHomeView extends ConsumerWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ResignView()));
+                              builder: (context) => MainPage()));
                     },
                     child: Text("onboarding")),
                 TextButton(
