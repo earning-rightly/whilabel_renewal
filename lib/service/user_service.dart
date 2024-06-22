@@ -37,7 +37,6 @@ class UserService extends BaseService {
       isSuccess = false;
     }
     Map<String, dynamic> jsonResponse = jsonDecode(response.body);
-    debugPrint("${jsonResponse}");
     LoginResponse result = LoginResponse.fromJson(jsonResponse);
     return  (isSuccess,result);
   }
@@ -45,7 +44,9 @@ class UserService extends BaseService {
   Future<(bool, NicknameCheckResponse)> checkNickname(String nickname) async {
     var url =
     Uri.http(baseUrl,"api/v1/user/nickname/check");
-    var response = await http.post(url,body: {'nickname': nickname});
+    final body = jsonEncode({'nickname': nickname});
+    var response = await http.post(url,body: body ,headers: {"Content-type": "application/json"});
+
     bool isSuccess = true;
     if (response.statusCode != 200) {
       isSuccess = false;

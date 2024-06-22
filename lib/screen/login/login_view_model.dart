@@ -8,6 +8,7 @@ import 'package:whilabel_renewal/service/oauth/kakao_oauth.dart';
 import 'package:whilabel_renewal/enums/login_type_enum.dart';
 import 'package:whilabel_renewal/screen/login/login_view_state.dart';
 import 'package:whilabel_renewal/service/user_service.dart';
+import 'package:whilabel_renewal/singleton/register_singleton.dart';
 
 
 class LoginViewModel extends StateNotifier<LoginViewState> {
@@ -57,6 +58,8 @@ class LoginViewModel extends StateNotifier<LoginViewState> {
 
     }
     else {
+      RegisterSingleton.instance.loginType = snsType;
+      RegisterSingleton.instance.snsToken = snsToken;
       Navigator.push(
           _context!,
           MaterialPageRoute(
