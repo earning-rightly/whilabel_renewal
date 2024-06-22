@@ -9,6 +9,7 @@ import 'package:whilabel_renewal/enums/login_type_enum.dart';
 import 'package:whilabel_renewal/screen/login/login_view_state.dart';
 import 'package:whilabel_renewal/service/user_service.dart';
 import 'package:whilabel_renewal/singleton/register_singleton.dart';
+import 'package:whilabel_renewal/singleton/shared_preference_singleton.dart';
 
 
 class LoginViewModel extends StateNotifier<LoginViewState> {
@@ -46,14 +47,14 @@ class LoginViewModel extends StateNotifier<LoginViewState> {
       case _:
         {}
     }
-
-    debugPrint("accessToken 2 ${snsToken}");
     _callLoginAPI(snsType, snsToken);
   }
 
   void _callLoginAPI(LoginType snsType, String snsToken) async {
-    final result = await userService.login(snsType, snsToken);
-    if (result.$1) {
+    final (isSuccess,result) = await userService.login(snsType, snsToken);
+    if (isSuccess) {
+      debugPrint(result.data?.token ?? "");
+      SharedPreferenceSingleton.instance.setToken(result.data?.token ?? "");
       //TODO: callUserMe api
 
     }

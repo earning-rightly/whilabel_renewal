@@ -11,14 +11,13 @@ class DatePickerView extends ConsumerWidget {
   final DatePickerViewModel viewModel;
   final TextEditingController textController = TextEditingController();
 
-   DatePickerView({
+   DatePickerView({super.key,
     required this.viewModel,
 });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    final state = ref.watch(viewModel.provider);
     final now = DateTime.now().year - 19;
 
     return GestureDetector(
@@ -54,8 +53,6 @@ class DatePickerView extends ConsumerWidget {
 
 
   showDatePicker(BuildContext context,WidgetRef ref) async {
-    final state = ref.watch(viewModel.provider);
-
     showCupertinoDialog(
       context: context,
       barrierDismissible: false,

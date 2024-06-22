@@ -10,9 +10,8 @@ part 'login_response.g.dart';
 class LoginResponse extends BaseResponses<LoginResponse> {
   // final String? message;
   final String? token;
-
   LoginResponse({
-    required this.token, required super.message, required super.data
+    required super.message, required super.data, required this.token,
 });
 
   factory LoginResponse.fromJson(Map<String, dynamic> json)

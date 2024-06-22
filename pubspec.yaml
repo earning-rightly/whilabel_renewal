@@ -45,6 +45,8 @@ dependencies:
   sign_in_with_apple: ^6.1.0
   flutter_dotenv: ^5.1.0
   http:
+  intl:
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:

@@ -2,6 +2,7 @@
 
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:whilabel_renewal/screen/util_views/date_picker/date_picker_state.dart';
 
 class DatePickerViewModel extends StateNotifier<DatePickerState> {
@@ -20,8 +21,9 @@ class DatePickerViewModel extends StateNotifier<DatePickerState> {
   }
 
   void updateDateTime(DateTime date) {
-    String dateString = "${date.year}-${date.month}-${date.day}";
-    state = state.copyWith(dateTime: date,dateString: dateString);
+    String formattedDate = DateFormat('yyyy-MM-dd').format(date);
+    _dateString = formattedDate;
+    state = state.copyWith(dateTime: date,dateString: formattedDate);
   }
 
   String getResult() {
