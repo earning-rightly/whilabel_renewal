@@ -24,26 +24,10 @@ class RegisterNicknameViewModel extends StateNotifier<RegisterNicknameState> {
     return RegisterNicknameViewModel();
   });
 
-
-  BuildContext? _context;
-
   RegisterNicknameViewModel() : super(RegisterNicknameState.initial());
 
-  void setContext(BuildContext context) {
-    this._context = context;
-  }
-
-  // required RegisterNicknameText texts,
-  // required bool isNextBtnEnabled,
-  // required bool isLoading,
-  // required String? errorInfoText,
-  // required Color nextBtnColor,
-  // required Color nextBtnTitleColor
 
   void validateNickname(String nickname) {
-    //TODO: validate nickname and set state.errorInfoText and set btnState when it's not qualified
-    //decision to make, check on client side or from server side
-
     if (nickname.length < 2 || nickname.length > 20 ) {
       state = state.copyWith(isNextBtnEnabled: false,
           errorInfoText: "닉네임은 최소 3글자 최대 20자 내외여야 합니다.",
@@ -62,7 +46,6 @@ class RegisterNicknameViewModel extends StateNotifier<RegisterNicknameState> {
     //TODO: api
     final result = await userService.checkNickname(nickname);
     if (result.$1) {
-      //TODO: - with go to registerPage with SNSToken, SNSTYPE and Nickname
       RegisterSingleton.instance.nickname = nickname;
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => RegisterUserInfoView()));
