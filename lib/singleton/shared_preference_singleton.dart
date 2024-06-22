@@ -10,10 +10,10 @@ class SharedPreferenceSingleton {
 
   String TOKEN = "TOKEN";
 
-  void setToken(String token) async {
+  Future<void> setToken(String token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(TOKEN, token);
-
+    return;
   }
 
   Future<String> getToken() async {

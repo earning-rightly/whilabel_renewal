@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:whilabel_renewal/domain/login_response.dart';
 import 'package:whilabel_renewal/domain/nicknamecheck_response.dart';
+import 'package:whilabel_renewal/domain/userme_response.dart';
 import 'package:whilabel_renewal/enums/gender.dart';
 import 'package:whilabel_renewal/service/base_service.dart';
 
@@ -58,7 +59,7 @@ class UserService extends BaseService {
     return (isSuccess,result);
   }
 
-  
+
   Future<(bool,LoginResponse)> register(String snsToken, LoginType loginType, String nickname, Gender gender, String birthday) async {
     var url =
     Uri.http(baseUrl,"api/v1/user/register");
@@ -91,6 +92,22 @@ class UserService extends BaseService {
     return (isSuccess,result);
   }
 
+
+  Future<(bool,UsermeResponse)> me() async {
+    var url =
+    Uri.http(baseUrl,"api/v1/user/me");
+    final header = await super.getAuthenticateHeader();
+    var response = await http.post(url ,headers: header);
+
+    bool isSuccess = true;
+    if (response.statusCode != 200) {
+      isSuccess = false;
+    }
+    Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+    debugPrint("${jsonResponse}");
+    UsermeResponse result = UsermeResponse.fromJson(jsonResponse);
+    return (isSuccess,result);
+  }
 
 
 

@@ -10,6 +10,7 @@ import 'package:whilabel_renewal/screen/login/login_view_state.dart';
 import 'package:whilabel_renewal/service/user_service.dart';
 import 'package:whilabel_renewal/singleton/register_singleton.dart';
 import 'package:whilabel_renewal/singleton/shared_preference_singleton.dart';
+import 'package:whilabel_renewal/singleton/user_singleton.dart';
 
 
 class LoginViewModel extends StateNotifier<LoginViewState> {
@@ -53,10 +54,8 @@ class LoginViewModel extends StateNotifier<LoginViewState> {
   void _callLoginAPI(LoginType snsType, String snsToken) async {
     final (isSuccess,result) = await userService.login(snsType, snsToken);
     if (isSuccess) {
-      debugPrint(result.data?.token ?? "");
-      SharedPreferenceSingleton.instance.setToken(result.data?.token ?? "");
-      //TODO: callUserMe api
-
+      await SharedPreferenceSingleton.instance.setToken(result.data?.token ?? "");
+      _callUserMeApi();
     }
     else {
       RegisterSingleton.instance.loginType = snsType;
@@ -65,6 +64,21 @@ class LoginViewModel extends StateNotifier<LoginViewState> {
           _context!,
           MaterialPageRoute(
               builder: (context) => RegisterNicknameView()));
+    }
+  }
+
+  void _callUserMeApi() async {
+    final (isSuccess,result) = await userService.me();
+
+    if (isSuccess) {
+      UserSingleton.instance.setUserMeResponse(result.data);
+
+    }
+    else {
+      final message = result.message ?? "잠시 후 다시 시도해주세요";
+      ScaffoldMessenger.of(_context!).showSnackBar(SnackBar(
+        content: Text(message),
+      ));
     }
   }
 }

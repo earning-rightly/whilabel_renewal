@@ -1,16 +1,39 @@
-// import 'package:freezed_annotation/freezed_annotation.dart';
-// import 'base_response.dart';
-//
-// part 'userme_response.g.dart';
-//
-// @JsonSerializable()
-// class UsermeResponse extends BaseResponses<UsermeResponse>  {
-//
-//
-//   NicknameCheckResponse() : super(message: null, data: null);
-//
-//   factory UsermeResponse.fromJson(Map<String, dynamic> json)
-//   => _$UsermeResponseFromJson(json);
-//
-//   Map<String, dynamic> toJson() => _$UsermeResponseToJson(this);
-// }
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'base_response.dart';
+
+part 'userme_response.g.dart';
+
+@JsonSerializable()
+class UsermeResponse extends BaseResponses<UsermeResponse>  {
+
+  final String id;
+  final String snsLoginType;
+  final String nickname;
+  final bool isPushAllowed;
+  final bool isMarketingAllowed;
+  final String pushToken;
+  final bool isResigned;
+  final String gender;
+  final String birthDay;
+
+
+
+  UsermeResponse({
+    required super.message, required super.data,
+  required this.id,
+    required this.snsLoginType,
+    required this.nickname,
+    required this.isPushAllowed,
+    required this.isMarketingAllowed,
+    required this.pushToken,
+    required this.isResigned,
+    required this.gender,
+    required this.birthDay,
+  });
+
+
+  factory UsermeResponse.fromJson(Map<String, dynamic> json)
+  => _$UsermeResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UsermeResponseToJson(this);
+}
