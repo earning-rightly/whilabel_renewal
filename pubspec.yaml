@@ -44,6 +44,7 @@ dependencies:
   kakao_flutter_sdk: ^1.9.2
   sign_in_with_apple: ^6.1.0
   flutter_dotenv: ^5.1.0
+  http:
 
 dev_dependencies:
   flutter_test:
