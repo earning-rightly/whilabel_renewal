@@ -12,6 +12,7 @@ class KaKaoOauth {
       }
       else {
         OAuthToken oAuthToken = await UserApi.instance.loginWithKakaoAccount();
+        debugPrint("accessToken ${oAuthToken.accessToken}");
         return oAuthToken.accessToken;
       }
     }

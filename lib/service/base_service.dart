@@ -1,5 +1,5 @@
 
 
 class BaseService {
-  final baseUrl = "http://localhost:8080";
+  final baseUrl = "172.30.1.80:8080";
 }

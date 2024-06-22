@@ -1,6 +1,9 @@
 import 'dart:convert' as convert;
+import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:whilabel_renewal/domain/login_response.dart';
 import 'package:whilabel_renewal/service/base_service.dart';
 
 import '../enums/login_type_enum.dart';
@@ -8,21 +11,32 @@ import '../enums/login_type_enum.dart';
 
 class UserService extends BaseService {
 
-  Future<dynamic> login(LoginType loginType, String snsToken,) async {
+  Future<(bool,LoginResponse)> login(LoginType loginType, String snsToken,) async {
     var url =
-    Uri.https('www.googleapis.com', '/books/v1/volumes', {'q': '{http}'});
-
-    var response = await http.get(url);
-    if (response.statusCode == 200) {
-      var jsonResponse =
-      convert.jsonDecode(response.body) as Map<String, dynamic>;
-      var itemCount = jsonResponse['totalItems'];
-      print('Number of books about http: $itemCount.');
-    } else {
-      print('Request failed with status: ${response.statusCode}.');
+    Uri.http(baseUrl,"api/v1/user/login");
+    String snsType = "";
+    switch (loginType) {
+      case LoginType.kakaotalk: {
+        snsType = "kakao";
+      }
+      case LoginType.google: {
+        snsType = "google";
+      }
+      case LoginType.apple: {
+        snsType = "apple";
+      }
+      case _: {
+        snsType = "";
+      }
     }
-
-    return  ;
+    var response = await http.post(url,body: {'snsType': snsType, 'snsToken': snsToken});
+    bool isSuccess = true;
+    if (response.statusCode != 200) {
+      isSuccess = false;
+    }
+    Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+    LoginResponse result = LoginResponse.fromJson(jsonResponse);
+    return  (isSuccess,result);
   }
 
 }
