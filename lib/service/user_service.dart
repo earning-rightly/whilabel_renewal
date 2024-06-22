@@ -97,7 +97,7 @@ class UserService extends BaseService {
     var url =
     Uri.http(baseUrl,"api/v1/user/me");
     final header = await super.getAuthenticateHeader();
-    var response = await http.post(url ,headers: header);
+    var response = await http.get(url ,headers: header);
 
     bool isSuccess = true;
     if (response.statusCode != 200) {

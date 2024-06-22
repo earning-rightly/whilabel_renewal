@@ -47,6 +47,7 @@ dependencies:
   http:
   intl:
   shared_preferences:
+  cached_network_image: ^3.3.1
 
 dev_dependencies:
   flutter_test:
