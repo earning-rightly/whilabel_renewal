@@ -31,7 +31,10 @@ class _MainPageState extends ConsumerState<MainPage>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-    ref.read(_viewModel.provider.notifier).init();
+    Future.microtask(() {
+      ref.read(_viewModel.provider.notifier).init();
+    });
+
   }
 
   @override

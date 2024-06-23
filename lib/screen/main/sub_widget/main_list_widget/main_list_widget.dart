@@ -27,7 +27,7 @@ class _MainListWidgetState extends ConsumerState<MainListWidget> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(viewModel.provider);
-
+    ref.read(viewModel.provider.notifier).setBuildContext(context);
     return Column(
       children: [
         Container(
@@ -71,7 +71,9 @@ class _MainListWidgetState extends ConsumerState<MainListWidget> {
                   postCount: ref
                       .read(viewModel.provider.notifier)
                       .getDuplicateWhiskyCount(data.whiskyId),
-                  holderTapEvent: (currentIndex) {},
+                  holderTapEvent: (currentIndex) {
+                    ref.read(viewModel.provider.notifier).showWhiskyPostDetailView(data.id);
+                  },
                   moreBtnTapEvent: (currentIndex) {},
                 );
               }),

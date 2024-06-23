@@ -11,7 +11,6 @@ import 'package:whilabel_renewal/screen/util_views/loading_view/loading_view.dar
 import 'package:whilabel_renewal/screen/util_views/loading_view/loading_view_model.dart';
 
 import '../main_bottom_tab_page/main_bottom_tab_page.dart';
-import 'sub_widget/mock_post.dart';
 
 /** 개발할때 사용할 임시 Home view */
 class MockHomeView extends ConsumerWidget {
@@ -31,12 +30,6 @@ class MockHomeView extends ConsumerWidget {
             height: size.height,
             child: Column(
               children: [
-                SizedBox(height: 30),
-                for (MockArchivingPost post in posts)
-                  ColoredBox(
-                    color: Colors.black,
-                    child: MockPost(archivingPost: post),
-                  ),
                 SizedBox(height: 30),
                 TextButton(
                     onPressed: () {

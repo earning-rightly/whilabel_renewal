@@ -1,10 +1,12 @@
 
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:whilabel_renewal/enums/pagin_enum.dart';
 import 'package:whilabel_renewal/screen/main/sub_widget/main_list_widget/main_list_state.dart';
+import 'package:whilabel_renewal/screen/whisky_post_detail/whisky_post_detail_view.dart';
 import 'package:whilabel_renewal/service/whisky_service.dart';
 
 class MainListViewModel extends StateNotifier<MainListState>  {
@@ -21,7 +23,9 @@ class MainListViewModel extends StateNotifier<MainListState>  {
     return MainListViewModel();
   });
 
-
+  void setBuildContext(BuildContext context) {
+    _context = context;
+  }
 
   void callWhiskyPostListAPI(PagingType pagingType) async {
     if (_lock || _hasMore == false) {
@@ -70,6 +74,11 @@ class MainListViewModel extends StateNotifier<MainListState>  {
     return data.where((item) {
       return item.whiskyId == id;
     }).length;
+  }
+
+  void showWhiskyPostDetailView(int postId) {
+    Navigator.push(_context!,
+    MaterialPageRoute(builder: (context) => WhiskyPostDetailView(postId: postId)));
   }
 
 
