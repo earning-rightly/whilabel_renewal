@@ -1,5 +1,5 @@
-class ArchivingPostViewText {
-  ArchivingPostViewText({
+class WhiskyPostViewText {
+  WhiskyPostViewText({
    required  this.whiskeyName,
    required  this.distillery,
    required  this.strength,

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whilabel_renewal/data/mock_data/archiving_post/mock_archiving_post.dart';
@@ -6,32 +7,32 @@ import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
 import 'package:whilabel_renewal/screen/common_views/function/divider.dart';
 
 import './sub_widget/modify_button.dart';
-import './archiving_post_detail_view_model.dart';
-import 'archiving_post_detail_state.dart';
+import './whisky_post_detail_view_model.dart';
+import 'whisky_post_detail_state.dart';
 import 'sub_widget/user_critique_container/user_critique_container.dart';
 import 'sub_widget/user_critique_container/user_critique_container_view_model.dart';
 
-class ArchivingPostDetailView extends ConsumerWidget {
-  final MockArchivingPost post;
 
-  final StateNotifierProvider<ArchivingPostDetailViewModel,
-      ArchivingPostDetailState> provider;
-
-  ArchivingPostDetailView(this.post, {Key? key, required this.provider})
-      : super(key: key);
-
-  final distilleryImage =
-      "https://firebasestorage.googleapis.com/v0/b/whilabel.appspot.com/o/distillery_images%2FAngel_senvy.jpeg?alt=media&token=8aafe5f3-8f39-4a3e-844e-0de50eae52c7";
-  final tasteNoteController = TextEditingController();
-  final userCritiqueViewModel = UserCritiqueContainerViewModel();
+class WhiskyPostDetailView extends ConsumerStatefulWidget {
+  const WhiskyPostDetailView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(provider);
-    final viewModel = ref.read(provider.notifier);
+  ConsumerState<WhiskyPostDetailView> createState() => _WhiskyPostDetailViewState();
+}
+
+class _WhiskyPostDetailViewState extends ConsumerState<WhiskyPostDetailView> {
+
+  final tasteNoteController = TextEditingController();
+  final userCritiqueViewModel = UserCritiqueContainerViewModel();
+  final _viewModel = WhiskyPostDetailViewModel();
+
+  @override
+  Widget build(BuildContext context, ) {
+    final state = ref.watch(_viewModel.provider);
+    final viewModel = ref.read(_viewModel.provider.notifier);
     bool isModify = state.isModify;
     final userCriqueContainerViewModel =
-        ref.read(userCritiqueViewModel.provider.notifier);
+    ref.read(userCritiqueViewModel.provider.notifier);
     final texts = state.texts;
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -52,29 +53,13 @@ class ArchivingPostDetailView extends ConsumerWidget {
                         width: size.width,
                         height: 225,
                         color: ColorsManager.black200,
-                        child: distilleryImage == null
-                            ? null
-                            : Image.network(
-                                distilleryImage,
-                                fit: BoxFit.fill,
-                                frameBuilder: (BuildContext context,
-                                    Widget child,
-                                    int? frame,
-                                    bool wasSynchronouslyLoaded) {
-                                  if (wasSynchronouslyLoaded) {
-                                    return child;
-                                  }
-                                  return AnimatedOpacity(
-                                    opacity: frame == null ? 0 : 1,
-                                    duration: const Duration(seconds: 1),
-                                    curve: Curves.easeOut,
-                                    alwaysIncludeSemantics: true,
-                                    child: child,
-                                  );
-                                },
-                              ),
+                        clipBehavior: Clip.hardEdge,
+                        child: CachedNetworkImage(
+                          imageUrl: "https://i.imgur.com/CzXTtJV.jpg",
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 16),
                         child: Column(
@@ -85,12 +70,10 @@ class ArchivingPostDetailView extends ConsumerWidget {
                                   flex: 237,
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                          state.texts.whiskeyName != ""
-                                              ? state.texts.whiskeyName
-                                              : "위스키를 등록 중입니다",
+                                          "위스키를 등록 중입니다",
                                           maxLines: 3,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStylesManager.bold20),
@@ -98,7 +81,7 @@ class ArchivingPostDetailView extends ConsumerWidget {
                                         height: 6,
                                       ),
                                       buildDistilleryAndStrengthText(
-                                          texts.distillery, texts.strength)
+                                          "texts.distillery", "texts.strength")
                                     ],
                                   ),
                                 ),
@@ -116,12 +99,12 @@ class ArchivingPostDetailView extends ConsumerWidget {
                                 children: [
                                   Row(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                    CrossAxisAlignment.center,
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        state.texts.myEvaluationText,
+                                        "state.texts.myEvaluationText",
                                         maxLines: 3,
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStylesManager.bold18,
@@ -133,11 +116,11 @@ class ArchivingPostDetailView extends ConsumerWidget {
                                           if (isModify) {
                                             // 저장 버튼 눌렀을 떄
                                             final score =
-                                                await userCriqueContainerViewModel
-                                                    .getStarScore();
+                                            await userCriqueContainerViewModel
+                                                .getStarScore();
                                             final features =
-                                                await userCriqueContainerViewModel
-                                                    .getFeatures();
+                                            await userCriqueContainerViewModel
+                                                .getFeatures();
                                             await viewModel.updatePostInfo(
                                                 score,
                                                 tasteNoteController.text,
@@ -146,37 +129,37 @@ class ArchivingPostDetailView extends ConsumerWidget {
                                           } else {
                                             // 수정 버튼 눌렀을 떄
                                             tasteNoteController.text =
-                                                state.note;
-                                            userCriqueContainerViewModel
-                                                .setState(
-                                                    note: state.note,
-                                                    starScore: state.starScore,
-                                                    features:
-                                                        state.tasteFeatures);
+                                                "state.note";
+                                          //   userCriqueContainerViewModel
+                                          //       .setState(
+                                          //       note: state.note,
+                                          //       starScore: state.starScore,
+                                          //       features:
+                                          //       state.tasteFeatures);
                                           }
-                                          viewModel.setIsModifyState(!isModify);
+                                          // viewModel.setIsModifyState(!isModify);
                                         },
                                       )
                                     ],
                                   ),
                                   SizedBox(height: 4),
                                   Text(
-                                    state.texts.createAt + "\t작성",
+                                    "state.texts.createAt" + "\t작성",
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStylesManager
                                         .createHadColorTextStyle(
-                                            "R14", Colors.grey),
+                                        "R14", Colors.grey),
                                   ),
                                   SizedBox(height: 16),
                                 ],
                               ),
                             ),
                             UserCritiqueContainer(
-                              starScore: state.starScore,
+                              starScore: 4,
                               isModify: isModify,
                               tasteNoteController: tasteNoteController,
-                              note: state.note,
+                              note: "state.note",
                               features: state.tasteFeatures,
                               viewModel: userCriqueContainerViewModel,
                             ),
@@ -210,13 +193,13 @@ class ArchivingPostDetailView extends ConsumerWidget {
                                           "맛 특징과 브랜드 특징이",
                                           style: TextStylesManager
                                               .createHadColorTextStyle("R16",
-                                                  ColorsManager.black400),
+                                              ColorsManager.black400),
                                         ),
                                         Text(
                                           "곧 등록될 예정이에요!",
                                           style: TextStylesManager
                                               .createHadColorTextStyle("R16",
-                                                  ColorsManager.black400),
+                                              ColorsManager.black400),
                                         ),
                                       ],
                                     ),
@@ -240,32 +223,34 @@ class ArchivingPostDetailView extends ConsumerWidget {
   }
 
   Widget buildDistilleryAndStrengthText(String distillery, String strength) {
+    final state = ref.watch(_viewModel.provider);
+
     const dot = "\u2022\t\t";
     if (distillery.isNotEmpty && strength.isNotEmpty) {
       return Row(children: [
         distillery.isNotEmpty
             ? Text(
-                "$distillery",
-                overflow: TextOverflow.ellipsis,
-                style: TextStylesManager.createHadColorTextStyle(
-                    "R14", Colors.grey),
-              )
+          "$state",
+          overflow: TextOverflow.ellipsis,
+          style: TextStylesManager.createHadColorTextStyle(
+              "R14", Colors.grey),
+        )
             : SizedBox(),
         (distillery == false && strength != null)
             ? const Row(
-                children: [
-                  SizedBox(width: 5),
-                  const Text(dot),
-                ],
-              )
+          children: [
+            SizedBox(width: 5),
+            const Text(dot),
+          ],
+        )
             : const SizedBox(),
         strength != null
             ? Text(
-                "$strength%",
-                overflow: TextOverflow.ellipsis,
-                style: TextStylesManager.createHadColorTextStyle(
-                    "R14", Colors.grey),
-              )
+          "$strength%",
+          overflow: TextOverflow.ellipsis,
+          style: TextStylesManager.createHadColorTextStyle(
+              "R14", Colors.grey),
+        )
             : SizedBox(),
       ]);
     } else {

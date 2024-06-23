@@ -1,24 +1,24 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whilabel_renewal/data/taste/taste_feature.dart';
 import 'package:whilabel_renewal/screen/home/mock_home_view_model.dart';
-import './archiving_post_detail_state.dart';
-import 'archiving_post_view_text.dart';
+import './whisky_post_detail_state.dart';
+import 'whisky_post_view_text.dart';
 
-class ArchivingPostDetailViewModel
-    extends StateNotifier<ArchivingPostDetailState> {
-  final provider = StateNotifierProvider<ArchivingPostDetailViewModel,
-      ArchivingPostDetailState>((ref) {
-    return ArchivingPostDetailViewModel();
+class WhiskyPostDetailViewModel
+    extends StateNotifier<WhiskyPostDetailState> {
+  final provider = StateNotifierProvider<WhiskyPostDetailViewModel,
+      WhiskyPostDetailState>((ref) {
+    return WhiskyPostDetailViewModel();
   });
 
-  static ArchivingPostViewText mockTexts = ArchivingPostViewText(
+  static WhiskyPostViewText mockTexts = WhiskyPostViewText(
       strength: '10',
       createAt: "2024.06.09",
       distillery: " mock distillery",
       whiskeyName: "whiskeyName");
 
-  ArchivingPostDetailViewModel()
-      : super(ArchivingPostDetailState.initial(
+  WhiskyPostDetailViewModel()
+      : super(WhiskyPostDetailState.initial(
             postId: 0, mockTexts, tasteFeatures: [], starScore: 3, note: ""));
 
   Future<void> setState(

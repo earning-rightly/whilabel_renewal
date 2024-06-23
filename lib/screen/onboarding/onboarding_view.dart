@@ -15,7 +15,7 @@ class OnBoardingView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(_viewModel.provider);
     ref.read(_viewModel.provider.notifier).setBuildContext(context);
-    
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(

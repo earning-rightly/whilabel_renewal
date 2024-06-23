@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whilabel_renewal/data/mock_data/archiving_post/mock_archiving_post.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
-import 'package:whilabel_renewal/screen/archiving_post_detail/archiving_post_detail_view_model.dart';
-import 'package:whilabel_renewal/screen/archiving_post_detail/archivng_post_detail_view.dart';
+import 'package:whilabel_renewal/screen/archiving_post_detail/whisky_post_detail_view_model.dart';
+import 'package:whilabel_renewal/screen/archiving_post_detail/whisky_post_detail_view.dart';
 
 // ignore: must_be_immutable
 class MockPost extends ConsumerWidget {
@@ -19,7 +19,7 @@ class MockPost extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     createDate = "2024.06.09";
-    final provider = ArchivingPostDetailViewModel().provider;
+    final provider = WhiskyPostDetailViewModel().provider;
 
     final archivingPostDetailViewModel = ref.watch(provider.notifier);
     return GestureDetector(
@@ -30,13 +30,13 @@ class MockPost extends ConsumerWidget {
             note: archivingPost.note,
             starScore: archivingPost.starValue,
             features: archivingPost.tasteFeatures);
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ArchivingPostDetailView(
-                      archivingPost,
-                      provider: provider,
-                    )));
+        // Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //         builder: (context) => WhiskyPostDetailView(
+        //               archivingPost,
+        //               provider: provider,
+        //             )));
       },
       child: Container(
         width: 350,
