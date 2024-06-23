@@ -8,7 +8,7 @@ import 'package:whilabel_renewal/service/base_service.dart';
 
 class WhiskyService extends BaseService {
 
-  Future<(bool,WhiskyPostListResponse)> getPosts(String sort, int page) async {
+  Future<(bool,WhiskyPostListResponse)> getListPosts(String sort, int page) async {
     var url =
     Uri.http(baseUrl,"api/v1/whisky/list",{"sort" : sort, "page" : page.toString()});
 
@@ -23,4 +23,21 @@ class WhiskyService extends BaseService {
     WhiskyPostListResponse result = WhiskyPostListResponse.fromJson(jsonResponse);
     return  (isSuccess,result);
   }
+
+  Future<(bool,WhiskyPostListResponse)> getGridPosts(int page) async {
+    var url =
+    Uri.http(baseUrl,"api/v1/whisky/grid",{"page" : page.toString()});
+
+    final header = await super.getAuthenticateHeader();
+    var response = await http.get(url,headers: header);
+
+    bool isSuccess = true;
+    if (response.statusCode != 200) {
+      isSuccess = false;
+    }
+    Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+    WhiskyPostListResponse result = WhiskyPostListResponse.fromJson(jsonResponse);
+    return  (isSuccess,result);
+  }
+
 }

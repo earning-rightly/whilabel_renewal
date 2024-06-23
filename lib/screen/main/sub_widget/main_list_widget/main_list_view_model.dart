@@ -35,7 +35,7 @@ class MainListViewModel extends StateNotifier<MainListState>  {
       _currentPage = 0;
     }
 
-    final (isSuccess,result) = await _whiskyService.getPosts(state.currentSortType, _currentPage);
+    final (isSuccess,result) = await _whiskyService.getListPosts(state.currentSortType, _currentPage);
 
     if(isSuccess) {
       if ((result.data?.length ?? 0) == 0) {

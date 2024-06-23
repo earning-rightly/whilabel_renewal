@@ -7,6 +7,7 @@ import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/design_guide_managers/svg_icon_path.dart';
 import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
 import 'package:whilabel_renewal/screen/main/main_view_model.dart';
+import 'package:whilabel_renewal/screen/main/sub_widget/main_grid_widget/main_grid_widget.dart';
 import 'package:whilabel_renewal/screen/main/sub_widget/main_list_widget/main_list_widget.dart';
 import 'package:whilabel_renewal/screen/my_page/my_page_view.dart';
 
@@ -23,6 +24,8 @@ class _MainPageState extends ConsumerState<MainPage>
   late final _viewModel = MainViewModel();
 
   final listView = MainListWidget();
+  final gridView = MainGridWidget();
+
 
   @override
   void initState() {
@@ -81,7 +84,7 @@ class _MainPageState extends ConsumerState<MainPage>
                   controller: _tabController,
                   children: [
                     listView,
-                    Container(),
+                    gridView,
                   ],
                 ),
               ),
