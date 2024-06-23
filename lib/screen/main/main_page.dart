@@ -31,11 +31,12 @@ class _MainPageState extends ConsumerState<MainPage>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    ref.read(_viewModel.provider.notifier).init();
   }
 
   @override
   Widget build(BuildContext context) {
-    ref.read(_viewModel.provider.notifier).init();
+
     final state = ref.watch(_viewModel.provider);
 
 

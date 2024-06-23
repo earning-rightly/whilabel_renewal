@@ -57,7 +57,7 @@ class RegisterUserInfoViewModel extends StateNotifier<RegisterUserInfoState> {
   void _callUserMeApi() async {
     final (isSuccess,result) = await userService.me();
     if (isSuccess) {
-      UserSingleton.instance.setUserMeResponse(result.data);
+      UserSingleton.instance.setUserMeResponse(result);
       Navigator.push(_context!,
           MaterialPageRoute(builder: (context) => OnBoardingView())
       );

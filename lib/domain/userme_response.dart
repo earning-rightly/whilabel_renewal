@@ -4,9 +4,8 @@ import 'base_response.dart';
 part 'userme_response.g.dart';
 
 @JsonSerializable()
-class UsermeResponse extends BaseResponses<UsermeResponse>  {
-
-  final String id;
+class UsermeResponse extends BaseResponses<UsermeResponse> {
+  final int id;
   final String snsLoginType;
   final String nickname;
   final bool isPushAllowed;
@@ -17,11 +16,10 @@ class UsermeResponse extends BaseResponses<UsermeResponse>  {
   final String birthDay;
   final int whiskyCount;
 
-
-
   UsermeResponse({
-    required super.message, required super.data,
-  required this.id,
+    required super.message,
+    required super.data,
+    required this.id,
     required this.snsLoginType,
     required this.nickname,
     required this.isPushAllowed,
@@ -33,9 +31,8 @@ class UsermeResponse extends BaseResponses<UsermeResponse>  {
     required this.whiskyCount,
   });
 
-
-  factory UsermeResponse.fromJson(Map<String, dynamic> json)
-  => _$UsermeResponseFromJson(json);
+  factory UsermeResponse.fromJson(Map<String, dynamic> json) =>
+      _$UsermeResponseFromJson(json);
 
   Map<String, dynamic> toJson() => _$UsermeResponseToJson(this);
 }

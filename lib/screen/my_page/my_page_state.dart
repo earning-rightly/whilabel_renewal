@@ -1,19 +1,21 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:whilabel_renewal/design_guide_managers/svg_icon_path.dart';
+import 'package:whilabel_renewal/singleton/user_singleton.dart';
 
 part 'my_page_state.freezed.dart';
 
 @freezed
 class MyPageState with _$MyPageState {
-  const factory MyPageState(
-          {
-          required String settingIconPath,
-          required List<Map<String, dynamic>> myPageViewButtonData,
-          required List<Map<String, dynamic>> myPageViewDocButtonData}) =
-      _MyPageState;
+  const factory MyPageState({
+    required String nickname,
+    required String settingIconPath,
+    required List<Map<String, dynamic>> myPageViewButtonData,
+    required List<Map<String, dynamic>> myPageViewDocButtonData,
+  }) = _MyPageState;
 
   factory MyPageState.initial() {
     return MyPageState(
+        nickname: UserSingleton.instance.getUserMeResponse()?.nickname ?? "홍길동" ,
         settingIconPath: SvgIconPath.setting,
         myPageViewButtonData: _myPageViewButtonData,
         myPageViewDocButtonData: _myPageViewDocButtonData);
