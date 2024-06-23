@@ -15,6 +15,7 @@ class UsermeResponse extends BaseResponses<UsermeResponse>  {
   final bool isResigned;
   final String gender;
   final String birthDay;
+  final int whiskyCount;
 
 
 
@@ -29,6 +30,7 @@ class UsermeResponse extends BaseResponses<UsermeResponse>  {
     required this.isResigned,
     required this.gender,
     required this.birthDay,
+    required this.whiskyCount,
   });
 
 

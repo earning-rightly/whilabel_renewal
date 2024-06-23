@@ -35,6 +35,7 @@ class _MainPageState extends ConsumerState<MainPage>
 
   @override
   Widget build(BuildContext context) {
+    ref.read(_viewModel.provider.notifier).init();
     final state = ref.watch(_viewModel.provider);
 
 

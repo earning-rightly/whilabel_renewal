@@ -2,6 +2,8 @@
 
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:whilabel_renewal/domain/userme_response.dart';
+import 'package:whilabel_renewal/singleton/user_singleton.dart';
 
 part 'main_state.freezed.dart';
 
