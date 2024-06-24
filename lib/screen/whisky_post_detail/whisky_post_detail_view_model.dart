@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:whilabel_renewal/data/taste/taste_feature.dart';
 import 'package:whilabel_renewal/domain/tastefeature_response.dart';
 import 'package:whilabel_renewal/screen/home/mock_home_view_model.dart';
+import 'package:whilabel_renewal/screen/whisky_post_detail/sub_widget/user_critique_container/user_critique_container_view_model.dart';
 import 'package:whilabel_renewal/service/whisky_service.dart';
 import './whisky_post_detail_state.dart';
 import 'whisky_post_view_text.dart';
@@ -11,6 +12,7 @@ import 'whisky_post_view_text.dart';
 class WhiskyPostDetailViewModel extends StateNotifier<WhiskyPostDetailState> {
 
   final _whiskyService = WhiskyService();
+
   BuildContext? _context;
 
   final provider =
@@ -60,54 +62,32 @@ class WhiskyPostDetailViewModel extends StateNotifier<WhiskyPostDetailState> {
     return tasteFeatures;
   }
 
-
-  // Future<void> setState(
-  //     {required int postId,
-  //     required bool isModify,
-  //     required String note,
-  //     required double starScore,
-  //     required List<TasteFeature> features}) async {
-  //   this.state = this.state.copyWith(
-  //         postId: postId,
-  //         isModify: isModify,
-  //         tasteFeatures: features,
-  //         note: note,
-  //         starScore: starScore,
-  //       );
-  // }
-
   void setIsModifyState(bool state) {
     this.state = this.state.copyWith(isModify: state);
   }
 
-  // Future<void> updatePostInfo(double starScore, String note,
-  //     List<TasteFeature> features, WidgetRef ref) async {
-  //   final homeProvider = MockHomeViewModel().provider;
-  //   final homeViewModel = ref.watch(homeProvider.notifier);
-  //
-  //   // detaill view state update
-  //   this.state = this.state.copyWith(
-  //         tasteFeatures: features,
-  //         note: note,
-  //         starScore: starScore,
-  //       );
-  //   // home view stare update
-  //   await homeViewModel.updateArchivingPost(
-  //       state.postId, starScore, note, features);
-  //
-  //   // TODO DB에 post 정보 변경 로직 추가하기
-  // }
-
-  Future<void> modifyNote(String note) async {
-    //TODO  note 값 변경
+  void processWhiskyPostUpdate(UserCritiqueContainerViewModel userCritiqueViewModel,String tasteNote) async {
+    final score = await userCritiqueViewModel.getStarScore();
+    final features = await userCritiqueViewModel.getFeatures();
+     this._callUpdateWhiskyPostAPI(score, tasteNote, features);
   }
 
-  Future<void> modifyStarScore(int score) async {
-    //TODO  stareScore 변경
-  }
+  void _callUpdateWhiskyPostAPI(double starScore, String note,
+      List<TasteFeature> features) async {
+    final bodyRate = features.where( (item) => item.title == "바디감").first.value;
+    final flavorRate = features.where( (item) => item.title == "향").first.value;
+    final peatRate = features.where( (item) => item.title == "피트감").first.value;
 
-  Future<void> modifyStarTasteFeature(TasteFeature tasteFeature) async {
-    // TODO List<TasteFeature>tasteFeatures 변경
+    final result = await _whiskyService.putPostDetail(state.data?.id ?? 0,
+        starScore,
+        note,
+        bodyRate.toDouble(),
+        flavorRate.toDouble(),
+        peatRate.toDouble());
+
+    if (result) {
+      init(state.data?.id ?? 0);
+    }
   }
 
   String getDistilleryAddressAndCountry() {

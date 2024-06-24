@@ -1,30 +1,30 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:whilabel_renewal/data/mock_data/archiving_post/mock_archiving_post.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
 import 'package:whilabel_renewal/screen/common_views/function/divider.dart';
 
+import '../../design_guide_managers/svg_icon_path.dart';
 import './sub_widget/modify_button.dart';
 import './whisky_post_detail_view_model.dart';
 import 'whisky_post_detail_state.dart';
 import 'sub_widget/user_critique_container/user_critique_container.dart';
 import 'sub_widget/user_critique_container/user_critique_container_view_model.dart';
 
-
 class WhiskyPostDetailView extends ConsumerStatefulWidget {
-  const WhiskyPostDetailView({super.key,required this.postId});
+  const WhiskyPostDetailView({super.key, required this.postId});
 
   final int postId;
 
-
   @override
-  ConsumerState<WhiskyPostDetailView> createState() => _WhiskyPostDetailViewState(postId: postId);
+  ConsumerState<WhiskyPostDetailView> createState() =>
+      _WhiskyPostDetailViewState(postId: postId);
 }
 
 class _WhiskyPostDetailViewState extends ConsumerState<WhiskyPostDetailView> {
-
   final tasteNoteController = TextEditingController();
   final userCritiqueViewModel = UserCritiqueContainerViewModel();
   final _viewModel = WhiskyPostDetailViewModel();
@@ -32,23 +32,24 @@ class _WhiskyPostDetailViewState extends ConsumerState<WhiskyPostDetailView> {
 
   _WhiskyPostDetailViewState({
     required this.postId,
-});
+  });
 
   @override
   void initState() {
     super.initState();
-    Future.microtask((){
+    Future.microtask(() {
       ref.read(_viewModel.provider.notifier).init(postId);
     });
   }
 
-
   @override
-  Widget build(BuildContext context, ) {
+  Widget build(
+    BuildContext context,
+  ) {
     final state = ref.watch(_viewModel.provider);
     bool isModify = state.isModify;
-    final userCriqueContainerViewModel =
-    ref.read(userCritiqueViewModel.provider.notifier);
+    final userCritiqueContainerViewModel =
+        ref.read(userCritiqueViewModel.provider.notifier);
     final Size size = MediaQuery.of(context).size;
     final data = state.data;
 
@@ -77,7 +78,7 @@ class _WhiskyPostDetailViewState extends ConsumerState<WhiskyPostDetailView> {
                       ),
                       const SizedBox(height: 20),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Column(
                           children: [
                             Row(
@@ -86,10 +87,13 @@ class _WhiskyPostDetailViewState extends ConsumerState<WhiskyPostDetailView> {
                                   flex: 237,
                                   child: Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                          ref.read(_viewModel.provider.notifier).getWhiskyName(),
+                                          ref
+                                              .read(
+                                                  _viewModel.provider.notifier)
+                                              .getWhiskyName(),
                                           maxLines: 3,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStylesManager.bold20),
@@ -97,17 +101,19 @@ class _WhiskyPostDetailViewState extends ConsumerState<WhiskyPostDetailView> {
                                         height: 6,
                                       ),
                                       buildDistilleryAndStrengthText(
-                                          ref.read(_viewModel.provider.notifier).getDistilleryAddressAndCountry(),
-                                          (data?.distilleryRating ?? 0).toString())
+                                          ref
+                                              .read(
+                                                  _viewModel.provider.notifier)
+                                              .getDistilleryAddressAndCountry(),
+                                          (data?.distilleryRating ?? 0)
+                                              .toString())
                                     ],
                                   ),
                                 ),
-                                Expanded(flex: 106, child: SizedBox())
+                                const Expanded(flex: 106, child: SizedBox())
                               ],
                             ),
-                            SizedBox(
-                              height: 12,
-                            ),
+                            const SizedBox(height: 12),
                             buildWhilabelDivider(),
                             SizedBox(
                               width: size.width,
@@ -116,9 +122,9 @@ class _WhiskyPostDetailViewState extends ConsumerState<WhiskyPostDetailView> {
                                 children: [
                                   Row(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.center,
+                                        CrossAxisAlignment.center,
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         state.texts.myEvaluationText,
@@ -132,29 +138,28 @@ class _WhiskyPostDetailViewState extends ConsumerState<WhiskyPostDetailView> {
                                           //TODO 저장을 누르면 viewSate에 방영 & dialog 출력
                                           if (isModify) {
                                             // 저장 버튼 눌렀을 떄
-                                            // final score =
-                                            // await userCriqueContainerViewModel
-                                            //     .getStarScore();
-                                            // final features =
-                                            // await userCriqueContainerViewModel
-                                            //     .getFeatures();
-                                            // await viewModel.updatePostInfo(
-                                            //     score,
-                                            //     tasteNoteController.text,
-                                            //     features,
-                                            //     ref);
+                                            ref
+                                                .read(_viewModel
+                                                    .provider.notifier)
+                                                .processWhiskyPostUpdate(
+                                                userCritiqueContainerViewModel,
+                                                    tasteNoteController.text);
                                           } else {
                                             // 수정 버튼 눌렀을 떄
                                             tasteNoteController.text =
-                                                "state.note";
-                                          //   userCriqueContainerViewModel
-                                          //       .setState(
-                                          //       note: state.note,
-                                          //       starScore: state.starScore,
-                                          //       features:
-                                          //       state.tasteFeatures);
+                                                data?.tasteNote ?? "";
+                                            userCritiqueContainerViewModel
+                                                .setState(
+                                                    note: data?.tasteNote ?? "",
+                                                    starScore:
+                                                        data?.starRating ?? 0,
+                                                    features:
+                                                        state.tasteFeatures);
                                           }
-                                          // viewModel.setIsModifyState(!isModify);
+                                          ref
+                                              .read(
+                                                  _viewModel.provider.notifier)
+                                              .setIsModifyState(!isModify);
                                         },
                                       )
                                     ],
@@ -166,19 +171,19 @@ class _WhiskyPostDetailViewState extends ConsumerState<WhiskyPostDetailView> {
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStylesManager
                                         .createHadColorTextStyle(
-                                        "R14", Colors.grey),
+                                            "R14", Colors.grey),
                                   ),
                                   SizedBox(height: 16),
                                 ],
                               ),
                             ),
                             UserCritiqueContainer(
-                              starScore: 4,
+                              starScore: data?.starRating ?? 0,
                               isModify: isModify,
                               tasteNoteController: tasteNoteController,
                               note: data?.tasteNote ?? "",
                               features: state.tasteFeatures,
-                              viewModel: userCriqueContainerViewModel,
+                              viewModel: userCritiqueContainerViewModel,
                             ),
                             // BasicDivider(),
                             Container(
@@ -209,13 +214,13 @@ class _WhiskyPostDetailViewState extends ConsumerState<WhiskyPostDetailView> {
                                           "맛 특징과 브랜드 특징이",
                                           style: TextStylesManager
                                               .createHadColorTextStyle("R16",
-                                              ColorsManager.black400),
+                                                  ColorsManager.black400),
                                         ),
                                         Text(
                                           "곧 등록될 예정이에요!",
                                           style: TextStylesManager
                                               .createHadColorTextStyle("R16",
-                                              ColorsManager.black400),
+                                                  ColorsManager.black400),
                                         ),
                                       ],
                                     ),
@@ -223,14 +228,42 @@ class _WhiskyPostDetailViewState extends ConsumerState<WhiskyPostDetailView> {
                                 ],
                               ),
                             ),
-                            // SizedBox(height: 80),)
                           ],
                         ),
                       ),
                     ],
                   ),
+                  //상단 앱바
+                  Container(
+                    alignment: Alignment.topCenter,
+                    height: 30,
+                    margin: EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          width: 32,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: ColorsManager.black400,
+                              shape: BoxShape.circle),
+                          child: IconButton(
+                              onPressed: () {
+                                bool isAblePop = Navigator.canPop(context);
+
+                                // if (isAblePop)   Navigator.pop(context);
+                                // else{
+                                //   Navigator.pushReplacementNamed(context, Routes.rootRoute);
+                                // }
+                              },
+                              icon: SvgPicture.asset(SvgIconPath.backBold)),
+                        )
+
+                      ],
+                    ),
+                  )
                 ],
-              )
+              ),
             ],
           ),
         ),
@@ -243,15 +276,11 @@ class _WhiskyPostDetailViewState extends ConsumerState<WhiskyPostDetailView> {
     final text;
     if (distillery.isEmpty && strength.isEmpty) {
       text = "위스키 정보 검토중";
-    }
-    else {
+    } else {
       text = "$distillery$dot$strength%";
     }
-    return Text(
-        text,
+    return Text(text,
         maxLines: 2,
-        style: TextStylesManager.createHadColorTextStyle(
-            "R14", Colors.grey)
-    );
+        style: TextStylesManager.createHadColorTextStyle("R14", Colors.grey));
   }
 }
