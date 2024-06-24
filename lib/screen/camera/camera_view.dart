@@ -3,15 +3,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/design_guide_managers/image_path.dart';
 import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
+import 'package:whilabel_renewal/screen/camera/barcode_scan/barcode_scan_view.dart';
+import 'package:whilabel_renewal/screen/camera/camera_view_model.dart';
 import 'package:whilabel_renewal/screen/common_views/long_text_button.dart';
 
 class CameraView extends ConsumerWidget {
   CameraView({Key? key}) : super(key: key);
 
+  final _provider = CameraViewModel().provider;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    final barcode = ref.watch(_provider).barcode;
+    final viewModel = ref.watch(_provider.notifier);
 
     return Scaffold(
         body: SafeArea(
@@ -72,12 +78,25 @@ class CameraView extends ConsumerWidget {
                             child: LongTextButton(
                               buttonText: "위스키 기록하기",
                               color: ColorsManager.brown100,
-                              onPressedFunc: () async {},
+                              onPressedFunc: () async {
+                                String res = await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const BarcodeScanView(),
+                                    ));
+
+                                viewModel.updateBarCode(res);
+                              },
                             ),
                           ),
-                          Expanded(flex: 5, child: SizedBox())
+                          Expanded(flex: 5, child: SizedBox()),
                         ],
                       ),
+                    ),
+                    Text(
+                      "BarCode : $barcode",
+                      style: TextStyle(color: Colors.yellow),
                     ),
                   ],
                 ),
