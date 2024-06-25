@@ -2,6 +2,7 @@
 
 class BaseResponses<T>  {
   final String? message;
+  final int? code;
   final T? data;
 
   BaseResponses({

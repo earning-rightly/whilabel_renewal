@@ -57,10 +57,18 @@ class LoginViewModel extends StateNotifier<LoginViewState> {
           .setToken(result.data?.token ?? "");
       _callUserMeApi();
     } else {
-      RegisterSingleton.instance.loginType = snsType;
-      RegisterSingleton.instance.snsToken = snsToken;
-      Navigator.push(_context!,
-          MaterialPageRoute(builder: (context) => RegisterNicknameView()));
+      if ((result.code ?? 0 )== 1001) { // 미가입 회원
+        RegisterSingleton.instance.loginType = snsType;
+        RegisterSingleton.instance.snsToken = snsToken;
+        Navigator.push(_context!,
+            MaterialPageRoute(builder: (context) => RegisterNicknameView()));
+      }
+      else if ((result.code ?? 0) == 1002 ) { //탈퇴된 회원 처리
+        final message = result.message ?? "잠시 후 다시 시도해주세요";
+        ScaffoldMessenger.of(_context!).showSnackBar(SnackBar(
+          content: Text(message),
+        ));
+      }
     }
   }
 
