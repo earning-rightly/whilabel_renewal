@@ -189,7 +189,6 @@ class ArchivingPostDetailView extends ConsumerWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SizedBox(height: 24),
-                                  // BasicDivider(),
                                   Container(
                                     height: 4,
                                     color: Colors.grey,

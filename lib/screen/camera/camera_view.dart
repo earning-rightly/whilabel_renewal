@@ -5,6 +5,7 @@ import 'package:whilabel_renewal/design_guide_managers/image_path.dart';
 import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
 import 'package:whilabel_renewal/screen/camera/barcode_scan/barcode_scan_view.dart';
 import 'package:whilabel_renewal/screen/camera/camera_view_model.dart';
+import 'package:whilabel_renewal/screen/camera/photo_taking/photo_taking_view.dart';
 import 'package:whilabel_renewal/screen/common_views/long_text_button.dart';
 
 class CameraView extends ConsumerWidget {
@@ -17,7 +18,10 @@ class CameraView extends ConsumerWidget {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     final barcode = ref.watch(_provider).barcode;
+    final camera = ref.watch(_provider).cameras;
+
     final viewModel = ref.watch(_provider.notifier);
+  
 
     return Scaffold(
         body: SafeArea(
@@ -28,6 +32,24 @@ class CameraView extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            TextButton(
+                onPressed: () {
+                 viewModel.initCamera();
+
+                  // viewModel.updateBarCode(res);
+                },
+                child: Text("init state!!!")),
+            TextButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PhotoTakingView(cameras: camera),
+                      ));
+
+                  // viewModel.updateBarCode(res);
+                },
+                child: Text("taka a picture")),
             height * 0.8 <= width
                 ? Container(
                     margin: EdgeInsets.symmetric(vertical: 32),
