@@ -252,7 +252,6 @@ class _WhiskyPostDetailViewState extends ConsumerState<WhiskyPostDetailView> {
                             child: IconButton(
                                 onPressed: () {
                                   bool isAblePop = Navigator.canPop(context);
-
                                   if (isAblePop)   Navigator.pop(context);
                                   else{
                                     Navigator.pushReplacementNamed(context, Routes.main_tab);

@@ -10,9 +10,14 @@ import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
 import './resign_view_model.dart';
 
 class ResignView extends ConsumerWidget {
+
+
+  final _viewModel = ResignViewModel();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(resignViewModelProvider);
+
+    final state = ref.watch(_viewModel.provider);
+    ref.read(_viewModel.provider.notifier).setBuildContext(context);
 
 
     return Scaffold(
@@ -76,7 +81,7 @@ class ResignView extends ConsumerWidget {
                     child: Center(
                       child: TextButton(
                         onPressed: () {
-                          ref.read(resignViewModelProvider.notifier).showResignConfirmPopUp(context);
+                          ref.read(_viewModel.provider.notifier).showResignConfirmPopUp(context);
                         },
                         child: const Text(
                           "탈퇴하기",

@@ -3,6 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/screen/common_views/common_pop_up_with_two_buttons.dart';
 
+import '../../../../singleton/shared_preference_singleton.dart';
+import '../../../../singleton/user_singleton.dart';
+import '../../../route/routes.dart';
 import 'setting_view_state.dart';
 
 final settingViewProvider =
@@ -50,9 +53,11 @@ class SettingViewModel extends StateNotifier<SettingViewState> {
                 Navigator.of(context).pop();
               },
               rightButtonColor: ColorsManager.orange,
-              onClickRightButton: () {
-                //TODO: 나중에 api 받아서 처리
+              onClickRightButton: () async {
+                UserSingleton.instance.setUserMeResponse(null);
+                await SharedPreferenceSingleton.instance.setToken("");
                 Navigator.of(context).pop();
+                Navigator.pushReplacementNamed(context, Routes.login);
               });
         });
   }

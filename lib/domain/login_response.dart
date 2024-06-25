@@ -11,7 +11,7 @@ class LoginResponse extends BaseResponses<LoginResponse> {
   // final String? message;
   final String? token;
   LoginResponse({
-    required super.message, required super.data, required this.token,
+    required super.message, required super.code, required super.data, required this.token,
 });
 
   factory LoginResponse.fromJson(Map<String, dynamic> json)

@@ -19,6 +19,7 @@ class UsermeResponse extends BaseResponses<UsermeResponse> {
   UsermeResponse({
     required super.message,
     required super.data,
+    required super.code,
     required this.id,
     required this.snsLoginType,
     required this.nickname,

@@ -109,6 +109,17 @@ class UserService extends BaseService {
     return (isSuccess,result);
   }
 
+  Future<bool> resign() async {
+    var url =
+    Uri.http(baseUrl,"api/v1/user/resign");
+    final header = await super.getAuthenticateHeader();
+    var response = await http.put(url ,headers: header);
 
+    bool isSuccess = true;
+    if (response.statusCode != 200) {
+      isSuccess = false;
+    }
+    return (isSuccess);
+  }
 
 }

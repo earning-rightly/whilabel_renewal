@@ -13,6 +13,7 @@ class WhiskyPostDetailResponse extends BaseResponses<WhiskyPostDetailModel>  {
   WhiskyPostDetailResponse({
     required super.message,
     required super.data,
+    required super.code,
   });
 
 

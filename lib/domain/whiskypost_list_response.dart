@@ -12,6 +12,7 @@ class WhiskyPostListResponse extends BaseResponses<List<WhiskyPostResponse>>  {
   WhiskyPostListResponse({
     required super.message,
     required super.data,
+    required super.code,
   });
 
 

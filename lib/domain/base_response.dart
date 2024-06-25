@@ -8,6 +8,7 @@ class BaseResponses<T>  {
   BaseResponses({
     required this.message,
     required this.data,
+    required this.code,
   });
 
 }
