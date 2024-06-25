@@ -126,7 +126,10 @@ class UserService extends BaseService {
     var url =
     Uri.http(baseUrl,"api/v1/user/push");
     final header = await super.getAuthenticateHeader();
-    final body = {"isMarketingPushAllowed" : isMarketingPushAllowed.toString(), "isPushAllowed" :isPushAllowed};
+    final body = jsonEncode({
+      "isMarketingPushAllowed": isMarketingPushAllowed.toString(),
+      "isPushAllowed": isPushAllowed
+    });
     var response = await http.put(url, body: body ,headers: header);
 
     bool isSuccess = true;
