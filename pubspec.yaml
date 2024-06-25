@@ -44,6 +44,10 @@ dependencies:
   kakao_flutter_sdk: ^1.9.2
   sign_in_with_apple: ^6.1.0
   flutter_dotenv: ^5.1.0
+  http:
+  intl:
+  shared_preferences:
+  cached_network_image: ^3.3.1
 
   # 이미지 카메라 관련
   camera: ^0.11.0+1

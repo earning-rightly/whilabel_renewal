@@ -12,10 +12,12 @@ import 'package:whilabel_renewal/screen/register/nickname/register_nickname_view
 class RegisterNicknameView extends ConsumerWidget {
 
   final TextEditingController nicknameInputController = TextEditingController();
+  final _viewModel = RegisterNicknameViewModel();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(registerNicknameProvider);
+    final state = ref.watch(_viewModel.registerNicknameProvider);
+    final viewModel = ref.watch(_viewModel.registerNicknameProvider.notifier);
 
     return Scaffold(
       appBar: _scaffoldAppBar(context),
@@ -47,23 +49,24 @@ class RegisterNicknameView extends ConsumerWidget {
               ),
               style: const TextStyle(color: ColorsManager.white),
               onChanged: (value) {
-                ref.read(registerNicknameProvider.notifier).validateNickname(value);
+                viewModel.validateNickname(value);
               },
             ),
 
             const Spacer(flex: 1),
 
-            Container(
-              height: 52,
-              decoration: BoxDecoration(
-                  color: state.nextBtnColor,
-                  borderRadius: BorderRadius.all(
-                      Radius.circular(BaseRadius.radius12))),
-              child: Center(
-                child: TextButton(
-                  onPressed: () {
-                    ref.read(registerNicknameProvider.notifier).checkDuplicatedNickname(context, nicknameInputController.text);
-                  },
+            InkWell(
+              onTap: (){
+                FocusManager.instance.primaryFocus?.unfocus();
+                viewModel.checkDuplicatedNickname(context, nicknameInputController.text);
+              },
+              child: Container(
+                height: 52,
+                decoration: BoxDecoration(
+                    color: state.nextBtnColor,
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(BaseRadius.radius12))),
+                child: Center(
                   child: Text(
                     state.texts.nextBtnTitle,
                     style: TextStyle(color: state.nextBtnTitleColor),

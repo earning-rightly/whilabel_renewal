@@ -1,39 +1,58 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:whilabel_renewal/data/mock_data/archiving_post/mock_archiving_post.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
 import 'package:whilabel_renewal/screen/common_views/function/divider.dart';
 
+import '../../design_guide_managers/svg_icon_path.dart';
 import './sub_widget/modify_button.dart';
-import './archiving_post_detail_view_model.dart';
-import 'archiving_post_detail_state.dart';
+import './whisky_post_detail_view_model.dart';
+import 'whisky_post_detail_state.dart';
 import 'sub_widget/user_critique_container/user_critique_container.dart';
 import 'sub_widget/user_critique_container/user_critique_container_view_model.dart';
 
-class ArchivingPostDetailView extends ConsumerWidget {
-  final MockArchivingPost post;
+class WhiskyPostDetailView extends ConsumerStatefulWidget {
+  const WhiskyPostDetailView({super.key, required this.postId});
 
-  final StateNotifierProvider<ArchivingPostDetailViewModel,
-      ArchivingPostDetailState> provider;
-
-  ArchivingPostDetailView(this.post, {Key? key, required this.provider})
-      : super(key: key);
-
-  final distilleryImage =
-      "https://firebasestorage.googleapis.com/v0/b/whilabel.appspot.com/o/distillery_images%2FAngel_senvy.jpeg?alt=media&token=8aafe5f3-8f39-4a3e-844e-0de50eae52c7";
-  final tasteNoteController = TextEditingController();
-  final userCritiqueViewModel = UserCritiqueContainerViewModel();
+  final int postId;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(provider);
-    final viewModel = ref.read(provider.notifier);
+  ConsumerState<WhiskyPostDetailView> createState() =>
+      _WhiskyPostDetailViewState(postId: postId);
+}
+
+class _WhiskyPostDetailViewState extends ConsumerState<WhiskyPostDetailView> {
+  final tasteNoteController = TextEditingController();
+  final userCritiqueViewModel = UserCritiqueContainerViewModel();
+  final _viewModel = WhiskyPostDetailViewModel();
+  final postId;
+
+  _WhiskyPostDetailViewState({
+    required this.postId,
+  });
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      ref.read(_viewModel.provider.notifier).init(postId);
+    });
+  }
+
+  @override
+  Widget build(
+    BuildContext context,
+  ) {
+    final state = ref.watch(_viewModel.provider);
     bool isModify = state.isModify;
-    final userCriqueContainerViewModel =
+    final userCritiqueContainerViewModel =
         ref.read(userCritiqueViewModel.provider.notifier);
-    final texts = state.texts;
     final Size size = MediaQuery.of(context).size;
+    final data = state.data;
+
     return Scaffold(
       backgroundColor: ColorsManager.black100,
       body: SizedBox(
@@ -52,31 +71,14 @@ class ArchivingPostDetailView extends ConsumerWidget {
                         width: size.width,
                         height: 225,
                         color: ColorsManager.black200,
-                        child: distilleryImage == null
-                            ? null
-                            : Image.network(
-                                distilleryImage,
-                                fit: BoxFit.fill,
-                                frameBuilder: (BuildContext context,
-                                    Widget child,
-                                    int? frame,
-                                    bool wasSynchronouslyLoaded) {
-                                  if (wasSynchronouslyLoaded) {
-                                    return child;
-                                  }
-                                  return AnimatedOpacity(
-                                    opacity: frame == null ? 0 : 1,
-                                    duration: const Duration(seconds: 1),
-                                    curve: Curves.easeOut,
-                                    alwaysIncludeSemantics: true,
-                                    child: child,
-                                  );
-                                },
-                              ),
+                        child: CachedNetworkImage(
+                          imageUrl: data?.distilleryImage ?? "",
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Column(
                           children: [
                             Row(
@@ -88,26 +90,30 @@ class ArchivingPostDetailView extends ConsumerWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                          state.texts.whiskeyName != ""
-                                              ? state.texts.whiskeyName
-                                              : "위스키를 등록 중입니다",
+                                          ref
+                                              .read(
+                                                  _viewModel.provider.notifier)
+                                              .getWhiskyName(),
                                           maxLines: 3,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStylesManager.bold20),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 6,
                                       ),
                                       buildDistilleryAndStrengthText(
-                                          texts.distillery, texts.strength)
+                                          ref
+                                              .read(
+                                                  _viewModel.provider.notifier)
+                                              .getDistilleryAddressAndCountry(),
+                                          (data?.distilleryRating ?? 0)
+                                              .toString())
                                     ],
                                   ),
                                 ),
-                                Expanded(flex: 106, child: SizedBox())
+                                const Expanded(flex: 106, child: SizedBox())
                               ],
                             ),
-                            SizedBox(
-                              height: 12,
-                            ),
+                            const SizedBox(height: 12),
                             buildWhilabelDivider(),
                             SizedBox(
                               width: size.width,
@@ -132,36 +138,35 @@ class ArchivingPostDetailView extends ConsumerWidget {
                                           //TODO 저장을 누르면 viewSate에 방영 & dialog 출력
                                           if (isModify) {
                                             // 저장 버튼 눌렀을 떄
-                                            final score =
-                                                await userCriqueContainerViewModel
-                                                    .getStarScore();
-                                            final features =
-                                                await userCriqueContainerViewModel
-                                                    .getFeatures();
-                                            await viewModel.updatePostInfo(
-                                                score,
-                                                tasteNoteController.text,
-                                                features,
-                                                ref);
+                                            ref
+                                                .read(_viewModel
+                                                    .provider.notifier)
+                                                .processWhiskyPostUpdate(
+                                                userCritiqueContainerViewModel,
+                                                    tasteNoteController.text);
                                           } else {
                                             // 수정 버튼 눌렀을 떄
                                             tasteNoteController.text =
-                                                state.note;
-                                            userCriqueContainerViewModel
+                                                data?.tasteNote ?? "";
+                                            userCritiqueContainerViewModel
                                                 .setState(
-                                                    note: state.note,
-                                                    starScore: state.starScore,
+                                                    note: data?.tasteNote ?? "",
+                                                    starScore:
+                                                        data?.starRating ?? 0,
                                                     features:
                                                         state.tasteFeatures);
                                           }
-                                          viewModel.setIsModifyState(!isModify);
+                                          ref
+                                              .read(
+                                                  _viewModel.provider.notifier)
+                                              .setIsModifyState(!isModify);
                                         },
                                       )
                                     ],
                                   ),
                                   SizedBox(height: 4),
                                   Text(
-                                    state.texts.createAt + "\t작성",
+                                    "${ref.read(_viewModel.provider.notifier).formatDate(state.data?.modifyDateTime ?? (state.data?.createDateTime ?? "2000-01-01"))}\t작성",
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStylesManager
@@ -173,12 +178,12 @@ class ArchivingPostDetailView extends ConsumerWidget {
                               ),
                             ),
                             UserCritiqueContainer(
-                              starScore: state.starScore,
+                              starScore: data?.starRating ?? 0,
                               isModify: isModify,
                               tasteNoteController: tasteNoteController,
-                              note: state.note,
+                              note: data?.tasteNote ?? "",
                               features: state.tasteFeatures,
-                              viewModel: userCriqueContainerViewModel,
+                              viewModel: userCritiqueContainerViewModel,
                             ),
                             // BasicDivider(),
                             Container(
@@ -188,18 +193,18 @@ class ArchivingPostDetailView extends ConsumerWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SizedBox(height: 24),
+                                  const SizedBox(height: 24),
+                                  // BasicDivider(),
                                   Container(
                                     height: 4,
                                     color: Colors.grey,
                                   ),
-                                  SizedBox(height: 24),
-
+                                  const SizedBox(height: 24),
                                   Container(
                                     padding: EdgeInsets.all(16),
                                     alignment: Alignment.center,
                                     width: MediaQuery.of(context).size.width,
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                         color: ColorsManager.black200,
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(16))),
@@ -223,14 +228,42 @@ class ArchivingPostDetailView extends ConsumerWidget {
                                 ],
                               ),
                             ),
-                            // SizedBox(height: 80),)
                           ],
                         ),
                       ),
                     ],
                   ),
+                  //상단 앱바
+                  Container(
+                    alignment: Alignment.topCenter,
+                    height: 30,
+                    margin: EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          width: 32,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: ColorsManager.black400,
+                              shape: BoxShape.circle),
+                          child: IconButton(
+                              onPressed: () {
+                                bool isAblePop = Navigator.canPop(context);
+
+                                // if (isAblePop)   Navigator.pop(context);
+                                // else{
+                                //   Navigator.pushReplacementNamed(context, Routes.rootRoute);
+                                // }
+                              },
+                              icon: SvgPicture.asset(SvgIconPath.backBold)),
+                        )
+
+                      ],
+                    ),
+                  )
                 ],
-              )
+              ),
             ],
           ),
         ),
@@ -239,40 +272,15 @@ class ArchivingPostDetailView extends ConsumerWidget {
   }
 
   Widget buildDistilleryAndStrengthText(String distillery, String strength) {
-    const dot = "\u2022\t\t";
-    if (distillery.isNotEmpty && strength.isNotEmpty) {
-      return Row(children: [
-        distillery.isNotEmpty
-            ? Text(
-                "$distillery",
-                overflow: TextOverflow.ellipsis,
-                style: TextStylesManager.createHadColorTextStyle(
-                    "R14", Colors.grey),
-              )
-            : SizedBox(),
-        (distillery == false && strength != null)
-            ? const Row(
-                children: [
-                  SizedBox(width: 5),
-                  const Text(dot),
-                ],
-              )
-            : const SizedBox(),
-        strength != null
-            ? Text(
-                "$strength%",
-                overflow: TextOverflow.ellipsis,
-                style: TextStylesManager.createHadColorTextStyle(
-                    "R14", Colors.grey),
-              )
-            : SizedBox(),
-      ]);
+    const dot = "\t\u2022\t";
+    final text;
+    if (distillery.isEmpty && strength.isEmpty) {
+      text = "위스키 정보 검토중";
     } else {
-      return Text(
-        "위스키 정보 검토중",
-        overflow: TextOverflow.ellipsis,
-        style: TextStylesManager.createHadColorTextStyle("R14", Colors.grey),
-      );
+      text = "$distillery$dot$strength%";
     }
+    return Text(text,
+        maxLines: 2,
+        style: TextStylesManager.createHadColorTextStyle("R14", Colors.grey));
   }
 }

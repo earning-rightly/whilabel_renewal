@@ -3,7 +3,7 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 
 class AppleOauth {
-  Future<void> login() async {
+  Future<String> login() async {
     try {
       final credential = await SignInWithApple.getAppleIDCredential(
         scopes: [
@@ -12,10 +12,11 @@ class AppleOauth {
         ],
       );
       print('identityToken: ${credential.identityToken}');
-      print(credential);
+      return credential.identityToken ?? "";
     }catch(err){
       debugPrint("에러 발생");
       debugPrint('$err');
+      return "";
     }
   }
 }

@@ -5,13 +5,14 @@ import 'package:whilabel_renewal/screen/camera/camera_view.dart';
 import 'package:whilabel_renewal/screen/create_archiving_post/create_archiving_post_view.dart';
 import 'package:whilabel_renewal/screen/home/mock_home_view_model.dart';
 import 'package:whilabel_renewal/screen/login/login_view.dart';
+import 'package:whilabel_renewal/screen/main/main_page.dart';
 import 'package:whilabel_renewal/screen/my_page/my_page_view.dart';
 import 'package:whilabel_renewal/screen/my_page/pages/resign/resign_view.dart';
 import 'package:whilabel_renewal/screen/onboarding/onboarding_view.dart';
 import 'package:whilabel_renewal/screen/util_views/loading_view/loading_view.dart';
 import 'package:whilabel_renewal/screen/util_views/loading_view/loading_view_model.dart';
 
-import 'sub_widget/mock_post.dart';
+import '../main_bottom_tab_page/main_bottom_tab_page.dart';
 
 /** 개발할때 사용할 임시 Home view */
 class MockHomeView extends ConsumerWidget {
@@ -32,12 +33,6 @@ class MockHomeView extends ConsumerWidget {
             child: Column(
               children: [
                 SizedBox(height: 30),
-                for (MockArchivingPost post in posts)
-                  ColoredBox(
-                    color: Colors.black,
-                    child: MockPost(archivingPost: post),
-                  ),
-                SizedBox(height: 30),
                 TextButton(
                     onPressed: () {
                       Navigator.push(context,
@@ -51,7 +46,7 @@ class MockHomeView extends ConsumerWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ResignView()));
+                              builder: (context) => MainBottomTabPage()));
                     },
                     child: Text("onboarding")),
                 TextButton(
