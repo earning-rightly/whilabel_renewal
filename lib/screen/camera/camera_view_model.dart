@@ -23,5 +23,4 @@ class CameraViewModel extends StateNotifier<CameraState> {
     // notifyListeners();
   }
 
-
 }

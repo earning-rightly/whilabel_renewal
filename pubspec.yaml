@@ -44,6 +44,7 @@ dependencies:
   kakao_flutter_sdk: ^1.9.2
   sign_in_with_apple: ^6.1.0
   flutter_dotenv: ^5.1.0
+  simple_barcode_scanner: ^0.1.1
 
   # 이미지 카메라 관련
   camera: ^0.11.0+1
@@ -90,6 +91,8 @@ flutter:
     - assets/icon/pop_menu/
     - assets/login/
     - assets/logo/
+    - assets/screen_image/
+
   fonts:
     - family: Pretendard
       fonts:

@@ -21,8 +21,7 @@ class CameraView extends ConsumerWidget {
     final camera = ref.watch(_provider).cameras;
 
     final viewModel = ref.watch(_provider.notifier);
-    // WidgetsFlutterBinding.ensureInitialized();
-    // final _camera = await availableCameras();
+  
 
     return Scaffold(
         body: SafeArea(
@@ -79,7 +78,7 @@ class CameraView extends ConsumerWidget {
                     ),
                     SizedBox(height: height * 0.85 <= width ? 0 : 32),
                     Text(
-                      "",
+                      "오늘 마신 위스키를 기록해볼까요?",
                       style: TextStylesManager.bold20,
                       textAlign: TextAlign.left,
                     ),
@@ -99,7 +98,7 @@ class CameraView extends ConsumerWidget {
                           Expanded(
                             flex: 40,
                             child: LongTextButton(
-                              buttonText: "",
+                              buttonText: "위스키 기록하기",
                               color: ColorsManager.brown100,
                               onPressedFunc: () async {
                                 String res = await Navigator.push(
