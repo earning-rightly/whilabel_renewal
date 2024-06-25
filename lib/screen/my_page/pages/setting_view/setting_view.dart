@@ -9,14 +9,17 @@ import './sub_widget/toggle_switch_button.dart';
 import '../resign/resign_view.dart';
 
 class SettingView extends ConsumerWidget {
-  const SettingView({super.key});
+  SettingView({super.key});
+
+  final _viewModel = SettingViewModel();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     /*TODO viewModel이라는 변수명 말고 어떤 것이 좋을까?**/
-    final viewModel = ref.read(settingViewProvider.notifier);
-    final viewState = ref.read(settingViewProvider);
-    final viewText = ref.watch(settingViewProvider).settingViewText;
+    final viewModel = ref.read(_viewModel.provider.notifier);
+    final viewState = ref.read(_viewModel.provider);
+    final viewText = ref.watch(_viewModel.provider).settingViewText;
+    ref.read(_viewModel.provider.notifier).setBuildContext(context);
     final Size size = MediaQuery.of(context).size;
 
     bool pushNotificationState = viewState.isAblePushNotification;
