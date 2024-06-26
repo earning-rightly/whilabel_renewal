@@ -8,6 +8,39 @@ import 'package:whilabel_renewal/domain/whiskypostdetail_response.dart';
 import 'package:whilabel_renewal/service/base_service.dart';
 
 class WhiskyService extends BaseService {
+  Future<bool> postWhiskyDetailPost(
+      int whiskyId,
+      String imageUrl,
+      double rating,
+      String tasteNote,
+      int bodyRate,
+      int flavorRate,
+      int peatRate) async {
+    final body = jsonEncode({
+      "whiskyId": whiskyId,
+      "imageUrl": imageUrl,
+      "rating": rating.toString(),
+      "tasteNote": tasteNote,
+      "bodyRate": bodyRate.toString(),
+      "flavorRate": flavorRate.toString(),
+      "peatRate": peatRate.toString()
+    });
+
+    debugPrint("${body}");
+    var url = Uri.http(baseUrl, "api/v1/whisky/detail");
+    final header = await super.getAuthenticateHeader();
+    print(header);
+    var response = await http.post(url, body: body, headers: header);
+
+    bool isSuccess = true;
+    if (response.statusCode != 200) {
+      isSuccess = false;
+    }
+    debugPrint(response.body);
+
+    return (isSuccess);
+  }
+
   Future<(bool, WhiskyPostListResponse)> getListPosts(
       String sort, int page) async {
     var url = Uri.http(
