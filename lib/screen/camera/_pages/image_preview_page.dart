@@ -40,7 +40,9 @@ class ImagePreviewPage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => CreateArchivingPostView(),
+                        builder: (context) => CreateArchivingPostView(
+                          currentFile:  currentFile
+                        ),
                       ),
                     );
                   },
