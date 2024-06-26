@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
+import 'package:whilabel_renewal/screen/camera/camera_view.dart';
 import 'package:whilabel_renewal/screen/main/main_page.dart';
 import 'package:whilabel_renewal/screen/main_bottom_tab_page/main_bottom_tab_view_model.dart';
 import 'package:whilabel_renewal/screen/my_page/my_page_view.dart';
@@ -17,7 +18,7 @@ class MainBottomTabPage extends ConsumerWidget {
     return Scaffold(
       body: IndexedStack(
         index: state.currentIndex,
-        children: [MainPage(), MyPageView()],
+        children: [MainPage(),CameraView() ,MyPageView()],
       ),
       bottomNavigationBar: Container(
         padding: const EdgeInsets.only(top: 4, bottom: 0, right: 4, left: 4),
@@ -51,6 +52,19 @@ class MainBottomTabPage extends ConsumerWidget {
                     ColorsManager.brown100, BlendMode.srcIn),
               ),
               label: "main"
+            ),
+            BottomNavigationBarItem(
+                icon: SvgPicture.asset(
+                  SvgIconPath.camera,
+                  colorFilter: const ColorFilter.mode(
+                      ColorsManager.black300, BlendMode.srcIn),
+                ),
+                activeIcon: SvgPicture.asset(
+                  SvgIconPath.camera,
+                  colorFilter: const ColorFilter.mode(
+                      ColorsManager.brown100, BlendMode.srcIn),
+                ),
+                label: "mypage"
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
