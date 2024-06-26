@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:whilabel_renewal/data/mock_data/archiving_post/mock_archiving_post.dart';
 import 'package:whilabel_renewal/screen/camera/camera_view.dart';
 import 'package:whilabel_renewal/screen/create_archiving_post/create_archiving_post_view.dart';
@@ -19,6 +23,16 @@ class MockHomeView extends ConsumerWidget {
   MockHomeView({Key? key}) : super(key: key);
 
   final _provider = MockHomeViewModel().provider;
+
+  Future<File> getImageFileFromAssets(String path) async {
+    final byteData = await rootBundle.load('assets/$path');
+
+    final file = File('${(await getTemporaryDirectory()).path}/$path');
+    await file.create(recursive: true);
+    await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+
+    return file;
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -64,11 +78,12 @@ class MockHomeView extends ConsumerWidget {
                           builder: (context) => CameraView()));
 
                 }, child: Text("cameraView")),
-                TextButton(onPressed: (){
+                TextButton(onPressed: () async{
+                  final image = await getImageFileFromAssets("mock/mock_whisky.jpg");
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => CreateArchivingPostView()));
+                          builder: (context) => CreateArchivingPostView(currentFile: image,)));
 
                 }, child: Text("createPostView"))
               ],
