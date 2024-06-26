@@ -58,6 +58,8 @@ dependencies:
 
   # 기타
   permission_handler: ^11.3.1
+  photo_gallery: ^2.2.1
+  transparent_image: ^2.0.1
 
 dev_dependencies:
   flutter_test:
@@ -86,6 +88,7 @@ flutter:
   uses-material-design: true
   assets:
     - .env
+    - assets/mock/
     - assets/icon/
     - assets/icon/_back/
     - assets/icon/_taste/
