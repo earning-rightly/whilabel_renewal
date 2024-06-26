@@ -1,6 +1,7 @@
 
 import 'package:whilabel_renewal/data/mock_data/archiving_post/mock_archiving_post.dart';
 import 'package:whilabel_renewal/data/taste/taste_feature.dart';
+import 'package:whilabel_renewal/enums/taste_feature_type.dart';
 
 final mockPost1 = MockArchivingPost(
     postId: 1,
@@ -8,7 +9,7 @@ final mockPost1 = MockArchivingPost(
     note: "맛있는 위스키 최고!!",
     tasteFeatures: [
       TasteFeature(
-          title: "test1",
+          title: TasteFeatureType.BODY,
           lowExpression: "low",
           highExpression: "high",
           value: 2)
@@ -35,12 +36,12 @@ final mockPost2 = MockArchivingPost(
     note: "아이고 맛이었누 위스키 최고!!",
     tasteFeatures: [
       TasteFeature(
-          title: "test1",
+          title: TasteFeatureType.BODY,
           lowExpression: "low1",
           highExpression: "high1",
           value: 2),
       TasteFeature(
-          title: "test2",
+          title: TasteFeatureType.BODY,
           lowExpression: "low2",
           highExpression: "high2",
           value: 2)

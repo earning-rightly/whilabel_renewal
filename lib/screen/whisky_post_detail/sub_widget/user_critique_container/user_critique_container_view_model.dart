@@ -23,7 +23,7 @@ class UserCritiqueContainerViewModel
     Map<String, int> tasteFeatureMap = {};
 
     features.forEach((feature) {
-      tasteFeatureMap[feature.title] = feature.value;
+      tasteFeatureMap[feature.title.displayName] = feature.value;
     });
 
     state = state.copyWith(
