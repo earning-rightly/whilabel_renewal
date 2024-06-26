@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:whilabel_renewal/data/taste/taste_feature.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
@@ -9,40 +12,33 @@ import 'package:whilabel_renewal/design_guide_managers/text_widgets_styles.dart'
 import 'package:whilabel_renewal/screen/common_views/star_rating.dart';
 import 'package:whilabel_renewal/screen/common_views/taste_range.dart';
 import 'package:whilabel_renewal/screen/common_views/text_field_lengh_counter.dart';
+import 'package:whilabel_renewal/screen/create_archiving_post/create_archiving_post_view_model.dart';
 import 'package:whilabel_renewal/screen/home/mock_home_view_model.dart';
+
+import './sub_widget/create_archiving_post_footer.dart';
 
 /** 개발할때 사용할 임시 Home view */
 class CreateArchivingPostView extends ConsumerWidget {
-  CreateArchivingPostView({Key? key}) : super(key: key);
+  final File currentFile;
+  CreateArchivingPostView( {Key? key, required this.currentFile,}) : super(key: key);
 
-  final _provider = MockHomeViewModel().provider;
+  final String whiskyName = "mockWhisy";
+  final double strength =45;
+  final String distilleryName = "mock distillery";
+  final String distilleryLocation = "스코드 ";
+
+
+  // final _provider = MockHomeViewModel().provider;
+  final _provider = CreateArchivingPostViewModel().provider;
   final tasteNoteController = TextEditingController();
-  final List<TasteFeature> features = [
-    TasteFeature(
-      title: "맛",
-      value: 3,
-      lowExpression: "별로",
-      highExpression: "최고",
-    ),
-    TasteFeature(
-      title: "맛",
-      value: 3,
-      lowExpression: "별로",
-      highExpression: "최고",
-    ),
-    TasteFeature(
-      title: "맛",
-      value: 3,
-      lowExpression: "별로",
-      highExpression: "최고",
-    ),
-  ];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final posts = ref.watch(_provider).posts;
+    final features = ref.watch(_provider).tasteFeatures;
+    double starScore = ref.watch(_provider).starScore;
+    final viewModel = ref.watch(_provider.notifier);
     final Size size = MediaQuery.of(context).size;
-    const double initalStarValue = 0;
+
     return Scaffold(
       appBar: _createAppBar(context, "나의 평가"),
       body: SafeArea(
@@ -53,13 +49,13 @@ class CreateArchivingPostView extends ConsumerWidget {
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               scrollDirection: Axis.vertical,
               child: SizedBox(
-                height: MediaQuery.of(context).size.height * 1.1,
+                height: MediaQuery.of(context).size.height * 1.22,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
                       width: MediaQuery.of(context).size.width,
-                      height: 120,
+                      height: 120.h,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -74,10 +70,11 @@ class CreateArchivingPostView extends ConsumerWidget {
                           _createEmptySpace(h: 16),
 
                           StarRating(
-                            initialRating: initalStarValue,
+                            initialRating: starScore,
                             disable: false,
-                            itemSize: 38,
+                            itemSize: 42,
                             onRatingUpdate: (double score) {
+                              viewModel.onChangeStarScore(score);
                               // viewModel.onChangeStarScore(score);
                             },
                           ),
@@ -114,7 +111,10 @@ class CreateArchivingPostView extends ConsumerWidget {
                             currentLength: currentLength,
                             maxLength: maxLength!,
                           ),
-                          onChanged: (text) {},
+                          onChanged: (text) {
+
+                            viewModel.onChangeNote(text);
+                          },
                         )
                       ],
                     ),
@@ -148,13 +148,14 @@ class CreateArchivingPostView extends ConsumerWidget {
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 16),
                                   child: TasteRange(
-                                    title: tasteFeature.title,
+                                    title: tasteFeature.title.displayName,
                                     subTitleRight: tasteFeature.highExpression,
                                     subTitleLeft: tasteFeature.lowExpression,
                                     value: tasteFeature.value,
                                     size: flavorRangeSize,
                                     disable: false,
                                     onChangeRating: (int value) async {
+                                      viewModel.onChangeTasteFeature(tasteFeature.title,value);
                                       // viewModel.onChangeTasteFeature(
                                       //     tasteFeature.title, value);
                                     },
@@ -168,6 +169,19 @@ class CreateArchivingPostView extends ConsumerWidget {
               ),
             );
           }),
+          Positioned(
+              bottom: 0,
+              child: CreateArchivingPostFooter(
+            currentFile: currentFile,
+            whiskyName: whiskyName,
+            strength: strength,
+            distilleryName: distilleryName,
+            distilleryLocation: distilleryLocation,
+                onPressedFunc: (){
+
+              viewModel.savePost(1, "");
+                },
+          ))
         ]),
       ),
     );
