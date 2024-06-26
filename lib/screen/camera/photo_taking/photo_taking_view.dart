@@ -3,7 +3,6 @@ import 'dart:async';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,6 +10,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/design_guide_managers/svg_icon_path.dart';
 import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
+import 'package:whilabel_renewal/screen/camera/_pages/image_preview_page.dart';
 import 'package:whilabel_renewal/screen/common_views/back_listener.dart';
 import 'package:whilabel_renewal/screen/util_views/show_dialog.dart';
 
@@ -105,9 +105,6 @@ class _PhotoTakingViewState extends State<PhotoTakingView>
 
   @override
   Widget build(BuildContext contextf) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-
     return BackListener(
       onBackButtonClick: () =>
           showMoveRootDialog(context, title: "위스키 기록을 중단 하실건가요?", rootIndex: 1),
@@ -123,8 +120,8 @@ class _PhotoTakingViewState extends State<PhotoTakingView>
                   icon: SvgPicture.asset(SvgIconPath.close),
                   onPressed: () {
                     // TODO 뒤로가기 기능이 있는 dialog 추가
-                    // showMoveRootDialog(context,
-                    //     title: "위스키 기록을 중단 하실건가요?", rootIndex: 1);
+                    showMoveRootDialog(context,
+                        title: "위스키 기록을 중단 하실건가요?", rootIndex: 1);
                   },
                 ),
               ]),
@@ -225,6 +222,16 @@ class _PhotoTakingViewState extends State<PhotoTakingView>
                                           File finalImage =
                                               await imageFile.copy(
                                             '${directory.path}/$currentUnix.$fileFormat',
+                                          );
+
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ImagePreviewPage(
+                                                currentFile: finalImage,
+                                              ),
+                                            ),
                                           );
 
                                           // await  Navigator.pushNamed(

@@ -48,7 +48,10 @@ class BarcodeScanView extends StatelessWidget {
       appBarTitle: appBarTitle,
       centerTitle: centerTitle,
       onScanned: (res) {
-        Navigator.pop(context, res);
+        Future.delayed(Duration(milliseconds : 2000),() {
+          Navigator.pop(context, res);
+        });
+
       },
     ),
       Icon(Icons.image),

@@ -11,17 +11,14 @@ import 'package:whilabel_renewal/screen/common_views/long_text_button.dart';
 class CameraView extends ConsumerWidget {
   CameraView({Key? key}) : super(key: key);
 
-  final _provider = CameraViewModel().provider;
+  // final _provider = CameraViewModel().provider;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    final barcode = ref.watch(_provider).barcode;
-    final camera = ref.watch(_provider).cameras;
-
-    final viewModel = ref.watch(_provider.notifier);
-  
+    final viewModel = ref.watch(cameraProvider.notifier);
+    final viewTexts = ref.watch(cameraProvider).texts;
 
     return Scaffold(
         body: SafeArea(
@@ -32,29 +29,11 @@ class CameraView extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextButton(
-                onPressed: () {
-                 viewModel.initCamera();
-
-                  // viewModel.updateBarCode(res);
-                },
-                child: Text("init state!!!")),
-            TextButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => PhotoTakingView(cameras: camera),
-                      ));
-
-                  // viewModel.updateBarCode(res);
-                },
-                child: Text("taka a picture")),
             height * 0.8 <= width
                 ? Container(
                     margin: EdgeInsets.symmetric(vertical: 32),
                     child: Text(
-                      "위스키 기록",
+                      viewTexts.pageTitle,
                       style: TextStylesManager.bold24,
                     ),
                   )
@@ -63,7 +42,7 @@ class CameraView extends ConsumerWidget {
                     child: Padding(
                       padding: EdgeInsets.only(top: 32),
                       child: Text(
-                        "위스키 기록",
+                        viewTexts.pageTitle,
                         style: TextStylesManager.bold24,
                       ),
                     ),
@@ -78,13 +57,13 @@ class CameraView extends ConsumerWidget {
                     ),
                     SizedBox(height: height * 0.85 <= width ? 0 : 32),
                     Text(
-                      "오늘 마신 위스키를 기록해볼까요?",
+                      viewTexts.pageIntroduce,
                       style: TextStylesManager.bold20,
                       textAlign: TextAlign.left,
                     ),
                     SizedBox(height: height * 0.85 <= width ? 0 : 24),
                     Text(
-                      "본격적인 위스키 생활을 시작해보세요",
+                      viewTexts.cameraSlogan,
                       style: TextStylesManager.createHadColorTextStyle(
                           "R16", ColorsManager.gray),
                       textAlign: TextAlign.left,
@@ -98,15 +77,26 @@ class CameraView extends ConsumerWidget {
                           Expanded(
                             flex: 40,
                             child: LongTextButton(
-                              buttonText: "위스키 기록하기",
+                              buttonText:  viewTexts.longTextButtonTitle,
                               color: ColorsManager.brown100,
                               onPressedFunc: () async {
-                                String res = await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const BarcodeScanView(),
-                                    ));
+                                String res = "";
+
+                                  res = await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const BarcodeScanView(),
+                                      ));
+                             final cameras = await viewModel.initCamera();
+
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        PhotoTakingView(cameras: cameras),
+                                  ),
+                                );
 
                                 viewModel.updateBarCode(res);
                               },
@@ -115,10 +105,6 @@ class CameraView extends ConsumerWidget {
                           Expanded(flex: 5, child: SizedBox()),
                         ],
                       ),
-                    ),
-                    Text(
-                      "BarCode : $barcode",
-                      style: TextStyle(color: Colors.yellow),
                     ),
                   ],
                 ),
