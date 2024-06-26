@@ -68,9 +68,11 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
-	<key>NSCameraUsageDescription</key>
-    <string>your usage description here</string>
+    <key>NSCameraUsageDescription</key>
+    <string>바코드 사진을 찍기 위해서 권한이 필요합니다.</string>
     <key>NSMicrophoneUsageDescription</key>
-    <string>your usage description here</string>
+    <string>Microphone permission is required.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>위스키 기록을 하기 위해서 권한이 필요합니다</string>
 </dict>
 </plist>
