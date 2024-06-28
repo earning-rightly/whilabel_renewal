@@ -8,9 +8,6 @@ import 'package:whilabel_renewal/screen/camera/barcode_scan/barcode_scan_view.da
 import 'package:whilabel_renewal/screen/camera/camera_view_model.dart';
 import 'package:whilabel_renewal/screen/camera/photo_taking/photo_taking_view.dart';
 import 'package:whilabel_renewal/screen/common_views/long_text_button.dart';
-import 'package:whilabel_renewal/screen/create_archiving_post/create_archiving_post_view.dart';
-import 'package:whilabel_renewal/screen/home/mock_home_view.dart';
-
 class CameraView extends ConsumerWidget {
   CameraView({Key? key}) : super(key: key);
 
@@ -39,17 +36,6 @@ class CameraView extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextButton(onPressed: () async{
-              final image = await getImageFileFromAssets("mock/mock_whisky.jpg");
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CreateArchivingPostView(currentFile: image,)));
-
-            }, child: Text("createPostView")),
-            TextButton(onPressed: (){
-              viewModel.updateBarCode("5678901234567");
-            }, child: Text("check barcode scan")),
             height * 0.8 <= width
                 ? Container(
                     margin: EdgeInsets.symmetric(vertical: 32),
