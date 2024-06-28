@@ -15,14 +15,14 @@ class CreateArchivingPostFooter extends StatelessWidget {
 
   final String whiskyName;
   final double strength;
-  final String distilleryName;
-  final String distilleryLocation;
+  final String distilleryCountry;
+  final String distilleryAddress;
   final File currentFile;
   final Function()? onPressedFunc;
 
   CreateArchivingPostFooter({
     Key? key,
-    required this.whiskyName, required this.currentFile, required this.strength, required this.distilleryName, required this.distilleryLocation, this.onPressedFunc,
+    required this.whiskyName, required this.currentFile, required this.strength, required this.distilleryCountry, required this.distilleryAddress, this.onPressedFunc,
   }) : super(key: key);
 
   bool isfilled = false;
@@ -59,10 +59,10 @@ class CreateArchivingPostFooter extends StatelessWidget {
                     maxLines: 1,
                   ),
                 ),
-                distilleryLocation!= null
+                distilleryAddress!= null
                     ? SizedBox(
                         child: Text(
-                          "${distilleryLocation}\t${strength}%",
+                          "${distilleryAddress}\t${strength}%",
                           style: const TextStyle(fontSize: 12),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
