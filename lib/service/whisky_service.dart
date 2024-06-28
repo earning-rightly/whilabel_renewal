@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import 'package:whilabel_renewal/domain/base_response.dart';
+import 'package:whilabel_renewal/domain/whisky_scan_response.dart';
 import 'package:whilabel_renewal/domain/whiskypost_list_response.dart';
 import 'package:whilabel_renewal/domain/whiskypostdetail_response.dart';
 import 'package:whilabel_renewal/service/base_service.dart';
@@ -116,5 +116,23 @@ class WhiskyService extends BaseService {
     }
 
     return (isSuccess);
+  }
+
+  Future<(bool,WhiskyScanResponse )> getWhiskyByBarcode(String barcode) async {
+    var url =
+    Uri.http(baseUrl, "api/v1/whisky/scan", {"barcode": barcode});
+
+    final header = await super.getAuthenticateHeader();
+    var response = await http.get(url, headers: header);
+
+    bool isSuccess = true;
+    if (response.statusCode != 200) {
+      isSuccess = false;
+    }
+    Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+    WhiskyScanResponse result =
+    WhiskyScanResponse.fromJson(jsonResponse);
+
+    return (isSuccess, result);
   }
 }
