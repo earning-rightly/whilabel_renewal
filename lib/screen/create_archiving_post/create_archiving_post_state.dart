@@ -7,6 +7,7 @@ part 'create_archiving_post_state.freezed.dart';
 @freezed
 class CreateArchivingPostState with _$CreateArchivingPostState {
   const factory CreateArchivingPostState({
+    required bool isPostResult,
     required String note,
     required double starScore,
     required List<TasteFeature> tasteFeatures,
@@ -14,7 +15,8 @@ class CreateArchivingPostState with _$CreateArchivingPostState {
   }) = _CreateArchivingPostState;
 
   factory CreateArchivingPostState.initial(
-      {required String note,
+      {
+        required String note,
         required double starScore,
         required List<TasteFeature> tasteFeatures}) {
     // Map<String, int> featureMap;
@@ -24,6 +26,7 @@ class CreateArchivingPostState with _$CreateArchivingPostState {
     Map<TasteFeatureType, int> tasteFeatureMap = tasteFeatures.asMap().map((key, value) => MapEntry(value.title, value.value));
 
     return CreateArchivingPostState(
+      isPostResult: false,
       note: note,
       starScore: starScore,
       tasteFeatures: tasteFeatures,

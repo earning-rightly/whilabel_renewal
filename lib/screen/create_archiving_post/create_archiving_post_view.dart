@@ -9,18 +9,19 @@ import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/design_guide_managers/svg_icon_path.dart';
 import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
 import 'package:whilabel_renewal/design_guide_managers/text_widgets_styles.dart';
+import 'package:whilabel_renewal/screen/camera/camera_view_model.dart';
 import 'package:whilabel_renewal/screen/common_views/star_rating.dart';
 import 'package:whilabel_renewal/screen/common_views/taste_range.dart';
 import 'package:whilabel_renewal/screen/common_views/text_field_lengh_counter.dart';
 import 'package:whilabel_renewal/screen/create_archiving_post/create_archiving_post_view_model.dart';
-import 'package:whilabel_renewal/screen/home/mock_home_view_model.dart';
+import 'package:whilabel_renewal/screen/main_bottom_tab_page/main_bottom_tab_page.dart';
 
 import './sub_widget/create_archiving_post_footer.dart';
 
 /** 개발할때 사용할 임시 Home view */
 class CreateArchivingPostView extends ConsumerWidget {
   final File currentFile;
-  CreateArchivingPostView( {Key? key, required this.currentFile,}) : super(key: key);
+  CreateArchivingPostView(  {Key? key,required this.currentFile,}) : super(key: key);
 
   final String whiskyName = "mockWhisy";
   final double strength =45;
@@ -28,7 +29,6 @@ class CreateArchivingPostView extends ConsumerWidget {
   final String distilleryLocation = "스코드 ";
 
 
-  // final _provider = MockHomeViewModel().provider;
   final _provider = CreateArchivingPostViewModel().provider;
   final tasteNoteController = TextEditingController();
 
@@ -38,6 +38,22 @@ class CreateArchivingPostView extends ConsumerWidget {
     double starScore = ref.watch(_provider).starScore;
     final viewModel = ref.watch(_provider.notifier);
     final Size size = MediaQuery.of(context).size;
+    final whiskyInfo = ref.watch(cameraProvider).scanResult;
+
+    ref.listen(_provider, (previousState, newState) {
+      if (newState.isPostResult == true){
+        /*TODO 포스트 생성을 완료하면 WhiskyPostDetailView()로
+        * 이동 할 수 있게 API에서 새로 생성된 post의 id를 주자
+        * **/
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                MainBottomTabPage()
+          ),
+        );
+      }
+    });
 
     return Scaffold(
       appBar: _createAppBar(context, "나의 평가"),
@@ -173,13 +189,13 @@ class CreateArchivingPostView extends ConsumerWidget {
               bottom: 0,
               child: CreateArchivingPostFooter(
             currentFile: currentFile,
-            whiskyName: whiskyName,
-            strength: strength,
-            distilleryName: distilleryName,
-            distilleryLocation: distilleryLocation,
+            whiskyName: whiskyInfo?.whiskyName ?? whiskyName,
+            strength: whiskyInfo?.distilleryRating ?? strength,
+            distilleryCountry: whiskyInfo?.distilleryCountry ?? distilleryName,
+            distilleryAddress: whiskyInfo?.distilleryAddress ?? distilleryLocation,
                 onPressedFunc: (){
-
-              viewModel.savePost(1, "");
+                /*TODO 이미지 URL을 실제 URL로 변경하자**/
+              viewModel.savePost(whiskyInfo?.whiskyId ?? 1, "https://fastly.picsum.photos/id/788/200/300.jpg?hmac=86XnLHCHcI7HWgr9Y662VsXxUxs7H70DjGHc_6iaIw4");
                 },
           ))
         ]),
