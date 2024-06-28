@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
@@ -7,11 +8,20 @@ import 'package:whilabel_renewal/screen/camera/barcode_scan/barcode_scan_view.da
 import 'package:whilabel_renewal/screen/camera/camera_view_model.dart';
 import 'package:whilabel_renewal/screen/camera/photo_taking/photo_taking_view.dart';
 import 'package:whilabel_renewal/screen/common_views/long_text_button.dart';
+import 'package:whilabel_renewal/screen/create_archiving_post/create_archiving_post_view.dart';
+import 'package:whilabel_renewal/screen/home/mock_home_view.dart';
 
 class CameraView extends ConsumerWidget {
   CameraView({Key? key}) : super(key: key);
 
   // final _provider = CameraViewModel().provider;
+
+  Future<List<CameraDescription>> getCamera() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    final _camera = await availableCameras();
+
+    return _camera;
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -29,6 +39,17 @@ class CameraView extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            TextButton(onPressed: () async{
+              final image = await getImageFileFromAssets("mock/mock_whisky.jpg");
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CreateArchivingPostView(currentFile: image,)));
+
+            }, child: Text("createPostView")),
+            TextButton(onPressed: (){
+              viewModel.updateBarCode("5678901234567");
+            }, child: Text("check barcode scan")),
             height * 0.8 <= width
                 ? Container(
                     margin: EdgeInsets.symmetric(vertical: 32),
@@ -80,15 +101,18 @@ class CameraView extends ConsumerWidget {
                               buttonText:  viewTexts.longTextButtonTitle,
                               color: ColorsManager.brown100,
                               onPressedFunc: () async {
-                                String res = "";
+                                final cameras = await getCamera();
 
-                                  res = await Navigator.push(
+                                String barcode = "";
+
+                             barcode =  await Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
                                             const BarcodeScanView(),
                                       ));
-                             final cameras = await viewModel.initCamera();
+                                 viewModel.updateBarCode(barcode);
+
 
                                 Navigator.push(
                                   context,
@@ -97,8 +121,6 @@ class CameraView extends ConsumerWidget {
                                         PhotoTakingView(cameras: cameras),
                                   ),
                                 );
-
-                                viewModel.updateBarCode(res);
                               },
                             ),
                           ),
