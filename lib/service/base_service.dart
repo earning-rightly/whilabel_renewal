@@ -9,6 +9,6 @@ class BaseService {
   Future<Map<String,String>> getAuthenticateHeader() async {
     final token = await SharedPreferenceSingleton.instance.getToken();
 
-    return {"Authorization" : "Bearer ${token}", "Content-Type" : "application/json"};
+    return {"Authorization" : "Bearer ${token}", "Content-Type" : "application/json",'Accept': 'application/json; charset=UTF-8'};
   }
 }

@@ -1,6 +1,4 @@
-import 'dart:convert' as convert;
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
@@ -109,6 +107,34 @@ class UserService extends BaseService {
     return (isSuccess,result);
   }
 
+  Future<bool> resign() async {
+    var url =
+    Uri.http(baseUrl,"api/v1/user/resign");
+    final header = await super.getAuthenticateHeader();
+    var response = await http.put(url ,headers: header);
 
+    bool isSuccess = true;
+    if (response.statusCode != 200) {
+      isSuccess = false;
+    }
+    return (isSuccess);
+  }
+
+  Future<bool> setPushAllow(bool isMarketingPushAllowed, bool isPushAllowed) async {
+    var url =
+    Uri.http(baseUrl,"api/v1/user/push");
+    final header = await super.getAuthenticateHeader();
+    final body = jsonEncode({
+      "isMarketingPushAllowed": isMarketingPushAllowed.toString(),
+      "isPushAllowed": isPushAllowed
+    });
+    var response = await http.put(url, body: body ,headers: header);
+
+    bool isSuccess = true;
+    if (response.statusCode != 200) {
+      isSuccess = false;
+    }
+    return (isSuccess);
+  }
 
 }

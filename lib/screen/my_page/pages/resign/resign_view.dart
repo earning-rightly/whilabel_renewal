@@ -6,14 +6,19 @@ import 'package:whilabel_renewal/design_guide_managers/base_design_settings.dart
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/design_guide_managers/svg_icon_path.dart';
 import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
-import 'package:whilabel_renewal/screen/common_views/long_text_button.dart';
 
 import './resign_view_model.dart';
 
 class ResignView extends ConsumerWidget {
+
+
+  final _viewModel = ResignViewModel();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(resignViewModelProvider);
+
+    final state = ref.watch(_viewModel.provider);
+    ref.read(_viewModel.provider.notifier).setBuildContext(context);
+
 
     return Scaffold(
       appBar: _scaffoldAppBar(context),
@@ -42,40 +47,49 @@ class ResignView extends ConsumerWidget {
                   SizedBox(height: BaseSpacing.space24),
 
                   // 첫 번째 리스트 글
-                  _createWarningText(
-                      state.resignViewText.cautionContentTextOne),
+                  _createWarningText(state.resignViewText.cautionContentTextOne),
                   SizedBox(height: BaseSpacing.space12),
 
                   // 두 번째 리스트 글
-                  _createWarningText(
-                      state.resignViewText.cautionContentTextTwo),
+                  _createWarningText(state.resignViewText.cautionContentTextTwo),
                   SizedBox(height: BaseSpacing.space12),
 
                   // 세 번째 리스트 글
-                  _createWarningText(
-                      state.resignViewText.cautionContentTextThree,
-                      maxLine: 2),
+                  _createWarningText(state.resignViewText.cautionContentTextThree, maxLine: 2),
 
                   const Spacer(),
-                  LongTextButton(
-                    buttonText: "위라벨 계속 사용하",
-                    buttonTextColor: ColorsManager.gray500,
-                    color: ColorsManager.orange,
-                    onPressedFunc: () {},
-                  ),
 
+                  Container(
+                    height: 52,
+                    decoration: BoxDecoration(
+                        color: ColorsManager.orange,
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(BaseRadius.radius12))),
+                    child: Center(
+                      child: TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          "위라벨 계속 사용하기",
+                          style: TextStyle(color: ColorsManager.gray500),
+                        ),
+                      ),
+                    ),
+                  ),
                   const SizedBox(height: 10),
-                  LongTextButton(
-                    buttonText: "탈퇴하기",
-                    buttonTextColor: ColorsManager.gray500,
-                    color: ColorsManager.black100,
-                    onPressedFunc: () {
-                      ref
-                          .read(resignViewModelProvider.notifier)
-                          .showResignConfirmPopUp(context);
-                    },
+                  SizedBox(
+                    height: 40,
+                    child: Center(
+                      child: TextButton(
+                        onPressed: () {
+                          ref.read(_viewModel.provider.notifier).showResignConfirmPopUp(context);
+                        },
+                        child: const Text(
+                          "탈퇴하기",
+                          style: TextStyle(color: ColorsManager.gray200),
+                        ),
+                      ),
+                    ),
                   ),
-
                   const SizedBox(height: 34),
                 ],
               ),

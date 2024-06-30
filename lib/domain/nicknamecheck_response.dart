@@ -8,7 +8,7 @@ part 'nicknamecheck_response.g.dart';
 @JsonSerializable()
 class NicknameCheckResponse extends BaseResponses<NicknameCheckResponse>  {
 
-  NicknameCheckResponse() : super(message: null, data: null);
+  NicknameCheckResponse() : super(message: null, data: null,code: null);
 
   factory NicknameCheckResponse.fromJson(Map<String, dynamic> json)
   => _$NicknameCheckResponseFromJson(json);
