@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whilabel_renewal/data/mock_data/archiving_post/mock_archiving_post.dart';
+import 'package:whilabel_renewal/screen/camera/camera_view.dart';
+import 'package:whilabel_renewal/screen/create_archiving_post/create_archiving_post_view.dart';
 import 'package:whilabel_renewal/screen/home/mock_home_view_model.dart';
 import 'package:whilabel_renewal/screen/login/login_view.dart';
 import 'package:whilabel_renewal/screen/main/main_page.dart';
@@ -55,6 +57,20 @@ class MockHomeView extends ConsumerWidget {
                               builder: (context) => MyPageView()));
                     },
                     child: Text("myPage")),
+                TextButton(onPressed: (){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CameraView()));
+
+                }, child: Text("cameraView")),
+                TextButton(onPressed: (){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CreateArchivingPostView()));
+
+                }, child: Text("createPostView"))
               ],
             ),
           ),
