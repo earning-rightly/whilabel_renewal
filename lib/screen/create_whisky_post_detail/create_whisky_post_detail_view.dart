@@ -13,15 +13,15 @@ import 'package:whilabel_renewal/screen/camera/camera_view_model.dart';
 import 'package:whilabel_renewal/screen/common_views/star_rating.dart';
 import 'package:whilabel_renewal/screen/common_views/taste_range.dart';
 import 'package:whilabel_renewal/screen/common_views/text_field_lengh_counter.dart';
-import 'package:whilabel_renewal/screen/create_archiving_post/create_archiving_post_view_model.dart';
 import 'package:whilabel_renewal/screen/main_bottom_tab_page/main_bottom_tab_page.dart';
 
-import './sub_widget/create_archiving_post_footer.dart';
+import './sub_widget/create_whisky_post_detail_footer.dart';
+import 'create_whisky_post_detail_view_model.dart';
 
 /** 개발할때 사용할 임시 Home view */
-class CreateArchivingPostView extends ConsumerWidget {
+class CreateWhiskyPostDetailView extends ConsumerWidget {
   final File currentFile;
-  CreateArchivingPostView(  {Key? key,required this.currentFile,}) : super(key: key);
+  CreateWhiskyPostDetailView(  {Key? key,required this.currentFile,}) : super(key: key);
 
   final String whiskyName = "mockWhisy";
   final double strength =45;
@@ -29,7 +29,7 @@ class CreateArchivingPostView extends ConsumerWidget {
   final String distilleryLocation = "스코드 ";
 
 
-  final _provider = CreateArchivingPostViewModel().provider;
+  final _provider = CreateWhiskyPostDetailViewModel().provider;
   final tasteNoteController = TextEditingController();
 
   @override
@@ -41,7 +41,7 @@ class CreateArchivingPostView extends ConsumerWidget {
     final whiskyInfo = ref.watch(cameraProvider).scanResult;
 
     ref.listen(_provider, (previousState, newState) {
-      if (newState.isPostResult == true){
+      if (newState.isPostSuccess == true){
         /*TODO 포스트 생성을 완료하면 WhiskyPostDetailView()로
         * 이동 할 수 있게 API에서 새로 생성된 post의 id를 주자
         * **/
@@ -193,7 +193,7 @@ class CreateArchivingPostView extends ConsumerWidget {
             strength: whiskyInfo?.distilleryRating ?? strength,
             distilleryCountry: whiskyInfo?.distilleryCountry ?? distilleryName,
             distilleryAddress: whiskyInfo?.distilleryAddress ?? distilleryLocation,
-                onPressedFunc: (){
+                onPressedEvent: (){
                 /*TODO 이미지 URL을 실제 URL로 변경하자**/
               viewModel.savePost(whiskyInfo?.whiskyId ?? 1, "https://fastly.picsum.photos/id/788/200/300.jpg?hmac=86XnLHCHcI7HWgr9Y662VsXxUxs7H70DjGHc_6iaIw4");
                 },

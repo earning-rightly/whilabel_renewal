@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/design_guide_managers/svg_icon_path.dart';
 import 'package:whilabel_renewal/screen/common_views/long_text_button.dart';
-import 'package:whilabel_renewal/screen/create_archiving_post/create_archiving_post_view.dart';
+import 'package:whilabel_renewal/screen/create_whisky_post_detail/create_whisky_post_detail_view.dart';
 
 class ImagePreviewPage extends StatelessWidget {
   const ImagePreviewPage({Key? key, required this.currentFile})
@@ -40,7 +40,7 @@ class ImagePreviewPage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => CreateArchivingPostView(
+                        builder: (context) => CreateWhiskyPostDetailView(
                           currentFile:  currentFile
                         ),
                       ),

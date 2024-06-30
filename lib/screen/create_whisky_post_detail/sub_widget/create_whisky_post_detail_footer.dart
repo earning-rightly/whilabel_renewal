@@ -4,7 +4,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:whilabel_renewal/data/mock_data/archiving_post/mock_archiving_post.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 
 
@@ -18,11 +17,11 @@ class CreateArchivingPostFooter extends StatelessWidget {
   final String distilleryCountry;
   final String distilleryAddress;
   final File currentFile;
-  final Function()? onPressedFunc;
+  final Function()? onPressedEvent;
 
   CreateArchivingPostFooter({
     Key? key,
-    required this.whiskyName, required this.currentFile, required this.strength, required this.distilleryCountry, required this.distilleryAddress, this.onPressedFunc,
+    required this.whiskyName, required this.currentFile, required this.strength, required this.distilleryCountry, required this.distilleryAddress, this.onPressedEvent,
   }) : super(key: key);
 
   bool isfilled = false;
@@ -86,7 +85,7 @@ class CreateArchivingPostFooter extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: ColorsManager.brown100,
               ),
-              onPressed: onPressedFunc ?? (){},
+              onPressed: onPressedEvent ?? (){},
               //TODO 다이어로그 viewModel에 입략
               child: const Text("등록하기"),
             ),
