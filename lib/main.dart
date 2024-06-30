@@ -4,10 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:whilabel_renewal/design_guide_managers/whilabel_theme.dart';
-import 'package:whilabel_renewal/screen/home/mock_home_view.dart';
 import 'package:whilabel_renewal/screen/login/login_view.dart';
 import 'package:whilabel_renewal/screen/main_bottom_tab_page/main_bottom_tab_page.dart';
 import 'package:whilabel_renewal/screen/route/routes.dart';
+import 'package:whilabel_renewal/screen/splash/splash_view.dart';
 
 import 'design_guide_managers/whilabel_theme.dart';
 
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         },
         title: 'Flutter Demo',
         theme: whilabelTheme,
-        home: MockHomeView(),
+        home: SplashView(),
       )),
     );
   }
