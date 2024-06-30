@@ -14,57 +14,62 @@ class OnBoardingView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(_viewModel.provider);
+    ref.read(_viewModel.provider.notifier).setBuildContext(context);
 
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.centerRight,
-            colors: [
-              Color(0xffA87137),
-              Color(0xff864E33),
-            ]),
-      ),
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: SizedBox(
-                  height: 40,
-                  width: 300,
-                  child: RoundedProgressbar(target: state.target),
+    return Scaffold(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.centerRight,
+              colors: [
+                Color(0xffA87137),
+                Color(0xff864E33),
+              ]),
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: SizedBox(
+                    height: 40,
+                    width: 300,
+                    child: RoundedProgressbar(target: state.target),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 32),
-              Text(
-                state.title,
-                style: TextStylesManager.bold24,
-              ),
-              const Spacer(flex: 1),
-              GestureDetector(
-                onTap: () {
-                  ref.read(_viewModel.provider.notifier).btnTapped();
-                },
-                child: Container(
-                  height: 52,
-                  decoration: BoxDecoration(
-                      color: ColorsManager.white,
-                      borderRadius: BorderRadius.all(
-                          Radius.circular(BaseRadius.radius12))),
-                  child: Center(
-                    child: Text(
-                      state.btnTitle,
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold, color: ColorsManager.brown100),
+                const SizedBox(height: 32),
+                Text(
+                  state.title,
+                  style: TextStylesManager.bold24,
+                ),
+                const Spacer(flex: 1),
+                GestureDetector(
+                  onTap: () {
+                    ref.read(_viewModel.provider.notifier).btnTapped();
+                  },
+                  child: Container(
+                    height: 52,
+                    decoration: BoxDecoration(
+                        color: ColorsManager.white,
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(BaseRadius.radius12))),
+                    child: Center(
+                      child: Text(
+                        state.btnTitle,
+                        style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: ColorsManager.brown100),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 34),
-            ],
+                const SizedBox(height: 34),
+              ],
+            ),
           ),
         ),
       ),
