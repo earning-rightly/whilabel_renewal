@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
@@ -106,6 +107,9 @@ class _PhotoTakingViewState extends State<PhotoTakingView>
 
   @override
   Widget build(BuildContext contextf) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
     return BackListener(
       onBackButtonClick: () =>
           showMoveRootDialog(context, title: "위스키 기록을 중단 하실건가요?", rootIndex: 1),
@@ -227,7 +231,6 @@ class _PhotoTakingViewState extends State<PhotoTakingView>
                                               await imageFile.copy(
                                             '${directory.path}/$currentUnix.$fileFormat',
                                           );
-
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
@@ -237,14 +240,6 @@ class _PhotoTakingViewState extends State<PhotoTakingView>
                                               ),
                                             ),
                                           );
-
-                                          // await  Navigator.pushNamed(
-                                          //     context, Routes.cameraRoutes.chosenImageRoute,
-                                          //     arguments: ChosenImagePageArgs(
-                                          //         initFileImage: finalImage,
-                                          //         index:0,
-                                          //         isUnableSlid: false
-                                          //     ));
                                         }
                                       } catch (e) {
                                         // If an error occurs, log the error to the console.

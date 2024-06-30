@@ -8,10 +8,10 @@ import 'package:whilabel_renewal/screen/camera/barcode_scan/barcode_scan_view.da
 import 'package:whilabel_renewal/screen/camera/camera_view_model.dart';
 import 'package:whilabel_renewal/screen/camera/photo_taking/photo_taking_view.dart';
 import 'package:whilabel_renewal/screen/common_views/long_text_button.dart';
+
+
 class CameraView extends ConsumerWidget {
   CameraView({Key? key}) : super(key: key);
-
-  // final _provider = CameraViewModel().provider;
 
   Future<List<CameraDescription>> getCamera() async {
     WidgetsFlutterBinding.ensureInitialized();
@@ -114,6 +114,7 @@ class CameraView extends ConsumerWidget {
                         ],
                       ),
                     ),
+
                   ],
                 ),
               ),

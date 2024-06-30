@@ -3,6 +3,7 @@ import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/screen/common_views/common_pop_up_with_two_buttons.dart';
 import 'package:whilabel_renewal/screen/main_bottom_tab_page/main_bottom_tab_page.dart';
 
+
 void showMoveRootDialog(BuildContext context,
     {int rootIndex = 0, String title = "홈으로 돌아기시겠습니까?"}) {
   showDialog(
@@ -14,7 +15,7 @@ void showMoveRootDialog(BuildContext context,
       rightButtonTitle: "네",
       rightButtonColor: ColorsManager.brown100,
       onClickRightButton: () async {
-        Navigator.push(
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
             builder: (context) => MainBottomTabPage(),
@@ -27,3 +28,4 @@ void showMoveRootDialog(BuildContext context,
     ),
   );
 }
+

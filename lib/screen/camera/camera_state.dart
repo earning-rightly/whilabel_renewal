@@ -15,7 +15,6 @@ class CameraState with _$CameraState {
     required List<CameraDescription> cameras,
     required CameraViewTexts texts,
     required WhiskyScan? scanResult,
-
     required String barcode
   }) = _CameraState;
 

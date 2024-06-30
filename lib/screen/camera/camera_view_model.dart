@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whilabel_renewal/screen/camera/camera_state.dart';
@@ -28,6 +29,7 @@ print("_callGetWhiskyByBarcodeAPI () barcode ===>>>$barcode");
    }else{
      debugPrint("getWhiskyByBarcode API 결과는 실패 ");
    }
+
   }
 
 }
