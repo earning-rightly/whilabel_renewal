@@ -1,23 +1,34 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:whilabel_renewal/data/mock_data/archiving_post/mock_archiving_post.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:whilabel_renewal/screen/camera/camera_view.dart';
-import 'package:whilabel_renewal/screen/create_archiving_post/create_archiving_post_view.dart';
+import 'package:whilabel_renewal/screen/create_whisky_post_detail/create_whisky_post_detail_view.dart';
 import 'package:whilabel_renewal/screen/home/mock_home_view_model.dart';
 import 'package:whilabel_renewal/screen/login/login_view.dart';
 import 'package:whilabel_renewal/screen/my_page/my_page_view.dart';
 import 'package:whilabel_renewal/screen/my_page/pages/resign/resign_view.dart';
-import 'package:whilabel_renewal/screen/onboarding/onboarding_view.dart';
 import 'package:whilabel_renewal/screen/util_views/loading_view/loading_view.dart';
 import 'package:whilabel_renewal/screen/util_views/loading_view/loading_view_model.dart';
 
-import 'sub_widget/mock_post.dart';
 
 /** 개발할때 사용할 임시 Home view */
 class MockHomeView extends ConsumerWidget {
   MockHomeView({Key? key}) : super(key: key);
 
   final _provider = MockHomeViewModel().provider;
+
+  Future<File> getImageFileFromAssets(String path) async {
+    final byteData = await rootBundle.load('assets/$path');
+
+    final file = File('${(await getTemporaryDirectory()).path}/$path');
+    await file.create(recursive: true);
+    await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+
+    return file;
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -31,12 +42,6 @@ class MockHomeView extends ConsumerWidget {
             height: size.height,
             child: Column(
               children: [
-                SizedBox(height: 30),
-                for (MockArchivingPost post in posts)
-                  ColoredBox(
-                    color: Colors.black,
-                    child: MockPost(archivingPost: post),
-                  ),
                 SizedBox(height: 30),
                 TextButton(
                     onPressed: () {
@@ -69,11 +74,12 @@ class MockHomeView extends ConsumerWidget {
                           builder: (context) => CameraView()));
 
                 }, child: Text("cameraView")),
-                TextButton(onPressed: (){
+                TextButton(onPressed: () async{
+                  final image = await getImageFileFromAssets("mock/mock_whisky.jpg");
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => CreateArchivingPostView()));
+                          builder: (context) => CreateWhiskyPostDetailView(currentFile: image,)));
 
                 }, child: Text("createPostView"))
               ],

@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:whilabel_renewal/domain/whisky_scan.dart';
 
 import 'camera_view_texts.dart';
 
@@ -13,11 +14,11 @@ class CameraState with _$CameraState {
     required bool isFindWhiskyData,
     required List<CameraDescription> cameras,
     required CameraViewTexts texts,
-
+    required WhiskyScan? scanResult,
     required String barcode
   }) = _CameraState;
 
   factory CameraState.initial() {
-    return CameraState( barcode: "", texts: CameraViewTexts(),isFindWhiskyData: false, cameras: [],albumTitle: "" ) ;
+    return CameraState( barcode: "", texts: CameraViewTexts(),isFindWhiskyData: false, cameras: [],albumTitle: "", scanResult: null ) ;
   }
 }

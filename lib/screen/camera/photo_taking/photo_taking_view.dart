@@ -11,6 +11,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/design_guide_managers/svg_icon_path.dart';
 import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
+import 'package:whilabel_renewal/screen/camera/_pages/image_preview_page.dart';
+import 'package:whilabel_renewal/screen/camera/garllery/garllery_view.dart';
 import 'package:whilabel_renewal/screen/common_views/back_listener.dart';
 import 'package:whilabel_renewal/screen/util_views/show_dialog.dart';
 
@@ -123,8 +125,8 @@ class _PhotoTakingViewState extends State<PhotoTakingView>
                   icon: SvgPicture.asset(SvgIconPath.close),
                   onPressed: () {
                     // TODO 뒤로가기 기능이 있는 dialog 추가
-                    // showMoveRootDialog(context,
-                    //     title: "위스키 기록을 중단 하실건가요?", rootIndex: 1);
+                    showMoveRootDialog(context,
+                        title: "위스키 기록을 중단 하실건가요?", rootIndex: 1);
                   },
                 ),
               ]),
@@ -168,7 +170,6 @@ class _PhotoTakingViewState extends State<PhotoTakingView>
                                   onPressed: () async {
                                     if (Platform.isIOS) {
                                       final ImagePicker picker = ImagePicker();
-// Pick an image.
                                       final XFile? image =
                                           await picker.pickImage(
                                               source: ImageSource.gallery);
@@ -190,9 +191,13 @@ class _PhotoTakingViewState extends State<PhotoTakingView>
                                         Navigator.pop(context);
                                       }
                                     } else {
-                                      //
-                                      // Navigator.pushNamed(
-                                      //     context, Routes.cameraRoutes.galleryRoute);
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                GalleryView()),
+                                      );
+
                                     }
                                   }),
                             ),
@@ -226,14 +231,15 @@ class _PhotoTakingViewState extends State<PhotoTakingView>
                                               await imageFile.copy(
                                             '${directory.path}/$currentUnix.$fileFormat',
                                           );
-
-                                          // await  Navigator.pushNamed(
-                                          //     context, Routes.cameraRoutes.chosenImageRoute,
-                                          //     arguments: ChosenImagePageArgs(
-                                          //         initFileImage: finalImage,
-                                          //         index:0,
-                                          //         isUnableSlid: false
-                                          //     ));
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ImagePreviewPage(
+                                                currentFile: finalImage,
+                                              ),
+                                            ),
+                                          );
                                         }
                                       } catch (e) {
                                         // If an error occurs, log the error to the console.

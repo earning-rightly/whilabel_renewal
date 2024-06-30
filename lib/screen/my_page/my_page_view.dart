@@ -36,7 +36,7 @@ class MyPageView extends ConsumerWidget {
                             children: [
                               Flexible(
                                 child: Text(
-                                  "000님",
+                                  "${state.nickname}님",
                                   style: TextStylesManager.bold24,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,

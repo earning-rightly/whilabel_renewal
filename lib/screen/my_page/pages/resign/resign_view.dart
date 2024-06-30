@@ -11,9 +11,12 @@ import 'package:whilabel_renewal/screen/common_views/long_text_button.dart';
 import './resign_view_model.dart';
 
 class ResignView extends ConsumerWidget {
+  final _viewModel = ResignViewModel();
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(resignViewModelProvider);
+    final state = ref.watch(_viewModel.provider);
+    ref.read(_viewModel.provider.notifier).setBuildContext(context);
 
     return Scaffold(
       appBar: _scaffoldAppBar(context),
@@ -65,17 +68,22 @@ class ResignView extends ConsumerWidget {
                   ),
 
                   const SizedBox(height: 10),
-                  LongTextButton(
-                    buttonText: "탈퇴하기",
-                    buttonTextColor: ColorsManager.gray500,
-                    color: ColorsManager.black100,
-                    onPressedFunc: () {
-                      ref
-                          .read(resignViewModelProvider.notifier)
-                          .showResignConfirmPopUp(context);
-                    },
+                  SizedBox(
+                    height: 40,
+                    child: Center(
+                      child: TextButton(
+                        onPressed: () {
+                          ref
+                              .read(_viewModel.provider.notifier)
+                              .showResignConfirmPopUp(context);
+                        },
+                        child: const Text(
+                          "탈퇴하기",
+                          style: TextStyle(color: ColorsManager.gray200),
+                        ),
+                      ),
+                    ),
                   ),
-
                   const SizedBox(height: 34),
                 ],
               ),
