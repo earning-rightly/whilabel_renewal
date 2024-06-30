@@ -19,7 +19,7 @@ void showMoveRootDialog(BuildContext context,
           context,
           MaterialPageRoute(
             builder: (context) => MainBottomTabPage(),
-          ),
+          ), (Route<dynamic> route) => false
         );
       },
       onClickLeftButton: () {

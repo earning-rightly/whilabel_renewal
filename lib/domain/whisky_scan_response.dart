@@ -9,6 +9,7 @@ class WhiskyScanResponse extends BaseResponses<WhiskyScan> {
   WhiskyScanResponse({
     required super.message,
     required super.data,
+    required super.code
   });
 
   factory WhiskyScanResponse.fromJson(Map<String, dynamic> json) =>
