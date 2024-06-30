@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:whilabel_renewal/data/taste/taste_feature.dart';
 import 'package:whilabel_renewal/domain/tastefeature_response.dart';
+import 'package:whilabel_renewal/enums/taste_feature_type.dart';
 import 'package:whilabel_renewal/screen/home/mock_home_view_model.dart';
 import 'package:whilabel_renewal/screen/whisky_post_detail/sub_widget/user_critique_container/user_critique_container_view_model.dart';
 import 'package:whilabel_renewal/service/whisky_service.dart';
@@ -43,19 +44,19 @@ class WhiskyPostDetailViewModel extends StateNotifier<WhiskyPostDetailState> {
   List<TasteFeature> _makeTasteFeature(TasteFeatureResponse data) {
     List<TasteFeature> tasteFeatures = [];
     tasteFeatures.add(TasteFeature(
-        title: "바디감",
+        title: TasteFeatureType.BODY,
         lowExpression: "가벼움",
         highExpression: "무거움",
         value: data.bodyRate.toInt()));
 
     tasteFeatures.add(TasteFeature(
-        title: "향",
+        title: TasteFeatureType.BODY,
         lowExpression: "섬세함",
         highExpression: "스모키함",
         value: data.flavorRate.toInt()));
 
     tasteFeatures.add(TasteFeature(
-        title: "피트감",
+        title:TasteFeatureType.BODY,
         lowExpression: "언피트",
         highExpression: "피트함",
         value: data.peatRate.toInt()));

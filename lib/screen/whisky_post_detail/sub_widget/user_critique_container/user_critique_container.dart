@@ -109,14 +109,14 @@ class UserCritiqueContainer extends ConsumerWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           child: TasteRange(
-                            title: tasteFeature.title,
+                            title: tasteFeature.title.displayName,
                             subTitleRight: tasteFeature.highExpression,
                             subTitleLeft: tasteFeature.lowExpression,
                             value: tasteFeature.value,
                             size: flavorRangeSize,
                             onChangeRating: (int value) async {
                               viewModel.onChangeTasteFeature(
-                                  tasteFeature.title, value);
+                                  tasteFeature.title.displayName, value);
                             },
                           ),
                         )

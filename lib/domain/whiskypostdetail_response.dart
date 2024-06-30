@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:whilabel_renewal/domain/tastefeature_response.dart';
 import 'package:whilabel_renewal/domain/whisky_post_detail_model.dart';
 import 'base_response.dart';
 

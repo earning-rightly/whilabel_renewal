@@ -1,26 +1,35 @@
-import 'package:camera/camera.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whilabel_renewal/screen/camera/camera_state.dart';
+import 'package:whilabel_renewal/service/whisky_service.dart';
+
+final cameraProvider = StateNotifierProvider<CameraViewModel, CameraState>(
+        (ref) => CameraViewModel());
 
 
 class CameraViewModel extends StateNotifier<CameraState> {
-  final provider = StateNotifierProvider<CameraViewModel, CameraState>(
-          (ref) => CameraViewModel());
 
   CameraViewModel() : super(CameraState.initial());
 
-  void updateBarCode(String barcode) {
-    state = state.copyWith(barcode: barcode);
+  final _whiskyService= WhiskyService();
+
+
+  Future <void> updateBarCode(String barcode) async{
+   await  _callGetWhiskyByBarcodeAPI(barcode);
   }
 
-  Future<void> initCamera() async {
-    /// state.cameras를 초기화한다.
-    WidgetsFlutterBinding.ensureInitialized();
-    final _camera = await availableCameras();
+  Future<void> _callGetWhiskyByBarcodeAPI( String barcode) async{
 
-    state = state.copyWith(cameras: _camera);
-    // notifyListeners();
+print("_callGetWhiskyByBarcodeAPI () barcode ===>>>$barcode");
+   final  (isSuccess ,scanResult)  = await  _whiskyService.getWhiskyByBarcode(barcode);
+   if (isSuccess){
+     state =state.copyWith(scanResult: scanResult.data, barcode: barcode);
+     debugPrint("getWhiskyByBarcode 성공");
+   }else{
+     debugPrint("getWhiskyByBarcode API 결과는 실패 ");
+   }
+
   }
 
 }

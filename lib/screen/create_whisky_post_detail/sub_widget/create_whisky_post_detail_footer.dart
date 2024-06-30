@@ -1,17 +1,27 @@
 
 // ignore_for_file: must_be_immutable
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:whilabel_renewal/data/mock_data/archiving_post/mock_archiving_post.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
+
+
+
 
 class CreateArchivingPostFooter extends StatelessWidget {
   // ignore: prefer_const_constructors_in_immutables
-  final MockArchivingPost currentPostData;
+
+  final String whiskyName;
+  final double strength;
+  final String distilleryCountry;
+  final String distilleryAddress;
+  final File currentFile;
+  final Function()? onPressedEvent;
 
   CreateArchivingPostFooter({
     Key? key,
-    required this.currentPostData,
+    required this.whiskyName, required this.currentFile, required this.strength, required this.distilleryCountry, required this.distilleryAddress, this.onPressedEvent,
   }) : super(key: key);
 
   bool isfilled = false;
@@ -24,16 +34,15 @@ class CreateArchivingPostFooter extends StatelessWidget {
           color: ColorsManager.black100,
           border:
               Border(top: BorderSide(width: 1, color: ColorsManager.black200))),
-      height: 75,
-      width: 340,
+      height: 85,
+      width: MediaQuery.of(context).size.width,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // Expanded(
-          // TODO 내가 찍은 사진 변형 UI로 보야주기
-          //   flex: 40,
-          //   child: Image.file(fit: BoxFit.cover, currentPostData.imageUrl!),
-          // ),
+          Expanded(
+            flex: 50,
+            child: Image.file(currentFile,fit: BoxFit.cover, ),
+          ),
           SizedBox(width: 12),
           Expanded(
             flex: 149,
@@ -43,16 +52,16 @@ class CreateArchivingPostFooter extends StatelessWidget {
               children: [
                 SizedBox(
                   child: Text(
-                    currentPostData.whiskyName,
+                    whiskyName,
                     style: TextStyle(fontSize: 14),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                   ),
                 ),
-                currentPostData.location != null
+                distilleryAddress!= null
                     ? SizedBox(
                         child: Text(
-                          "${currentPostData.location}\t${currentPostData.strength}%",
+                          "${distilleryAddress}\t${strength}%",
                           style: const TextStyle(fontSize: 12),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
@@ -60,7 +69,7 @@ class CreateArchivingPostFooter extends StatelessWidget {
                       )
                     : SizedBox(
                         child: Text(
-                          "\t${currentPostData.strength}%",
+                          "\t${strength}%",
                           style: const TextStyle(fontSize: 12),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
@@ -76,7 +85,7 @@ class CreateArchivingPostFooter extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: ColorsManager.brown100,
               ),
-              onPressed: () {},
+              onPressed: onPressedEvent ?? (){},
               //TODO 다이어로그 viewModel에 입략
               child: const Text("등록하기"),
             ),
