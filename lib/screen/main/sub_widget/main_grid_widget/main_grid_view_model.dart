@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whilabel_renewal/domain/whiskypost_response.dart';
 import 'package:whilabel_renewal/screen/main/sub_widget/main_grid_widget/main_grid_state.dart';
 
 import '../../../../enums/pagin_enum.dart';
@@ -52,11 +53,11 @@ class MainGridViewModel extends StateNotifier<MainGridState> {
     _lock = false;
   }
 
-  int getDuplicateWhiskyCount(int id) {
+  List<WhiskyPostResponse> getDuplicateWhiskyCount(int id) {
     final data = state.data;
-    return data.where((item) {
+    return  data.where((item) {
       return item.whiskyId == id;
-    }).length;
+    }).toList();
   }
 
   void setBuildContext(BuildContext context) {
