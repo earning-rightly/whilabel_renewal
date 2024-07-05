@@ -3,33 +3,40 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/design_guide_managers/svg_icon_path.dart';
-import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
+import 'package:whilabel_renewal/domain/whiskypost_response.dart';
 
-class MainGridCellWidget extends StatelessWidget {
+import 'main_grid_view_model.dart';
+
+class MainGridCellWidget extends ConsumerWidget {
 
   final int currentIndex;
   final double width;
   final double height;
-  final String imageUrl;
   final int whiskyCount;
+  final String coverImage ;
+  final List<WhiskyPostResponse> posts;
 
   final Function(int) holderTapEvent;
 
-  MainGridCellWidget({
+  MainGridCellWidget( {
     required this.currentIndex,
     required this.width,
     required this.height,
-    required this.imageUrl,
     required this.whiskyCount,
     required this.holderTapEvent,
+    required this.coverImage,
+    required this.posts,
 });
 
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final mainGridViewModel = MainGridViewModel();
+
     return GestureDetector(
       onTap: (){
         holderTapEvent(currentIndex);
@@ -44,7 +51,7 @@ class MainGridCellWidget extends StatelessWidget {
             ),
             clipBehavior: Clip.hardEdge,
             child: CachedNetworkImage(
-              imageUrl: imageUrl,
+              imageUrl:coverImage,
               fit: BoxFit.cover,
             ),
           ),
