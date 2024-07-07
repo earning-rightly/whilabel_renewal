@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -74,8 +75,15 @@ class LoginViewModel extends StateNotifier<LoginViewState> {
 
   void _callUserMeApi() async {
     final (isSuccess, result) = await userService.me();
-
     if (isSuccess) {
+
+
+      final fcmToken = await FirebaseMessaging.instance.getToken();
+      print("fcmToken => $fcmToken");
+      /* if (result.fcmToken != fcmToken) {
+            userService.setFcmToken(fcmToken);
+      }
+      * */
       UserSingleton.instance.setUserMeResponse(result);
       Navigator.pushAndRemoveUntil(_context!,
           MaterialPageRoute(builder: (context) {

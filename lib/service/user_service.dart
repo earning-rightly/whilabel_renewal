@@ -137,4 +137,24 @@ class UserService extends BaseService {
     return (isSuccess);
   }
 
+
+  /** TODO Fcm token 수정 API와 연결하자*/
+  Future<bool> setFcmToken(String fcmToken) async{
+
+    var url =
+    Uri.http(baseUrl,"api/v1/user/push");
+    final header = await super.getAuthenticateHeader();
+    final body = jsonEncode({
+      "fcmToken": fcmToken,
+    });
+    var response = await http.put(url, body: body ,headers: header);
+
+    bool isSuccess = true;
+    if (response.statusCode != 200) {
+      isSuccess = false;
+    }
+    return (isSuccess);
+
+
+  }
 }
