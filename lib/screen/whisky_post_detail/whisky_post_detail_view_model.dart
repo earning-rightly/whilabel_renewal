@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:whilabel_renewal/data/taste/taste_feature.dart';
 import 'package:whilabel_renewal/domain/tastefeature_response.dart';
 import 'package:whilabel_renewal/enums/taste_feature_type.dart';
-import 'package:whilabel_renewal/screen/home/mock_home_view_model.dart';
 import 'package:whilabel_renewal/screen/whisky_post_detail/sub_widget/user_critique_container/user_critique_container_view_model.dart';
 import 'package:whilabel_renewal/service/whisky_service.dart';
 import './whisky_post_detail_state.dart';
