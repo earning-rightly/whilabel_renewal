@@ -47,7 +47,7 @@ class RegisterNicknameView extends ConsumerWidget {
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                 ),
               ),
-              style: const TextStyle(color: ColorsManager.white),
+              style: const TextStyle(color: ColorsManager.white,fontSize: 15),
               onChanged: (value) {
                 viewModel.validateNickname(value);
               },

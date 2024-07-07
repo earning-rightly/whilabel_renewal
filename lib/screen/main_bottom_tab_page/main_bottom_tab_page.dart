@@ -64,7 +64,7 @@ class MainBottomTabPage extends ConsumerWidget {
                   colorFilter: const ColorFilter.mode(
                       ColorsManager.brown100, BlendMode.srcIn),
                 ),
-                label: "mypage"
+                label: "camera"
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(

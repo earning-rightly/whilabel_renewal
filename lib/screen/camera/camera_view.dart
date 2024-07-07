@@ -30,33 +30,21 @@ class CameraView extends ConsumerWidget {
     return Scaffold(
         body: SafeArea(
             child: Padding(
-      // padding: WhilabelPadding.onlyHoizBasicPadding,
       padding: EdgeInsets.symmetric(horizontal: 16),
       child: SizedBox(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            height * 0.8 <= width
-                ? Container(
-                    margin: EdgeInsets.symmetric(vertical: 32),
-                    child: Text(
-                      viewTexts.pageTitle,
-                      style: TextStylesManager.bold24,
-                    ),
-                  )
-                : Expanded(
-                    flex: 1,
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 32),
-                      child: Text(
-                        viewTexts.pageTitle,
-                        style: TextStylesManager.bold24,
-                      ),
-                    ),
-                  ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 32),
+              child: Text(
+                viewTexts.pageTitle,
+                style: TextStylesManager.bold24,
+              ),
+            ),
             Expanded(
-              flex: height * 0.8 <= width ? 1 : 3,
-              child: SizedBox(
+              flex: 1,
+              child: Center(
                 child: Column(
                   children: [
                     Image.asset(
@@ -114,7 +102,6 @@ class CameraView extends ConsumerWidget {
                         ],
                       ),
                     ),
-
                   ],
                 ),
               ),

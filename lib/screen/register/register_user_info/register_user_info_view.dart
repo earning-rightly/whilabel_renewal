@@ -62,7 +62,7 @@ class RegisterUserInfoView extends ConsumerWidget {
                           borderRadius: BorderRadius.all(Radius.circular(8)),
                         ),
                       ),
-                      style: const TextStyle(color: ColorsManager.white),
+                      style: const TextStyle(color: ColorsManager.white,fontSize: 15),
                     ),
                     const SizedBox(height: 32),
                     Text(state.texts.genderBoxTitle,
