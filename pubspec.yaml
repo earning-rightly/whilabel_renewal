@@ -60,6 +60,11 @@ dependencies:
 
   # 기타
   permission_handler: ^11.3.1
+
+  # firebase
+  firebase_messaging: 15.0.2
+  firebase_core: 3.1.1
+  flutter_local_notifications: ^17.2.1+1
   
 
 
