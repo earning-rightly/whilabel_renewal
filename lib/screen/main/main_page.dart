@@ -10,6 +10,7 @@ import 'package:whilabel_renewal/screen/main/main_view_model.dart';
 import 'package:whilabel_renewal/screen/main/sub_widget/main_grid_widget/main_grid_widget.dart';
 import 'package:whilabel_renewal/screen/main/sub_widget/main_list_widget/main_list_widget.dart';
 import 'package:whilabel_renewal/screen/my_page/my_page_view.dart';
+import 'package:whilabel_renewal/service/notification/whilabel_fcm_service.dart';
 
 class MainPage extends ConsumerStatefulWidget {
   const MainPage({super.key});
@@ -22,6 +23,8 @@ class _MainPageState extends ConsumerState<MainPage>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController;
   late final _viewModel = MainViewModel();
+  final whilabelFcmService =WhilabelFcmService();
+
 
   final listView = MainListWidget();
   final gridView = MainGridWidget();
@@ -31,17 +34,18 @@ class _MainPageState extends ConsumerState<MainPage>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+
+    // FCM service
+    whilabelFcmService.setupInteractedMessage();
+
     Future.microtask(() {
       ref.read(_viewModel.provider.notifier).init();
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
-
     final state = ref.watch(_viewModel.provider);
-
 
     return Container(
       color: ColorsManager.black100,
@@ -61,7 +65,9 @@ class _MainPageState extends ConsumerState<MainPage>
                 ),
                 child: TabBar(
                   onTap: (index) {
-                    ref.read(_viewModel.provider.notifier).setCurrentIndex(index);
+                    ref
+                        .read(_viewModel.provider.notifier)
+                        .setCurrentIndex(index);
                   },
                   controller: _tabController,
                   unselectedLabelColor: ColorsManager.black100,
@@ -74,10 +80,16 @@ class _MainPageState extends ConsumerState<MainPage>
                   ),
                   tabs: [
                     Tab(
-                      icon: SvgPicture.asset(SvgIconPath.list,color: state.currentIndex == 0 ? Colors.white : ColorsManager.gray),
+                      icon: SvgPicture.asset(SvgIconPath.list,
+                          color: state.currentIndex == 0
+                              ? Colors.white
+                              : ColorsManager.gray),
                     ),
                     Tab(
-                      icon: SvgPicture.asset(SvgIconPath.grid,color: state.currentIndex == 1 ? Colors.white : ColorsManager.gray),
+                      icon: SvgPicture.asset(SvgIconPath.grid,
+                          color: state.currentIndex == 1
+                              ? Colors.white
+                              : ColorsManager.gray),
                     )
                   ],
                 ),
@@ -107,7 +119,7 @@ class _MainPageState extends ConsumerState<MainPage>
       backgroundColor: ColorsManager.black100,
       leading: Row(
         children: [
-           Text(
+          Text(
             state.text.title,
             style: TextStylesManager.bold24,
           ),
@@ -133,7 +145,9 @@ class _MainPageState extends ConsumerState<MainPage>
       splashColor: ColorsManager.black300,
       splashRadius: 15,
       color: ColorsManager.gray200,
-      icon: SvgPicture.asset(state.hasNotification ? SvgIconPath.notificationNew :SvgIconPath.notification),
+      icon: SvgPicture.asset(state.hasNotification
+          ? SvgIconPath.notificationNew
+          : SvgIconPath.notification),
       padding: EdgeInsets.zero,
       constraints: const BoxConstraints(minWidth: 10, minHeight: 10),
       style: IconButton.styleFrom(
