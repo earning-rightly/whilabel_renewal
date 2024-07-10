@@ -13,12 +13,7 @@ import 'package:whilabel_renewal/screen/common_views/long_text_button.dart';
 class CameraView extends ConsumerWidget {
   CameraView({Key? key}) : super(key: key);
 
-  Future<List<CameraDescription>> getCamera() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    final _camera = await availableCameras();
 
-    return _camera;
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,6 +21,7 @@ class CameraView extends ConsumerWidget {
     double width = MediaQuery.of(context).size.width;
     final viewModel = ref.watch(cameraProvider.notifier);
     final viewTexts = ref.watch(cameraProvider).texts;
+    viewModel.setBuildContext(context);
 
     return Scaffold(
         body: SafeArea(
@@ -75,26 +71,7 @@ class CameraView extends ConsumerWidget {
                               buttonText:  viewTexts.longTextButtonTitle,
                               color: ColorsManager.brown100,
                               onPressedFunc: () async {
-                                final cameras = await getCamera();
-
-                                String barcode = "";
-
-                             barcode =  await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const BarcodeScanView(),
-                                      ));
-                                 viewModel.updateBarCode(barcode);
-
-
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        PhotoTakingView(cameras: cameras),
-                                  ),
-                                );
+                                viewModel.showBarcodeScanView();
                               },
                             ),
                           ),

@@ -4,7 +4,6 @@ import 'package:simple_barcode_scanner/screens/shared.dart';
 
 export 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 
-
 class BarcodeScanView extends StatelessWidget {
   ///Barcode line color default set to #ff6666
   final String lineColor;
@@ -38,23 +37,29 @@ class BarcodeScanView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child:
-    Stack(children: [
-      BarcodeScanner(
-      lineColor: lineColor,
-      cancelButtonText: cancelButtonText,
-      isShowFlashIcon: isShowFlashIcon,
-      scanType: scanType,
-      appBarTitle: appBarTitle,
-      centerTitle: centerTitle,
-      onScanned: (res) {
-        Navigator.pop(context, res);
-      },
-    ),
-      Icon(Icons.image),
-    ],)
-    );
+    return SafeArea(
+        child: Stack(
+      children: [
+        BarcodeScanner(
+          lineColor: lineColor,
+          cancelButtonText: cancelButtonText,
+          isShowFlashIcon: isShowFlashIcon,
+          scanType: scanType,
+          appBarTitle: appBarTitle,
+          centerTitle: centerTitle,
+          onScanned: (res) {
+            Navigator.pop(context, res);
+          },
+        ),
+        Positioned(
+          bottom: 0,
+            child: Container(
+              height: 100,
+              color: Colors.black,
+            ),
+        ),
+        Icon(Icons.image),
+      ],
+    ));
   }
 }
-
-String result = '';

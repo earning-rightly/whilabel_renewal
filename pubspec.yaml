@@ -58,6 +58,7 @@ dependencies:
   simple_barcode_scanner: ^0.1.1
   photo_gallery: ^2.2.1
   transparent_image: ^2.0.1
+  google_ml_kit:
 
   # 기타
   permission_handler: ^11.3.1
