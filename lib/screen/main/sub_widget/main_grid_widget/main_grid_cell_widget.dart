@@ -4,9 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/design_guide_managers/svg_icon_path.dart';
-import 'package:whilabel_renewal/domain/whiskypost_response.dart';
 
-import 'main_grid_view_model.dart';
 
 class MainGridCellWidget extends ConsumerWidget {
   final int currentIndex;
@@ -28,7 +26,6 @@ class MainGridCellWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final mainGridViewModel = MainGridViewModel();
 
     return GestureDetector(
       onTap: () {
