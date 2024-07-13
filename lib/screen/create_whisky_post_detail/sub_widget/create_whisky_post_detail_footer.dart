@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
+import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
 
 
 
@@ -12,7 +13,7 @@ import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 class CreateArchivingPostFooter extends StatelessWidget {
   // ignore: prefer_const_constructors_in_immutables
 
-  final String whiskyName;
+  final String? whiskyName;
   final double strength;
   final String distilleryCountry;
   final String distilleryAddress;
@@ -21,7 +22,7 @@ class CreateArchivingPostFooter extends StatelessWidget {
 
   CreateArchivingPostFooter({
     Key? key,
-    required this.whiskyName, required this.currentFile, required this.strength, required this.distilleryCountry, required this.distilleryAddress, this.onPressedEvent,
+     this.whiskyName, required this.currentFile, required this.strength, required this.distilleryCountry, required this.distilleryAddress, this.onPressedEvent,
   }) : super(key: key);
 
   bool isfilled = false;
@@ -44,6 +45,13 @@ class CreateArchivingPostFooter extends StatelessWidget {
             child: Image.file(currentFile,fit: BoxFit.cover, ),
           ),
           SizedBox(width: 12),
+          whiskyName == null ?
+
+          Expanded(
+            flex: 149,
+          child: Center(child: Text("인식되지 않은 위스키 입니다", style: TextStylesManager.medium12,)),
+          ):
+
           Expanded(
             flex: 149,
             child: Column(
@@ -52,7 +60,7 @@ class CreateArchivingPostFooter extends StatelessWidget {
               children: [
                 SizedBox(
                   child: Text(
-                    whiskyName,
+                    whiskyName!,
                     style: TextStyle(fontSize: 14),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
