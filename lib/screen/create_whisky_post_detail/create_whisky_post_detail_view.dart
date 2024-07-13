@@ -209,8 +209,8 @@ class CreateWhiskyPostDetailView extends ConsumerWidget {
                     Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => isFindWhiskyData
-                                ? PostSuccessPage(
+                            builder: (context) =>
+                            isFindWhiskyData  ? PostSuccessPage(
                                     currentWhiskyCount: currentWhiskyCount ?? 0)
                                 : PostFailurePage(
                                     currentWhiskyCount:

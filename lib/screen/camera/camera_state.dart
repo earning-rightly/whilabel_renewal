@@ -19,6 +19,6 @@ class CameraState with _$CameraState {
   }) = _CameraState;
 
   factory CameraState.initial() {
-    return CameraState( barcode: "", texts: CameraViewTexts(),isFindWhiskyData: false, cameras: [],albumTitle: "", scanResult: null ) ;
+    return CameraState( barcode: "", texts: CameraViewTexts(),isFindWhiskyData: true, cameras: [],albumTitle: "", scanResult: null ) ;
   }
 }
