@@ -51,11 +51,13 @@ class MainGridViewModel extends StateNotifier<MainGridState> {
     _lock = false;
   }
 
-  List<WhiskyPostResponse> getDuplicateWhiskys(int id) {
-    final data = state.data;
-    return data.where((post) {
-      return post.whiskyId == id;
-    }).toList();
+  /* 같은 위스키 id를 가지고 있는 MainGridState.data의 index 묶음 **/
+  List<int> getWhiskyIdToDataIndexes(int id) {
+    List<WhiskyPostResponse> data = state.data;
+    return data
+        .where((post) => post.whiskyId == id)
+        .map((post) => data.indexOf(post))
+        .toList();
   }
 
   void setBuildContext(BuildContext context) {
@@ -89,19 +91,18 @@ class MainGridViewModel extends StateNotifier<MainGridState> {
               right: 0,
               left: 0,
               child: ExpandedWhiskyPostImage(
-                useDots: true,
-                dotsAlignment: Alignment.bottomCenter,
-                dotsColorInactive: ColorsManager.gray500,
-                dotsColorActive: ColorsManager.white,
-                height: height * 0.6,
-                context: context,
-                images: [
-                  for (WhiskyPostResponse whiskeyNameGroupedArchivingPost
-                      in posts)
-                    whiskeyNameGroupedArchivingPost.imageUrl,
-                ],
-                onClick: onTapExpandedImageEvent
-              ),
+                  useDots: true,
+                  dotsAlignment: Alignment.bottomCenter,
+                  dotsColorInactive: ColorsManager.gray500,
+                  dotsColorActive: ColorsManager.white,
+                  height: height * 0.6,
+                  context: context,
+                  images: [
+                    for (WhiskyPostResponse whiskeyNameGroupedArchivingPost
+                        in posts)
+                      whiskeyNameGroupedArchivingPost.imageUrl,
+                  ],
+                  onClick: onTapExpandedImageEvent),
             ),
           ],
         ),

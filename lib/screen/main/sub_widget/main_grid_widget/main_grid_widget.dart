@@ -29,6 +29,7 @@ class _MainGridWidgetState extends ConsumerState<MainGridWidget> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(_viewModel.provider);
+    final gridPostData = state.data;
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     final cellWidth = (width - (10 * 3)) / 2;
@@ -50,19 +51,28 @@ class _MainGridWidgetState extends ConsumerState<MainGridWidget> {
               .read(_viewModel.provider.notifier)
               .callWhiskyPostGridAPI(PagingType.paging);
         }
-        final groupingIdPosts = ref
+        List<int> groupingPostIndexes = ref
             .read(_viewModel.provider.notifier)
-            .getDuplicateWhiskys(data.whiskyId);
+            .getWhiskyIdToDataIndexes(data.whiskyId);
+        print("groupingPostIndexes: ${groupingPostIndexes}\t index:$index");
         return MainGridCellWidget(
-          posts: groupingIdPosts,
           currentIndex: index,
-          coverImage: groupingIdPosts.first.imageUrl,
+          coverImage: state.data[index].imageUrl,
           width: cellWidth,
           height: cellWidth * 1.25,
-          whiskyCount: groupingIdPosts.length,
+          whiskyCount: groupingPostIndexes.length,
           holderTapEvent: (index) {
+            groupingPostIndexes.remove(index);
+            groupingPostIndexes.insert(0, index);
+
             ref.read(_viewModel.provider.notifier).showExpendingImage(context,
-                posts: groupingIdPosts, onTapExpandedImageEvent: (index) {
+                posts: gridPostData
+                    .where((post) => groupingPostIndexes
+                        .contains(gridPostData.indexOf(post)))
+                    .toList(),
+             onTapExpandedImageEvent: (index) {
+              print(groupingPostIndexes);
+
               ref.read(_contextMenuProvider.notifier).showContextMenu(
                   context,
                   overlay!.paintBounds.size.width,
