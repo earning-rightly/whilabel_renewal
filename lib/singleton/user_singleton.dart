@@ -16,4 +16,8 @@ class UserSingleton {
   UsermeResponse? getUserMeResponse() {
     return _data;
   }
+
+  int? getUserMeWhiskyCount() {
+    return _data?.whiskyCount ;
+  }
 }
