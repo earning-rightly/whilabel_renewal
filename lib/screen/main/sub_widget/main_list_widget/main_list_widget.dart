@@ -61,6 +61,7 @@ class _MainListWidgetState extends ConsumerState<MainListWidget> {
                   currentIndex: index,
                   imageUrl: data.imageUrl,
                   whiskyname: data.name,
+                  postId: data.id,
                   address: data.address,
                   distilleryRating: data.distilleryRating,
                   tasteNote: data.tasteNote,
@@ -72,9 +73,10 @@ class _MainListWidgetState extends ConsumerState<MainListWidget> {
                       .read(viewModel.provider.notifier)
                       .getDuplicateWhiskyCount(data.whiskyId),
                   holderTapEvent: (currentIndex) {
-                    ref.read(viewModel.provider.notifier).showWhiskyPostDetailView(data.id);
+                    ref
+                        .read(viewModel.provider.notifier)
+                        .showWhiskyPostDetailView(data.id);
                   },
-                  moreBtnTapEvent: (currentIndex) {},
                 );
               }),
         ),

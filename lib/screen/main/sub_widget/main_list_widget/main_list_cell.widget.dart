@@ -1,11 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whilabel_renewal/screen/util_views/context_menu/context_menu_view_model.dart';
 
 import '../../../../design_guide_managers/color_manager.dart';
 import '../../../../design_guide_managers/text_style_manager.dart';
 
-class MainListCellWidget extends StatelessWidget {
+// ignore: must_be_immutable
+class MainListCellWidget extends ConsumerWidget {
   final int currentIndex;
   final String imageUrl;
   final String whiskyname;
@@ -15,15 +18,16 @@ class MainListCellWidget extends StatelessWidget {
   final double whiskyStarRate;
   final String createdAt;
   final int postCount;
+  final int postId;
 
   final Function(int) holderTapEvent;
-  final Function(int) moreBtnTapEvent;
 
-  const MainListCellWidget(
+  MainListCellWidget(
       {super.key,
       required this.currentIndex,
       required this.imageUrl,
       required this.whiskyname,
+      required this.postId,
       required this.address,
       required this.distilleryRating,
       required this.tasteNote,
@@ -31,10 +35,13 @@ class MainListCellWidget extends StatelessWidget {
       required this.createdAt,
       required this.postCount,
       required this.holderTapEvent,
-      required this.moreBtnTapEvent});
+      });
+
+  GlobalKey key = GlobalKey(); // declare a global key
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final contextMenuProvider = ContextMenuViewModel().provider;
     return GestureDetector(
       onTap: () {
         holderTapEvent(currentIndex);
@@ -80,9 +87,12 @@ class MainListCellWidget extends StatelessWidget {
                         ),
                         // 누르면 item meun 보여주는 아이콘 버튼
                         IconButton(
-                            splashColor: ColorsManager.black300,
+                            splashColor: ColorsManager.black100,
                             splashRadius: 15,
-                            icon: Icon(Icons.more_horiz_outlined),
+                            icon: Icon(
+                              Icons.more_horiz_outlined,
+                              color: ColorsManager.white,
+                            ),
                             padding: EdgeInsets.zero,
                             constraints: const BoxConstraints(
                                 minWidth: 10, minHeight: 10),
@@ -91,7 +101,15 @@ class MainListCellWidget extends StatelessWidget {
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
                             onPressed: () async {
-                              moreBtnTapEvent(currentIndex);
+                              RenderBox popUpMenuBox = key.currentContext
+                                  ?.findRenderObject() as RenderBox;
+                              // meauitems가 나타나야 하는 곳에 위치를 통일 시키기 위해서
+                              Offset position = popUpMenuBox.localToGlobal(
+                                  Offset.zero); //this is global position
+                              ref
+                                  .read(contextMenuProvider.notifier)
+                                  .showContextMenu(
+                                      context, position.dx + 1000, position.dy);
                             }),
                       ],
                     ),

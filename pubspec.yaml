@@ -61,6 +61,7 @@ dependencies:
 
   # 기타
   permission_handler: ^11.3.1
+  popup_banner: ^1.0.0
   
 
 

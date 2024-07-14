@@ -1,20 +1,17 @@
-
-
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/design_guide_managers/svg_icon_path.dart';
-import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
 
-class MainGridCellWidget extends StatelessWidget {
 
+class MainGridCellWidget extends ConsumerWidget {
   final int currentIndex;
   final double width;
   final double height;
-  final String imageUrl;
   final int whiskyCount;
+  final String coverImage;
 
   final Function(int) holderTapEvent;
 
@@ -22,16 +19,16 @@ class MainGridCellWidget extends StatelessWidget {
     required this.currentIndex,
     required this.width,
     required this.height,
-    required this.imageUrl,
     required this.whiskyCount,
     required this.holderTapEvent,
-});
-
+    required this.coverImage,
+  });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         holderTapEvent(currentIndex);
       },
       child: Stack(
@@ -44,13 +41,12 @@ class MainGridCellWidget extends StatelessWidget {
             ),
             clipBehavior: Clip.hardEdge,
             child: CachedNetworkImage(
-              imageUrl: imageUrl,
+              imageUrl: coverImage,
               fit: BoxFit.cover,
             ),
           ),
-
           Container(
-            margin: EdgeInsets.only(right: 12,bottom: 12),
+            margin: EdgeInsets.only(right: 12, bottom: 12),
             alignment: Alignment.bottomRight,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -58,13 +54,16 @@ class MainGridCellWidget extends StatelessWidget {
                 SizedBox(
                   width: 16,
                   height: 16,
-                  child: SvgPicture.asset(SvgIconPath.whisky,color: ColorsManager.white,fit: BoxFit.fitWidth),
+                  child: SvgPicture.asset(SvgIconPath.whisky,
+                      color: ColorsManager.white, fit: BoxFit.fitWidth),
                 ),
                 const SizedBox(width: 1),
                 Text(
                   "${whiskyCount}",
                   style: const TextStyle(
-                      fontSize: 14, fontWeight: FontWeight.w400, color: ColorsManager.white),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: ColorsManager.white),
                 ),
               ],
             ),
