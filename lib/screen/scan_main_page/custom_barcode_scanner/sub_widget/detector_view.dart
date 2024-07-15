@@ -1,9 +1,9 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
-
+import 'package:whilabel_renewal/screen/scan_main_page/gallery/gallery_view.dart';
 import 'camera_view.dart';
-import 'gallery_view.dart';
+// import 'gallery_view.dart';
 
 enum DetectorViewMode { liveFeed, gallery }
 
@@ -62,11 +62,17 @@ class _DetectorViewState extends State<DetectorView> {
             onCameraShutterTap: widget.onCameraShutterTapped,
           )
         : GalleryView(
-            title: widget.title,
-            text: widget.text,
-            onImage: widget.onImage,
-            onDetectorViewModeChanged: _onDetectorViewModeChanged);
+      onImageSelectedForBarcodeScan: widget.onImage,
+      onDetectorViewModeChanged: _onDetectorViewModeChanged,
+      isInBarcodeScanMode: true,
+    );
   }
+
+  // GalleryView(
+  // title: widget.title,
+  // text: widget.text,
+  // onImage: widget.onImage,
+  // onDetectorViewModeChanged: _onDetectorViewModeChanged);
 
   void _onDetectorViewModeChanged() {
     if (_mode == DetectorViewMode.liveFeed) {

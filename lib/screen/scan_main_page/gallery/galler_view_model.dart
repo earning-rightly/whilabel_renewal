@@ -49,8 +49,7 @@ class GalleryViewModel extends StateNotifier<GalleryState> {
 
       _albumNames = albumNames?.map((name) => name!).toList() ?? [];
 
-      state = state.copyWith(albums: albums, mediums: this._mediums, albumNames: _albumNames );
-
+      state = state.copyWith(albums: albums, mediums: this._mediums, albumNames: _albumNames,isLoading: false );
     }
   }
 

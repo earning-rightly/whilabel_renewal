@@ -14,4 +14,7 @@ class CustomBarcodeScannerViewModel extends StateNotifier<CustomBarcodeScannerSt
 
   CustomBarcodeScannerViewModel(this.ref) : super(CustomBarcodeScannerState.initial());
 
+
+
+
 }
