@@ -1,6 +1,7 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whilabel_renewal/screen/main_bottom_tab_page/main_bottom_tab_state.dart';
+import 'package:whilabel_renewal/singleton/gallery_singleton.dart';
 
 
 class MainBottomTabViewModel extends StateNotifier<MainBottomTabState>  {
