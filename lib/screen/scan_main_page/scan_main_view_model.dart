@@ -40,7 +40,7 @@ class ScanMainViewModel extends StateNotifier<ScanMainState> {
 
   void _callGetWhiskyByBarcodeAPI(String barcode) async {
     print("_callGetWhiskyByBarcodeAPI () barcode ===>>>$barcode");
-    final (isSuccess, scanResult) =
+    final (_, scanResult) =
         await _whiskyService.getWhiskyByBarcode(barcode);
     if (scanResult.data != null) {
       state = state.copyWith(scanResult: scanResult.data, barcode: barcode);
