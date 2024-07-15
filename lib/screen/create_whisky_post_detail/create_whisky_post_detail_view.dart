@@ -9,7 +9,6 @@ import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/design_guide_managers/svg_icon_path.dart';
 import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
 import 'package:whilabel_renewal/design_guide_managers/text_widgets_styles.dart';
-import 'package:whilabel_renewal/screen/camera/camera_view_model.dart';
 import 'package:whilabel_renewal/screen/common_views/star_rating.dart';
 import 'package:whilabel_renewal/screen/common_views/taste_range.dart';
 import 'package:whilabel_renewal/screen/common_views/text_field_lengh_counter.dart';
@@ -38,7 +37,9 @@ class CreateWhiskyPostDetailView extends ConsumerWidget {
     double starScore = ref.watch(_provider).starScore;
     final viewModel = ref.watch(_provider.notifier);
     final Size size = MediaQuery.of(context).size;
-    final whiskyInfo = ref.watch(cameraProvider).scanResult;
+    //TODO 한상민 scanResult를 한번에 가져오는 식이 아니라, 계속 상위 위젯 혹은 전 페이지에서 넘겨받아서 처리하는 식으로 변경 요청
+    final whiskyInfo = null;
+        //ref.watch(cameraProvider).scanResult;
 
     ref.listen(_provider, (previousState, newState) {
       if (newState.isPostSuccess == true){

@@ -1,4 +1,4 @@
-class CameraViewTexts {
+class ScanMainTextx {
   final String longTextButtonTitle = "위스키 기록하기";
   final String pageTitle = "위스키 기록";
   final String pageIntroduce = "오늘 마신 위스키를 기록해볼까요?";

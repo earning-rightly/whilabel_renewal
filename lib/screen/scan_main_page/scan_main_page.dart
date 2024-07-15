@@ -4,59 +4,40 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/design_guide_managers/image_path.dart';
 import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
-import 'package:whilabel_renewal/screen/camera/barcode_scan/barcode_scan_view.dart';
-import 'package:whilabel_renewal/screen/camera/camera_view_model.dart';
-import 'package:whilabel_renewal/screen/camera/photo_taking/photo_taking_view.dart';
+import 'package:whilabel_renewal/screen/scan_main_page/scan_main_view_model.dart';
 import 'package:whilabel_renewal/screen/common_views/long_text_button.dart';
 
+class ScanMainPage extends ConsumerWidget {
+  ScanMainPage({Key? key}) : super(key: key);
 
-class CameraView extends ConsumerWidget {
-  CameraView({Key? key}) : super(key: key);
-
-  Future<List<CameraDescription>> getCamera() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    final _camera = await availableCameras();
-
-    return _camera;
-  }
+  final _viewModel = ScanMainViewModel();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    final viewModel = ref.watch(cameraProvider.notifier);
-    final viewTexts = ref.watch(cameraProvider).texts;
+    final viewModel = ref.watch(_viewModel.provider.notifier);
+    final viewTexts = ref.watch(_viewModel.provider).texts;
+    viewModel.setBuildContext(context);
 
     return Scaffold(
         body: SafeArea(
             child: Padding(
-      // padding: WhilabelPadding.onlyHoizBasicPadding,
       padding: EdgeInsets.symmetric(horizontal: 16),
       child: SizedBox(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            height * 0.8 <= width
-                ? Container(
-                    margin: EdgeInsets.symmetric(vertical: 32),
-                    child: Text(
-                      viewTexts.pageTitle,
-                      style: TextStylesManager.bold24,
-                    ),
-                  )
-                : Expanded(
-                    flex: 1,
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 32),
-                      child: Text(
-                        viewTexts.pageTitle,
-                        style: TextStylesManager.bold24,
-                      ),
-                    ),
-                  ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 32),
+              child: Text(
+                viewTexts.pageTitle,
+                style: TextStylesManager.bold24,
+              ),
+            ),
             Expanded(
-              flex: height * 0.8 <= width ? 1 : 3,
-              child: SizedBox(
+              flex: 1,
+              child: Center(
                 child: Column(
                   children: [
                     Image.asset(
@@ -84,29 +65,10 @@ class CameraView extends ConsumerWidget {
                           Expanded(
                             flex: 40,
                             child: LongTextButton(
-                              buttonText:  viewTexts.longTextButtonTitle,
+                              buttonText: viewTexts.longTextButtonTitle,
                               color: ColorsManager.brown100,
                               onPressedFunc: () async {
-                                final cameras = await getCamera();
-
-                                String barcode = "";
-
-                             barcode =  await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const BarcodeScanView(),
-                                      ));
-                                 viewModel.updateBarCode(barcode);
-
-
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        PhotoTakingView(cameras: cameras),
-                                  ),
-                                );
+                                viewModel.showBarcodeScanView();
                               },
                             ),
                           ),
@@ -114,7 +76,6 @@ class CameraView extends ConsumerWidget {
                         ],
                       ),
                     ),
-
                   ],
                 ),
               ),
