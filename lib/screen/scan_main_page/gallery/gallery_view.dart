@@ -5,7 +5,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:photo_gallery/photo_gallery.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
-import 'package:whilabel_renewal/screen/camera/_pages/image_preview_page.dart';
+import 'package:whilabel_renewal/screen/scan_main_page/_pages/image_preview_page.dart';
 
 // ignore: must_be_immutable
 class GalleryView extends StatefulWidget {

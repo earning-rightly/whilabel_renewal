@@ -5,9 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:camera/camera.dart';
 import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart';
-import 'package:whilabel_renewal/screen/camera/camera_view_model.dart';
-import 'package:whilabel_renewal/screen/camera/custom_barcode_scanner/sub_widget/barcode_detector_painter.dart';
-import 'package:whilabel_renewal/screen/camera/custom_barcode_scanner/sub_widget/detector_view.dart';
+import 'package:whilabel_renewal/screen/scan_main_page/custom_barcode_scanner/sub_widget/detector_view.dart';
 
 class CustomBarcodeScannerView extends ConsumerStatefulWidget {
   const CustomBarcodeScannerView({super.key});

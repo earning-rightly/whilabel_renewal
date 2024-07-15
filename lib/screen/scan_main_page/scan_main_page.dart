@@ -4,14 +4,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/design_guide_managers/image_path.dart';
 import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
-import 'package:whilabel_renewal/screen/camera/camera_view_model.dart';
-import 'package:whilabel_renewal/screen/camera/photo_taking/photo_taking_view.dart';
+import 'package:whilabel_renewal/screen/scan_main_page/scan_main_view_model.dart';
 import 'package:whilabel_renewal/screen/common_views/long_text_button.dart';
 
-class CameraView extends ConsumerWidget {
-  CameraView({Key? key}) : super(key: key);
+class ScanMainPage extends ConsumerWidget {
+  ScanMainPage({Key? key}) : super(key: key);
 
-  final _viewModel = CameraViewModel();
+  final _viewModel = ScanMainViewModel();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

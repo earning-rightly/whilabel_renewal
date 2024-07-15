@@ -9,7 +9,6 @@ import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/design_guide_managers/svg_icon_path.dart';
 import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
 import 'package:whilabel_renewal/design_guide_managers/text_widgets_styles.dart';
-import 'package:whilabel_renewal/screen/camera/camera_view_model.dart';
 import 'package:whilabel_renewal/screen/common_views/star_rating.dart';
 import 'package:whilabel_renewal/screen/common_views/taste_range.dart';
 import 'package:whilabel_renewal/screen/common_views/text_field_lengh_counter.dart';

@@ -3,7 +3,6 @@ import 'dart:async';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,9 +10,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/design_guide_managers/svg_icon_path.dart';
 import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
-import 'package:whilabel_renewal/screen/camera/_pages/image_preview_page.dart';
-import 'package:whilabel_renewal/screen/camera/garllery/garllery_view.dart';
+import 'package:whilabel_renewal/screen/scan_main_page/_pages/image_preview_page.dart';
 import 'package:whilabel_renewal/screen/common_views/back_listener.dart';
+import 'package:whilabel_renewal/screen/scan_main_page/gallery/gallery_view.dart';
 import 'package:whilabel_renewal/screen/util_views/show_dialog.dart';
 
 class PhotoTakingView extends StatefulWidget {

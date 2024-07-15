@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
-import 'package:whilabel_renewal/screen/camera/camera_view.dart';
 import 'package:whilabel_renewal/screen/main/main_page.dart';
 import 'package:whilabel_renewal/screen/main_bottom_tab_page/main_bottom_tab_view_model.dart';
 import 'package:whilabel_renewal/screen/my_page/my_page_view.dart';
-
 import '../../design_guide_managers/svg_icon_path.dart';
-import '../camera/custom_barcode_scanner/custom_barcode_scanner_view.dart';
+import '../scan_main_page/scan_main_page.dart';
 
 class MainBottomTabPage extends ConsumerWidget {
   final _viewModel = MainBottomTabViewModel();
@@ -19,7 +17,7 @@ class MainBottomTabPage extends ConsumerWidget {
     return Scaffold(
       body: IndexedStack(
         index: state.currentIndex,
-        children: [MainPage(),CameraView() ,MyPageView()],
+        children: [MainPage(),ScanMainPage() ,MyPageView()],
       ),
       bottomNavigationBar: Container(
         padding: const EdgeInsets.only(top: 4, bottom: 0, right: 4, left: 4),

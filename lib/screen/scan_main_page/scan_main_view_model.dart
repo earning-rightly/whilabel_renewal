@@ -2,23 +2,24 @@ import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:whilabel_renewal/screen/camera/camera_state.dart';
-import 'package:whilabel_renewal/screen/camera/custom_barcode_scanner/custom_barcode_scanner_view.dart';
-import 'package:whilabel_renewal/screen/camera/photo_taking/photo_taking_view.dart';
+import 'package:whilabel_renewal/screen/scan_main_page/photo_taking/photo_taking_view.dart';
+import 'package:whilabel_renewal/screen/scan_main_page/scan_main_state.dart';
 import 'package:whilabel_renewal/service/whisky_service.dart';
 
+import 'custom_barcode_scanner/custom_barcode_scanner_view.dart';
 
 
 
-class CameraViewModel extends StateNotifier<CameraState> {
-  CameraViewModel() : super(CameraState.initial());
+
+class ScanMainViewModel extends StateNotifier<ScanMainState> {
+  ScanMainViewModel() : super(ScanMainState.initial());
 
   final _whiskyService = WhiskyService();
 
   BuildContext? _context;
 
-  final provider = StateNotifierProvider<CameraViewModel, CameraState>(
-          (ref) => CameraViewModel());
+  final provider = StateNotifierProvider<ScanMainViewModel, ScanMainState>(
+          (ref) => ScanMainViewModel());
 
 
 
