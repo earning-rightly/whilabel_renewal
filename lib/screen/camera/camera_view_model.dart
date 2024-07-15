@@ -7,10 +7,8 @@ import 'package:whilabel_renewal/screen/camera/custom_barcode_scanner/custom_bar
 import 'package:whilabel_renewal/screen/camera/photo_taking/photo_taking_view.dart';
 import 'package:whilabel_renewal/service/whisky_service.dart';
 
-import 'barcode_scan/barcode_scan_view.dart';
 
-final cameraProvider = StateNotifierProvider<CameraViewModel, CameraState>(
-    (ref) => CameraViewModel());
+
 
 class CameraViewModel extends StateNotifier<CameraState> {
   CameraViewModel() : super(CameraState.initial());
@@ -18,6 +16,9 @@ class CameraViewModel extends StateNotifier<CameraState> {
   final _whiskyService = WhiskyService();
 
   BuildContext? _context;
+
+  final provider = StateNotifierProvider<CameraViewModel, CameraState>(
+          (ref) => CameraViewModel());
 
 
 

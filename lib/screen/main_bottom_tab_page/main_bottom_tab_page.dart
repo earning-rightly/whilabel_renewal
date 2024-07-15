@@ -8,13 +8,14 @@ import 'package:whilabel_renewal/screen/main_bottom_tab_page/main_bottom_tab_vie
 import 'package:whilabel_renewal/screen/my_page/my_page_view.dart';
 
 import '../../design_guide_managers/svg_icon_path.dart';
+import '../camera/custom_barcode_scanner/custom_barcode_scanner_view.dart';
 
 class MainBottomTabPage extends ConsumerWidget {
   final _viewModel = MainBottomTabViewModel();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(_viewModel.provider);
-
+//CameraView()
     return Scaffold(
       body: IndexedStack(
         index: state.currentIndex,

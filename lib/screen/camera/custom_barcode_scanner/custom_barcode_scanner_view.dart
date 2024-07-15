@@ -1,9 +1,13 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:camera/camera.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
+import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart';
+import 'package:whilabel_renewal/screen/camera/camera_view_model.dart';
+import 'package:whilabel_renewal/screen/camera/custom_barcode_scanner/sub_widget/barcode_detector_painter.dart';
+import 'package:whilabel_renewal/screen/camera/custom_barcode_scanner/sub_widget/detector_view.dart';
 
 class CustomBarcodeScannerView extends ConsumerStatefulWidget {
   const CustomBarcodeScannerView({super.key});
@@ -14,104 +18,69 @@ class CustomBarcodeScannerView extends ConsumerStatefulWidget {
   }
 
 }
-class _CustomBarcodeScannerViewState extends ConsumerState<CustomBarcodeScannerView> {
-  CameraController? _controller;
-  List<CameraDescription> _cameras = [];
-  bool _isDetecting = false;
-  final barcodeScanner = GoogleMlKit.vision.barcodeScanner();
 
-  @override
-  void initState() {
-    super.initState();
-    initializeCamera();
-  }
+class _CustomBarcodeScannerViewState extends ConsumerState<CustomBarcodeScannerView> {
+
+  final BarcodeScanner _barcodeScanner = BarcodeScanner();
+  bool _canProcess = true;
+  bool _isBusy = false;
+  CustomPaint? _customPaint;
+  String? _text;
+  var _cameraLensDirection = CameraLensDirection.back;
+  var _barcode = "바코드가 발견되지 않았습니다";
 
   @override
   void dispose() {
-    _controller?.dispose();
+    _canProcess = false;
+    _barcodeScanner.close();
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
-    if (_controller == null || !_controller!.value.isInitialized) {
-      return Center(child: CircularProgressIndicator());
-    }
-    return Scaffold(
-      appBar: AppBar(title: Text('Barcode Scanner')),
-      body: CameraPreview(_controller!),
-    );
-  }
-
-}
-extension _CameraFunctions on _CustomBarcodeScannerViewState {
-
-  void initializeCamera() async {
-
-    _cameras = await availableCameras();
-    _controller = CameraController(_cameras[0], ResolutionPreset.high);
-    await _controller!.initialize();
-
-    if (!mounted) return;
-    setState(() {
-      print("set state");
-    });
-
-    _controller!.startImageStream((CameraImage image) {
-      if (!_isDetecting) {
-        _isDetecting = true;
-        _processCameraImage(image);
-      }
-    });
-  }
-
-  Future<void> _processCameraImage(CameraImage image) async {
-    final WriteBuffer allBytes = WriteBuffer();
-    for (var plane in image.planes) {
-      allBytes.putUint8List(plane.bytes);
-    }
-    final bytes = allBytes.done().buffer.asUint8List();
-
-    final Size imageSize = Size(image.width.toDouble(), image.height.toDouble());
-
-    final InputImageRotation imageRotation =
-        InputImageRotationMethods.fromRawValue(_cameras[0].sensorOrientation) ?? InputImageRotation.Rotation_0deg;
-
-    final InputImageFormat inputImageFormat =
-        InputImageFormatMethods.fromRawValue(image.format.raw) ?? InputImageFormat.NV21;
-
-    final planeData = image.planes.map(
-          (Plane plane) {
-        return InputImagePlaneMetadata(
-          bytesPerRow: plane.bytesPerRow,
-          height: plane.height,
-          width: plane.width,
-        );
+    return DetectorView(
+      barcode: _barcode,
+      title: 'Barcode Scanner',
+      customPaint: _customPaint,
+      text: _text,
+      onImage: _processImage,
+      initialCameraLensDirection: _cameraLensDirection,
+      onCameraLensDirectionChanged: (value) => _cameraLensDirection = value,
+      onCameraShutterTapped: () {
+        Navigator.pop(context, _barcode);
       },
-    ).toList();
-
-    final inputImageData = InputImageData(
-      size: imageSize,
-      imageRotation: imageRotation,
-      inputImageFormat: inputImageFormat,
-      planeData: planeData,
     );
-
-    final inputImage = InputImage.fromBytes(bytes: bytes, inputImageData: inputImageData);
-
-    final barcodes = await barcodeScanner.processImage(inputImage);
-
-    if (barcodes.isNotEmpty) {
-      for (Barcode barcode in barcodes) {
-        final String displayValue = barcode.value.displayValue!;
-        print('Barcode found! Value: $displayValue');
-        // 바코드 값 사용하여 추가 작업 수행
-        _controller?.pausePreview();
-      }
-    }
-
-    _isDetecting = false;
   }
 
+  Future<void> _processImage(InputImage inputImage) async {
+    if (!_canProcess) return;
+    if (_isBusy) return;
+    _isBusy = true;
+    setState(() {
+      _text = '';
+    });
+    final barcodes = await _barcodeScanner.processImage(inputImage);
+    if (inputImage.metadata?.size != null &&
+        inputImage.metadata?.rotation != null) {
+      if (barcodes.length != 0 ) {
+        _barcode = barcodes.last.displayValue ?? "바코드가 발견되지 않았습니다";
+      }
+      else {
+        _barcode = "바코드가 발견되지 않았습니다";
+      }
+
+    } else {
+      String text = 'Barcodes found: ${barcodes.length}\n\n';
+      for (final barcode in barcodes) {
+        text += 'Barcode: ${barcode.rawValue}\n\n';
+      }
+      _text = text;
+      // TODO: set _customPaint to draw boundingRect on top of image
+      _customPaint = null;
+    }
+    _isBusy = false;
+    if (mounted) {
+      setState(() {});
+    }
+  }
 }

@@ -4,23 +4,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whilabel_renewal/design_guide_managers/color_manager.dart';
 import 'package:whilabel_renewal/design_guide_managers/image_path.dart';
 import 'package:whilabel_renewal/design_guide_managers/text_style_manager.dart';
-import 'package:whilabel_renewal/screen/camera/barcode_scan/barcode_scan_view.dart';
 import 'package:whilabel_renewal/screen/camera/camera_view_model.dart';
 import 'package:whilabel_renewal/screen/camera/photo_taking/photo_taking_view.dart';
 import 'package:whilabel_renewal/screen/common_views/long_text_button.dart';
 
-
 class CameraView extends ConsumerWidget {
   CameraView({Key? key}) : super(key: key);
 
-
+  final _viewModel = CameraViewModel();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    final viewModel = ref.watch(cameraProvider.notifier);
-    final viewTexts = ref.watch(cameraProvider).texts;
+    final viewModel = ref.watch(_viewModel.provider.notifier);
+    final viewTexts = ref.watch(_viewModel.provider).texts;
     viewModel.setBuildContext(context);
 
     return Scaffold(
@@ -68,7 +66,7 @@ class CameraView extends ConsumerWidget {
                           Expanded(
                             flex: 40,
                             child: LongTextButton(
-                              buttonText:  viewTexts.longTextButtonTitle,
+                              buttonText: viewTexts.longTextButtonTitle,
                               color: ColorsManager.brown100,
                               onPressedFunc: () async {
                                 viewModel.showBarcodeScanView();
