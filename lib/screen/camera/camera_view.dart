@@ -9,7 +9,6 @@ import 'package:whilabel_renewal/screen/camera/camera_view_model.dart';
 import 'package:whilabel_renewal/screen/camera/photo_taking/photo_taking_view.dart';
 import 'package:whilabel_renewal/screen/common_views/long_text_button.dart';
 
-
 class CameraView extends ConsumerWidget {
   CameraView({Key? key}) : super(key: key);
 
@@ -84,29 +83,34 @@ class CameraView extends ConsumerWidget {
                           Expanded(
                             flex: 40,
                             child: LongTextButton(
-                              buttonText:  viewTexts.longTextButtonTitle,
+                              buttonText: viewTexts.longTextButtonTitle,
                               color: ColorsManager.brown100,
                               onPressedFunc: () async {
                                 final cameras = await getCamera();
 
                                 String barcode = "";
 
-                             barcode =  await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const BarcodeScanView(),
-                                      ));
-                                 viewModel.updateBarCode(barcode);
+                                barcode = await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const BarcodeScanView(),
+                                    ));
+                                final isRecognition =
+                                    await viewModel.updateBarCode(barcode);
 
-
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        PhotoTakingView(cameras: cameras),
-                                  ),
-                                );
+                                if (isRecognition == false) {
+                                  await viewModel.showBarcodeNoMatchDialog(
+                                      context, cameras);
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) {
+                                      return PhotoTakingView(
+                                          cameras: cameras);
+                                    }),
+                                  );
+                                }
                               },
                             ),
                           ),
@@ -114,7 +118,6 @@ class CameraView extends ConsumerWidget {
                         ],
                       ),
                     ),
-
                   ],
                 ),
               ),

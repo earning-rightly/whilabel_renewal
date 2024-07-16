@@ -49,18 +49,18 @@ class CreateWhiskyPostDetailViewModel
     state = state.copyWith(note: note);
   }
 
-  void savePost(int whiskyId, String imageUrl) async {
+  Future<bool> savePost(int whiskyId, String imageUrl) async {
     /* TODO _mockImageUrl제거하기**/
     String _mockImageUrl =
         "https://farm4.staticflickr.com/3075/3168662394_7d7103de7d_z_d.jpg";
     bool isSuccess = false;
     if (imageUrl == "") {
       isSuccess = await _callCreatePostAPI(whiskyId, _mockImageUrl);
-      return;
+      return isSuccess;
     }
     isSuccess = await _callCreatePostAPI(whiskyId, imageUrl);
     state = state.copyWith(isPostSuccess: isSuccess);
-    return;
+    return isSuccess;
   }
 
   Future<bool> _callCreatePostAPI(int whiskyId, String imageUrl) async {
