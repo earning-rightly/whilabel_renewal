@@ -13,6 +13,8 @@ import 'package:whilabel_renewal/screen/camera/camera_view_model.dart';
 import 'package:whilabel_renewal/screen/common_views/star_rating.dart';
 import 'package:whilabel_renewal/screen/common_views/taste_range.dart';
 import 'package:whilabel_renewal/screen/common_views/text_field_lengh_counter.dart';
+import 'package:whilabel_renewal/screen/create_whisky_post_detail/page/post_failure_page.dart';
+
 import 'package:whilabel_renewal/screen/create_whisky_post_detail/page/post_success_page.dart';
 import 'package:whilabel_renewal/screen/main_bottom_tab_page/main_bottom_tab_page.dart';
 import 'package:whilabel_renewal/singleton/user_singleton.dart';
@@ -43,6 +45,7 @@ class CreateWhiskyPostDetailView extends ConsumerWidget {
     double starScore = ref.watch(_provider).starScore;
     final viewModel = ref.watch(_provider.notifier);
     final whiskyInfo = ref.watch(cameraProvider).scanResult;
+    final isFindWhiskyData = ref.watch(cameraProvider).isFindWhiskyData;
 
     ref.listen(_provider, (previousState, newState) {
       if (newState.isPostSuccess == true) {
@@ -190,7 +193,7 @@ class CreateWhiskyPostDetailView extends ConsumerWidget {
               bottom: 0,
               child: CreateArchivingPostFooter(
                 currentFile: currentFile,
-                whiskyName: whiskyInfo?.whiskyName ?? whiskyName,
+                whiskyName: whiskyInfo?.whiskyName,
                 strength: whiskyInfo?.distilleryRating ?? strength,
                 distilleryCountry:
                     whiskyInfo?.distilleryCountry ?? distilleryName,
@@ -207,8 +210,12 @@ class CreateWhiskyPostDetailView extends ConsumerWidget {
                     Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => PostSuccessPage(
-                                currentWhiskyCount: currentWhiskyCount ?? 0)),
+                            builder: (context) =>
+                            isFindWhiskyData  ? PostSuccessPage(
+                                    currentWhiskyCount: currentWhiskyCount ?? 0)
+                                : PostFailurePage(
+                                    currentWhiskyCount:
+                                        currentWhiskyCount ?? 0)),
                         (Route<dynamic> route) => false);
                   }
                 },

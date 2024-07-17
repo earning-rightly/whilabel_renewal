@@ -48,6 +48,7 @@ dependencies:
   intl:
   shared_preferences:
   cached_network_image: ^3.3.1
+  flutter_native_splash: ^2.0.5
 
   # 이미지 카메라 관련
   camera: ^0.11.0+1
@@ -60,6 +61,7 @@ dependencies:
 
   # 기타
   permission_handler: ^11.3.1
+  popup_banner: ^1.0.0
   
 
 

@@ -26,7 +26,6 @@ class _MainPageState extends ConsumerState<MainPage>
   final listView = MainListWidget();
   final gridView = MainGridWidget();
 
-
   @override
   void initState() {
     super.initState();
@@ -34,14 +33,11 @@ class _MainPageState extends ConsumerState<MainPage>
     Future.microtask(() {
       ref.read(_viewModel.provider.notifier).init();
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
-
     final state = ref.watch(_viewModel.provider);
-
 
     return Container(
       color: ColorsManager.black100,
@@ -61,7 +57,9 @@ class _MainPageState extends ConsumerState<MainPage>
                 ),
                 child: TabBar(
                   onTap: (index) {
-                    ref.read(_viewModel.provider.notifier).setCurrentIndex(index);
+                    ref
+                        .read(_viewModel.provider.notifier)
+                        .setCurrentIndex(index);
                   },
                   controller: _tabController,
                   unselectedLabelColor: ColorsManager.black100,
@@ -74,10 +72,16 @@ class _MainPageState extends ConsumerState<MainPage>
                   ),
                   tabs: [
                     Tab(
-                      icon: SvgPicture.asset(SvgIconPath.list,color: state.currentIndex == 0 ? Colors.white : ColorsManager.gray),
+                      icon: SvgPicture.asset(SvgIconPath.list,
+                          color: state.currentIndex == 0
+                              ? Colors.white
+                              : ColorsManager.gray),
                     ),
                     Tab(
-                      icon: SvgPicture.asset(SvgIconPath.grid,color: state.currentIndex == 1 ? Colors.white : ColorsManager.gray),
+                      icon: SvgPicture.asset(SvgIconPath.grid,
+                          color: state.currentIndex == 1
+                              ? Colors.white
+                              : ColorsManager.gray),
                     )
                   ],
                 ),
@@ -107,7 +111,7 @@ class _MainPageState extends ConsumerState<MainPage>
       backgroundColor: ColorsManager.black100,
       leading: Row(
         children: [
-           Text(
+          Text(
             state.text.title,
             style: TextStylesManager.bold24,
           ),
@@ -133,7 +137,9 @@ class _MainPageState extends ConsumerState<MainPage>
       splashColor: ColorsManager.black300,
       splashRadius: 15,
       color: ColorsManager.gray200,
-      icon: SvgPicture.asset(state.hasNotification ? SvgIconPath.notificationNew :SvgIconPath.notification),
+      icon: SvgPicture.asset(state.hasNotification
+          ? SvgIconPath.notificationNew
+          : SvgIconPath.notification),
       padding: EdgeInsets.zero,
       constraints: const BoxConstraints(minWidth: 10, minHeight: 10),
       style: IconButton.styleFrom(
