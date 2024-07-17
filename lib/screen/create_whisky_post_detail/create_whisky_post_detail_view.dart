@@ -14,6 +14,7 @@ import 'package:whilabel_renewal/screen/common_views/star_rating.dart';
 import 'package:whilabel_renewal/screen/common_views/taste_range.dart';
 import 'package:whilabel_renewal/screen/common_views/text_field_lengh_counter.dart';
 import 'package:whilabel_renewal/screen/create_whisky_post_detail/page/post_failure_page.dart';
+
 import 'package:whilabel_renewal/screen/create_whisky_post_detail/page/post_success_page.dart';
 import 'package:whilabel_renewal/screen/main_bottom_tab_page/main_bottom_tab_page.dart';
 import 'package:whilabel_renewal/singleton/user_singleton.dart';
