@@ -28,14 +28,15 @@ class ScanMainViewModel extends StateNotifier<ScanMainState> {
   }
 
   void showBarcodeScanView() async {
-    String barcode = "";
+    String? barcode = "";
     barcode = await Navigator.push(
         _context!,
         MaterialPageRoute(
           builder: (context) => const CustomBarcodeScannerView(),
         ));
-
-    _callGetWhiskyByBarcodeAPI(barcode);
+    if (barcode != null) {
+      _callGetWhiskyByBarcodeAPI(barcode);
+    }
   }
 
   void _callGetWhiskyByBarcodeAPI(String barcode) async {

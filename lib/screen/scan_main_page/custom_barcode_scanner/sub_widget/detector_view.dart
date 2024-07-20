@@ -66,13 +66,17 @@ class _DetectorViewState extends State<DetectorView> {
       onDetectorViewModeChanged: _onDetectorViewModeChanged,
       isInBarcodeScanMode: true,
     );
+
+
+    // GalleryView(
+    //     title: "widget.title",
+    //     text: "widget.text",
+    //     onImage: widget.onImage,
+    //     onDetectorViewModeChanged: _onDetectorViewModeChanged);
+
   }
 
-  // GalleryView(
-  // title: widget.title,
-  // text: widget.text,
-  // onImage: widget.onImage,
-  // onDetectorViewModeChanged: _onDetectorViewModeChanged);
+
 
   void _onDetectorViewModeChanged() {
     if (_mode == DetectorViewMode.liveFeed) {

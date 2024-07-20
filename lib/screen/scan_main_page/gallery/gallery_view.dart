@@ -14,6 +14,8 @@ import 'package:whilabel_renewal/screen/scan_main_page/gallery/galler_view_model
 import '../../../design_guide_managers/svg_icon_path.dart';
 import '../../../design_guide_managers/text_style_manager.dart';
 
+import 'package:image/image.dart' as img;
+
 // ignore: must_be_immutable
 class GalleryView extends ConsumerStatefulWidget {
   GalleryView(
@@ -77,35 +79,48 @@ class _GalleryViewState extends ConsumerState<GalleryView> {
                 ),
                 itemBuilder: (BuildContext context, int index) {
                   Medium medium = state.mediums[index];
-                  return GestureDetector(
-                    onTap: () async {
-                      if (widget.isInBarcodeScanMode) {
 
-                      }
-                      else {
-                        ref
-                            .read(_viewModel.provider.notifier)
-                            .showImagePreviewPage(medium);
-                      }
-                    },
-                    child: SizedBox(
-                      child: FadeInImage(
-                        fit: BoxFit.cover,
-                        placeholder: MemoryImage(kTransparentImage),
-                        image: ThumbnailProvider(
-                          mediumId: medium.id,
-                          mediumType: medium.mediumType,
-                          highQuality: true,
+                    return GestureDetector(
+                      onTap: () async {
+                        if (widget.isInBarcodeScanMode) {
+                          final file = await medium.getFile();
+
+                          debugPrint("file ${file.toString()}");
+                          debugPrint("file ${medium.toString()}");
+                          final path = await ref.watch(_viewModel.provider.notifier).resizeImageAndGetModifiedPath(file.path);
+                          // if (widget.onPathSelectedForBarcodeScan != null) {
+                          //   widget.onPathSelectedForBarcodeScan!(path);
+                          // }
+                          // final inputImage = InputImage.fromFilePath(tempPath);
+
+                          // debugPrint("inputImage ${inputImage!.toJson()}");
+                          // if (widget.onImageSelectedForBarcodeScan != null) {
+                          //   await widget
+                          //       .onImageSelectedForBarcodeScan!(inputImage!);
+                          // }
+                        } else {
+                          ref
+                              .read(_viewModel.provider.notifier)
+                              .showImagePreviewPage(medium);
+                        }
+                      },
+                      child: SizedBox(
+                        child: FadeInImage(
+                          fit: BoxFit.cover,
+                          placeholder: MemoryImage(kTransparentImage),
+                          image: ThumbnailProvider(
+                            mediumId: medium.id,
+                            mediumType: medium.mediumType,
+                            highQuality: true,
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  }
               ),
       ),
     );
   }
-
 
   AppBar _scaffoldAppBar(BuildContext context) {
     return AppBar(
@@ -121,8 +136,7 @@ class _GalleryViewState extends ConsumerState<GalleryView> {
             if (widget.onDetectorViewModeChanged != null) {
               widget.onDetectorViewModeChanged!();
             }
-          }
-          else {
+          } else {
             Navigator.pop(context);
           }
         },
@@ -133,6 +147,4 @@ class _GalleryViewState extends ConsumerState<GalleryView> {
       ),
     );
   }
-
-
 }

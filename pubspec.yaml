@@ -59,6 +59,8 @@ dependencies:
   photo_gallery: ^2.2.1
   transparent_image: ^2.0.1
   google_mlkit_barcode_scanning: ^0.12.0
+  image: ^4.2.0
+  heic_to_jpg: ^0.2.0
 
   # 기타
   permission_handler: ^11.3.1

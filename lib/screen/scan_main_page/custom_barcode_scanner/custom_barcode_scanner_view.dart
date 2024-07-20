@@ -20,6 +20,8 @@ class CustomBarcodeScannerView extends ConsumerStatefulWidget {
 class _CustomBarcodeScannerViewState extends ConsumerState<CustomBarcodeScannerView> {
 
   final BarcodeScanner _barcodeScanner = BarcodeScanner();
+
+
   bool _canProcess = true;
   bool _isBusy = false;
   CustomPaint? _customPaint;
@@ -27,8 +29,9 @@ class _CustomBarcodeScannerViewState extends ConsumerState<CustomBarcodeScannerV
   var _cameraLensDirection = CameraLensDirection.back;
   var _barcode = "바코드가 발견되지 않았습니다";
 
+
   @override
-  void dispose() {
+  void dispose() async {
     _canProcess = false;
     _barcodeScanner.close();
     super.dispose();
@@ -50,14 +53,15 @@ class _CustomBarcodeScannerViewState extends ConsumerState<CustomBarcodeScannerV
     );
   }
 
+
   Future<void> _processImage(InputImage inputImage) async {
+
+    
     if (!_canProcess) return;
     if (_isBusy) return;
     _isBusy = true;
-    setState(() {
-      _text = '';
-    });
     final barcodes = await _barcodeScanner.processImage(inputImage);
+
     if (inputImage.metadata?.size != null &&
         inputImage.metadata?.rotation != null) {
       if (barcodes.length != 0 ) {
@@ -66,15 +70,6 @@ class _CustomBarcodeScannerViewState extends ConsumerState<CustomBarcodeScannerV
       else {
         _barcode = "바코드가 발견되지 않았습니다";
       }
-
-    } else {
-      String text = 'Barcodes found: ${barcodes.length}\n\n';
-      for (final barcode in barcodes) {
-        text += 'Barcode: ${barcode.rawValue}\n\n';
-      }
-      _text = text;
-      // TODO: set _customPaint to draw boundingRect on top of image
-      _customPaint = null;
     }
     _isBusy = false;
     if (mounted) {
